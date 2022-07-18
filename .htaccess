@@ -1,0 +1,17 @@
+RewriteEngine On
+#RewriteBase /
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^(.*)$ index.php?page=$1 [QSA,L]
+
+ErrorDocument 404 /accessErrors/notfound.php
+ErrorDocument 401 /accessErrors/unauthorized.php
+ErrorDocument 500 /accessErrors/internalError.php
+ErrorDocument 403 /accessErrors/forbid.php
+Options -Indexes
+
+#http den https yönlendirme
+ 
+ #RewriteEngine On
+# RewriteCond %{HTTPS} !=on
+ #RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [R,L]
