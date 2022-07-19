@@ -172,8 +172,10 @@ function adminLTE_redirect($is_modal, $alert_header, $alert_message, $alert_type
     $_SESSION['adminLTE_alert'] = array($is_modal, $alert_header, $alert_message, $alert_type, $is_remove_time);
     if ($yonlendirilecek_url == "") {
         header("location:" . $_SERVER['PHP_SELF']);
+        die();
     } else {
         header("location:" . $yonlendirilecek_url);
+        die();
     }
 }
 
@@ -345,7 +347,6 @@ function en_lowercase($sData) {
 function tr_to_en($sData) {
     $newphrase = $sData;
 
-
     $newphrase = str_replace("Ü", "U", $newphrase);
     $newphrase = str_replace("Ş", "S", $newphrase);
     $newphrase = str_replace("Ğ", "G", $newphrase);
@@ -358,7 +359,6 @@ function tr_to_en($sData) {
     $newphrase = str_replace("ı", "i", $newphrase);
     $newphrase = str_replace("ö", "o", $newphrase);
     $newphrase = str_replace("ğ", "g", $newphrase);
-
 
     return $newphrase;
 }
@@ -389,7 +389,7 @@ function csrfguard_generate_token() {
             } else {
                 $c = chr(ord('0') + $r - 26);
             }
-            $token.=$c;
+            $token .= $c;
         }
     }
 
@@ -405,7 +405,6 @@ function csrfguard_isvalid_token($token) {
     }
     $sesToken = $_SESSION['token'];
     unset($_SESSION['token']);
-
 
     if (isset($sesToken)) {
         if ($sesToken == $token) {
@@ -480,7 +479,6 @@ function convertDateFormatDefault($old_date) {
 
 function redirect($url, $message = '') {
     global $_config;
-
 
     //eğer $message parametresi null değilse header php içindeki msgbox divivnin içinde görünmesi için değişkeni session a ata...
     if ($message) {

@@ -17,7 +17,7 @@
             </div>  
         </div>                
         <div class="col-sm-12 form-group form-group-sm">
-            <button type="submit" name="insert" value="Kaydet" class="btn bg-olive btn-block"><span class="fa fa-floppy-o"></span> <?= __("Grup Kaydet") ?></button>
+            <button type="submit" name="insert" value="Kaydet" class="btn bg-olive btn-block"><span class="fa fa-floppy-o"></span> <?= __("Rol Kaydet") ?></button>
         </div>
     </form>
 </div>

@@ -30,10 +30,10 @@
                 <?php
 //yeni kayıt butonunana basıldı ise
                 if (isset($_GET['add']) && in_array(YT_INSERT, $sayfaIslemleriId)) {
-                    require_once 'yeni.php';
+                    require_once 'ekle.php';
                 }//eğer güncelleme butonuna basıldı ise
                 else if (isset($_POST['update']) && in_array(YT_UPDATE, $sayfaIslemleriId)) {
-                    require_once 'guncelleme.php';
+                    require_once 'guncelle.php';
                 } else if (isset($_GET['ekspertiz_pdf']) && in_array(YT_UPDATE, $sayfaIslemleriId)) {
                     require_once 'pdf.php';
                 } else {//normal pdf
@@ -41,7 +41,7 @@
                             <div  class="col-md-12 box box-purple" id="sorgulama_ekrani_div">';
                     if (in_array(YT_INSERT, $sayfaIslemleriId)) {
                         echo '<div class="col-md-8" style="	margin-bottom: 10px;">
-                            <form class="form-horizontal" method="GET" action="">
+                            <form class="form-horizontal" method="GET" action="?add">
                                 <input class="btn bg-green" type="submit" id="btn_yeni_kayit_ekle" name="add" value="YENİ RUHSAT EKLE">
                             </form>  
                         </div>';
@@ -52,7 +52,7 @@
                             <div class="form-group form-group-sm">
                             </div>   
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-2 control-label" for="ruhsatlar"><?= "Ruhsat No" ?></label>
+                                <label class="col-sm-2 control-label" for="ruhsatlar">Ruhsat No</label>
                                 <div class="col-sm-8">
                                     <select class="form-control select2 select2-hidden-accessible"  onchange="$('#get-items').click();" style="width: 100%;" tabindex="-1" aria-hidden="true" id="ruhsat_no" name="ruhsat_no">
                                         <option value=''>Listelenecek Ruhsat Seçiniz</option>
@@ -82,7 +82,7 @@
                             <div class="form-group form-group-sm">
                             </div>   
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-2 control-label" for="ruhsatlar"><?= "Ruhsat Cinsi" ?></label>
+                                <label class="col-sm-2 control-label" for="ruhsatlar">Ruhsat Cinsi</label>
                                 <div class="col-sm-8">
                                     <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="ruhsat_cinsi" name="ruhsat_cinsi">
                                         <option value=''>Ruhsat Cinsi Seçiniz</option>
@@ -139,12 +139,12 @@
                                 </div>
                             </div>
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-2 control-label" for="iskan_verildi_mi"><?= "İskan Verildi Mi?" ?></label>
+                                <label class="col-sm-2 control-label" for="iskan_verildi_mi">İskan Verildi Mi?</label>
                                 <div class="col-sm-8">
                                     <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="iskan_verildi_mi" name="iskan_verildi_mi">
-                                        <option value=''>Ruhsat Durumu Seçiniz</option>
-                                        <option value='1' <?= ((isset($_GET['iskan_verildi_mi']) && ($_GET['iskan_verildi_mi'] === 1) ? 'selected' : '')) ?> >Ruhsat Var</option>
-                                        <option value='0' <?= ((isset($_GET['iskan_verildi_mi']) && ($_GET['iskan_verildi_mi'] === 0) ? 'selected' : '')) ?> >Ruhsat Yok</option>
+                                        <option value=''>İskan Durumu Seçiniz</option>
+                                        <option value='1' <?= ((isset($_GET['iskan_verildi_mi']) && ($_GET['iskan_verildi_mi'] === 1) ? 'selected' : '')) ?> >İskan Var</option>
+                                        <option value='0' <?= ((isset($_GET['iskan_verildi_mi']) && ($_GET['iskan_verildi_mi'] === 0) ? 'selected' : '')) ?> >İskan Yok</option>
                                     </select>
                                 </div>
                             </div>

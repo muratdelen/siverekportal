@@ -31,9 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //post ile veri gelmişse
 }
 if (isset($_SESSION["grup_id"])) {
     if ($_SESSION["grup_id"] == 5) {
-        header('location:' . BASE_URL . 'personel_izin_alma/index.php');
+        header('location:' . BASE_URL . 'ruhsat/index.php');
     } elseif ($_SESSION["grup_id"] == 6) {
-        header('location:' . BASE_URL . 'personel_izin_islemleri/izin_onay.php');
+        header('location:' . BASE_URL . 'ruhsat/index.php');
     } else {
         header('location:' . BASE_URL . 'admin');
     }
