@@ -9,13 +9,13 @@ $_POST = unserialize($_POST["params"]);
 //die();
 if (in_array(YT_EXCEL, $sayfaIslemleriId)) {
     $excel_sender = new PhpExcelReaderWriter("Ruhsat Ekranı");
-    $excel_sender->toExcelFromArray(array('RUHSAT NO', 'İskan', 'İskan Ruhsat Tarihi', 'Adı Soyadı', 'Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul', 'Ruhsat Tarihi', 'Mahallesi', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Ölçüsü'));
+    $excel_sender->toExcelFromArray(array('RUHSAT NO', 'İskan', 'İskan Ruhsat Tarihi', 'Adı Soyadı', 'ruhsat_cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul', 'Ruhsat Tarihi', 'Mahallesi', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Ölçüsü'));
     $ItemsSQL = "";
     $ruhsat_where_string = "";
     $ruhsat_where = array();
     if (trim($_POST['ruhsat_no']) == "") {
         if (trim($_POST['ruhsat_cinsi']) !== "") {
-            $ruhsat_where_string .= " AND cinsi = ? ";
+            $ruhsat_where_string .= " AND ruhsat_cinsi = ? ";
             array_push($ruhsat_where, trim($_POST['ruhsat_cinsi']));
         }
         if (trim($_POST['iskan_verildi_mi']) !== "") {
@@ -51,7 +51,7 @@ if (in_array(YT_EXCEL, $sayfaIslemleriId)) {
                                             (CASE s_ruhsat_bilgileri.iskan_verildi_mi WHEN 1 THEN 'İskan Verildi' WHEN 0 THEN 'İskan Yok' END) AS iskan_verildi_mi, 
                                             DATE_FORMAT(s_ruhsat_bilgileri.ruhsat_tarihi,'%d/%m/%Y') AS ruhsat_tarihi,  
                                             s_ruhsat_bilgileri.adi_soyadi, 
-                                            s_ruhsat_bilgileri.cinsi, 
+                                            s_ruhsat_bilgileri.ruhsat_cinsi, 
                                             s_ruhsat_bilgileri.ruhsat_verilis_amaci, 
                                             s_ruhsat_bilgileri.fenni_mesul, 
                                             DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
@@ -59,7 +59,7 @@ if (in_array(YT_EXCEL, $sayfaIslemleriId)) {
                                             s_ruhsat_bilgileri.bulten_no, 
                                             s_ruhsat_bilgileri.ada_parsel, 
                                             s_ruhsat_bilgileri.yibf_no, 
-                                            s_ruhsat_bilgileri.olcusu
+                                            s_ruhsat_bilgileri.yapi_alani
                                     FROM
                                             s_ruhsat_bilgileri
                                             WHERE aktif_mi " . $ruhsat_where_string . " LIMIT 1000";
@@ -69,7 +69,7 @@ if (in_array(YT_EXCEL, $sayfaIslemleriId)) {
                                                 (CASE s_ruhsat_bilgileri.iskan_verildi_mi WHEN 1 THEN 'İskan Verildi' WHEN 0 THEN 'İskan Yok' END) AS iskan_verildi_mi, 
                                                 DATE_FORMAT(s_ruhsat_bilgileri.ruhsat_tarihi,'%d/%m/%Y') AS ruhsat_tarihi,  
                                                 s_ruhsat_bilgileri.adi_soyadi, 
-                                                s_ruhsat_bilgileri.cinsi, 
+                                                s_ruhsat_bilgileri.ruhsat_cinsi, 
                                                 s_ruhsat_bilgileri.ruhsat_verilis_amaci, 
                                                 s_ruhsat_bilgileri.fenni_mesul, 
                                                 DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
@@ -77,7 +77,7 @@ if (in_array(YT_EXCEL, $sayfaIslemleriId)) {
                                                 s_ruhsat_bilgileri.bulten_no, 
                                                 s_ruhsat_bilgileri.ada_parsel, 
                                                 s_ruhsat_bilgileri.yibf_no, 
-                                                s_ruhsat_bilgileri.olcusu
+                                                s_ruhsat_bilgileri.yapi_alani
                                         FROM
                                                 s_ruhsat_bilgileri
                                                 WHERE aktif_mi AND id = ? ";

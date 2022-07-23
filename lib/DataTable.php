@@ -174,7 +174,7 @@ class DataTable {
                             $anahtar = explode('_', $key)[1];
                             $this->buttonConditions[$anahtar] = $dataVal;
                         } else {
-                            $dataTable .= '<td>' . $dataVal . '</td>';
+                            $dataTable .= '<td><h5 class="table-data">' . $dataVal . '</h5></td>';
                         }
                     }
                 }
@@ -426,7 +426,7 @@ class DataTable {
 //                            var_dump($anahtar);
                             $this->buttonConditions[$anahtar] = $dataVal;
                         } else {
-                            $dataTable .= '<td>' . $dataVal . '</td>';
+                            $dataTable .= '<td><h5 class="table-data">' . $dataVal . '</h5></td>';
                         }
                     }
                 }

@@ -8,7 +8,7 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
 	(CASE s_ruhsat_bilgileri.iskan_verildi_mi WHEN 1 THEN 'İskan Verildi' WHEN 0 THEN 'İskan Yok' END) AS iskan_verildi_mi, 
 	DATE_FORMAT(s_ruhsat_bilgileri.ruhsat_tarihi,'%d/%m/%Y') AS ruhsat_tarihi,  
 	s_ruhsat_bilgileri.adi_soyadi, 
-	s_ruhsat_bilgileri.cinsi, 
+	s_ruhsat_bilgileri.ruhsat_cinsi, 
 	s_ruhsat_bilgileri.ruhsat_verilis_amaci, 
 	s_ruhsat_bilgileri.fenni_mesul, 
 	DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
@@ -16,7 +16,7 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
 	s_ruhsat_bilgileri.bulten_no, 
 	s_ruhsat_bilgileri.ada_parsel, 
 	s_ruhsat_bilgileri.yibf_no, 
-	s_ruhsat_bilgileri.olcusu
+	s_ruhsat_bilgileri.yapi_alani
 FROM
 	s_ruhsat_bilgileri
 	WHERE aktif_mi AND id = ?";
@@ -24,7 +24,7 @@ FROM
     } catch (Zend_Db_Exception $ex) {
         log::DB_hata_kaydi_ekle(__FILE__, $ex);
     }
-var_dump($update_id,$ruhsat_bilgisi);
+    var_dump($update_id, $ruhsat_bilgisi);
 //die();
 } else {
     adminLTE_redirect(true, "Güncelleme Yetkiniz Yoktur.", "Güncelleme Yetkiniz Yoktur.", "warning", 100000, BASE_URL . "ruhsat/index.php");
@@ -50,19 +50,70 @@ var_dump($update_id,$ruhsat_bilgisi);
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="ruhsat_cinsi">Ruhsat Cinsi</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" id="ruhsat_cinsi" name="ruhsat_cinsi" value="<?= $ruhsat_bilgisi->cinsi ?>" >
+                <input class="form-control" type="text" id="ruhsat_cinsi" name="ruhsat_cinsi" value="<?= $ruhsat_bilgisi->ruhsat_cinsi ?>" >
             </div>
         </div>
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="ruhsat_verilis_amaci">Ruhsat Veriliş Amacı</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" id="ruhsat_verilis_amaci" name="ruhsat_verilis_amaci" value="<?= $ruhsat_bilgisi->ruhsat_verilis_amaci ?>" >
+                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="ruhsat_verilis_amaci" name="ruhsat_verilis_amaci">
+                    <option value=''>Listelenecek Ruhsat Seçiniz</option>
+                    <?php
+                    try {
+                        $ruhsat_verilis_amaclari = $db->fetchAll("SELECT verilis_amaci, aciklama FROM s_ruhsat_verilis_amaci WHERE aktif_mi");
+                    } catch (Zend_Db_Exception $ex) {
+                        log::DB_hata_kaydi_ekle(__FILE__, $ex);
+                    }
+                    htmlspecialchar_obj($ruhsat_verilis_amaclari);
+                    $is_not_select = true;
+                    foreach ($ruhsat_verilis_amaclari as $ruhsat_verilis_amaci) {
+                        echo "<option value='$ruhsat_verilis_amaci->verilis_amaci' title='$ruhsat_verilis_amaci->aciklama' ";
+                        if ($ruhsat_bilgisi->ruhsat_verilis_amaci == $ruhsat_verilis_amaci->verilis_amaci) {
+                            $is_not_select = false;
+                            echo 'seledted';
+                        }
+                        echo ">$ruhsat_verilis_amaci->verilis_amaci</option>";
+                    }
+                    if ($is_not_select && !is_null($ruhsat_bilgisi->ruhsat_verilis_amaci)) {
+                        echo "<option value='$ruhsat_bilgisi->ruhsat_verilis_amaci' title='Daha önce girilen bilgidir.' selected >$ruhsat_bilgisi->ruhsat_verilis_amaci</option>";
+                    }
+                    ?>
+                </select>
             </div>
-        </div>        
+        </div>    
+
         <div class="form-group form-group-sm">
-            <label class="col-sm-2 control-label" for="fenni_mesul">Fenni Mesul</label>
+            <label class="col-sm-2 control-label" for="fenni_mesul">Fenni Mesul/Yapı Denetim</label>
             <div class="col-sm-8">
                 <input class="form-control" type="text" id="fenni_mesul" name="fenni_mesul" value="<?= $ruhsat_bilgisi->fenni_mesul ?>" >
+            </div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-sm-2 control-label" for="fenni_mesul">Fenni Mesul/Yapı Denetim</label>
+            <div class="col-sm-8">
+                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="fenni_mesul" name="fenni_mesul">
+                    <option value=''>Listelenecek Ruhsat Seçiniz</option>
+                    <?php
+                    try {
+                        $ydk_bilgileri = $db->fetchAll("SELECT unvan, adres FROM s_ydk_listesi WHERE aktif_mi");
+                    } catch (Zend_Db_Exception $ex) {
+                        log::DB_hata_kaydi_ekle(__FILE__, $ex);
+                    }
+                    htmlspecialchar_obj($ruhsat_verilis_amaclari);
+                    $is_not_select = true;
+                    foreach ($ydk_bilgileri as $ydk_bilgisi) {
+                        echo "<option value='$ydk_bilgisi->unvan' title='$ydk_bilgisi->adres' ";
+                        if ($ruhsat_bilgisi->fenni_mesul == $ydk_bilgisi->unvan) {
+                            $is_not_select = false;
+                            echo 'selected';
+                        }
+                        echo ">$ydk_bilgisi->unvan</option>";
+                    }
+                    if ($is_not_select && !is_null($ruhsat_bilgisi->fenni_mesul)) {
+                        echo "<option value='$ruhsat_bilgisi->fenni_mesul' title='Daha önce girilen bilgidir.' selected >$ruhsat_bilgisi->fenni_mesul</option>";
+                    }
+                    ?>
+                </select>
             </div>
         </div>
         <div class="form-group form-group-sm">
@@ -95,11 +146,11 @@ var_dump($update_id,$ruhsat_bilgisi);
                 <input class="form-control" type="text" id="yibf_no" name="yibf_no" value="<?= $ruhsat_bilgisi->yibf_no ?>" >
             </div>
         </div>
-        
+
         <div class="form-group form-group-sm">
-            <label class="col-sm-2 control-label" for="olcusu">Ölçüsü</label>
+            <label class="col-sm-2 control-label" for="yapi_alani">Ölçüsü</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" id="olcusu" name="olcusu" value="<?= $ruhsat_bilgisi->olcusu ?>" >
+                <input class="form-control" type="text" id="yapi_alani" name="yapi_alani" value="<?= $ruhsat_bilgisi->yapi_alani ?>" >
             </div>
         </div>
         <div class="form-group form-group-sm">

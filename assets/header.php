@@ -219,7 +219,7 @@ if (isset($_SESSION['adminLTE_alert'])) {
             </li>';
                     echo '<li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:#fff !important; ">
-                        <img src="' . BASE_URL . 'upload/user_images/' . $kullanici_adi . '.jpg" onerror="this.src=' . "'" . BASE_URL . "upload/user_images/public.png'" . '" class="user-image" alt="User Image">
+                        <img src="' . BASE_URL . 'upload/user_images/public.png" onerror="this.src=' . "'" . BASE_URL . "upload/user_images/public.png'" . '" class="user-image" alt="User Image">
                              <span class="hidden-xs">' . $kullanici . '</span>
                     </a>
                     <ul class="dropdown-menu">
@@ -232,7 +232,7 @@ if (isset($_SESSION['adminLTE_alert'])) {
                     <a href="#" role="button" onclick="$('#user-image-upload').click();
                             return false;" >
                            <?php
-                           echo '<img src="' . BASE_URL . 'upload/user_images/' . $kullanici_adi . '.jpg" class="img-circle" alt="User Image" onerror="this.src=' . "'" . BASE_URL . "upload/user_images/public.png'" . '"  >
+                           echo '<img src="' . BASE_URL . 'upload/user_images/public.png" class="img-circle" alt="User Image" onerror="this.src=' . "'" . BASE_URL . "upload/user_images/public.png'" . '"  >
                         <br>Resim Değiştirmek İçin Tıklayınız.</a>
                         <p>' . $kullanici
                            . '<small>' . $kullanici_görevi . ' (' . $selected_language . ') </small>

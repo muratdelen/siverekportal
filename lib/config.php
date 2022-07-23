@@ -2,7 +2,7 @@
 
 ob_start();
 
-//ini_set("display_errors", 1);
+ini_set("display_errors", 1);
 //var_dump($sayfaIslemleriId);
 require_once 'config.const.php'; 
 require_once('translate/gettext.inc');
@@ -234,6 +234,6 @@ if (in_array($pageUrl, $girissizErisilecekSayfalar)) {
 include_once 'uyari.php';
 
 if (isset($_SESSION["kullanici_adi"]) && isset($_FILES["user-image-upload"])) {
-    include 'upload.php';
+//    include 'upload.php';
 }
 ?>

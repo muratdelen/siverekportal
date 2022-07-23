@@ -95,7 +95,7 @@ foreach ($subMenuItems as $key => $subMenuItem) {
                 $menu_html .= '</li>';
             }
         }
-        $menu_html .= '<li class="treeview"><a href="/" class="help_for_use_website"><small class="label pull-left bg-black"><i class="fa fa-question-circle"></i></small><span>' . __("Bidb Portal Kullanımı") . '</span></a></li>';
+        $menu_html .= '<li class="treeview"><a href="/" class="help_for_use_website"><small class="label pull-left bg-black"><i class="fa fa-question-circle"></i></small><span>Portal Kullanımı</span></a></li>';
         echo $menu_html;
         ?>
 

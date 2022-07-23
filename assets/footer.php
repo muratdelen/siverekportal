@@ -1,7 +1,7 @@
 
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-        <?= __("Copyright &copy; 2017 <b>Version</b> 1.0"); ?>
+        <?= __("Copyright &copy;2022 <b>Version</b> 1.0"); ?>
     </div>
     <?= __('<strong><a href="http://bidb.Siverek.edu.tr">Bilgi İşlem Müdürlüğü</a></strong> tarafından yapılmıştır.'); ?>
 

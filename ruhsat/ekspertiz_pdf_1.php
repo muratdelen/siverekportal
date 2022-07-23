@@ -15,7 +15,7 @@ if (isset($_POST['print1']) && in_array(YT_PDF, $sayfaIslemleriId)) {
                                                 (CASE s_ruhsat_bilgileri.iskan_verildi_mi WHEN 1 THEN 'İskan Verildi' WHEN 0 THEN 'İskan Yok' END) AS iskan_verildi_mi, 
                                                 DATE_FORMAT(s_ruhsat_bilgileri.ruhsat_tarihi,'%d/%m/%Y') AS ruhsat_tarihi,  
                                                 s_ruhsat_bilgileri.adi_soyadi, 
-                                                s_ruhsat_bilgileri.cinsi, 
+                                                s_ruhsat_bilgileri.ruhsat_cinsi, 
                                                 s_ruhsat_bilgileri.ruhsat_verilis_amaci, 
                                                 s_ruhsat_bilgileri.fenni_mesul, 
                                                 DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
@@ -23,7 +23,7 @@ if (isset($_POST['print1']) && in_array(YT_PDF, $sayfaIslemleriId)) {
                                                 s_ruhsat_bilgileri.bulten_no, 
                                                 s_ruhsat_bilgileri.ada_parsel, 
                                                 s_ruhsat_bilgileri.yibf_no, 
-                                                s_ruhsat_bilgileri.olcusu
+                                                s_ruhsat_bilgileri.yapi_alani
                                         FROM
                                                 s_ruhsat_bilgileri
                                                 WHERE aktif_mi AND id = ? ";

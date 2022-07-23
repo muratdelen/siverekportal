@@ -677,26 +677,43 @@ function id_ile_parametrik_secenek_getir($paramedrik_secenek_idsi) {
     }
 }
 
-function mcrypt($data, $key) {
-    return $data;
-    $algorithm = MCRYPT_BLOWFISH;
-    $mode = MCRYPT_MODE_ECB;
-    $iv = mcrypt_create_iv(mcrypt_get_iv_size($algorithm, $mode), MCRYPT_DEV_URANDOM);
-    $encrypted_data = mcrypt_encrypt($algorithm, $key, $data, $mode, $iv);
-    $encrypted_data = mcrypt_encrypt($algorithm, $key, $data, $mode);
-//        return mUrlEncode(base64_encode($encrypted_data));
-    return base64_encode($encrypted_data);
+/**
+ * Returns an encrypted & utf8-encoded
+ */
+function mcrypt($pure_string, $encryption_key) {
+    // Store the cipher method
+    $ciphering = "AES-128-CTR";
+
+// Use OpenSSl Encryption method
+    $iv_length = openssl_cipher_iv_length($ciphering);
+    $options = 0;
+
+// Non-NULL Initialization Vector for encryption
+    $encryption_iv = '1234567891011121';
+
+// Use openssl_encrypt() function to encrypt the data
+    $encryption = openssl_encrypt($pure_string, $ciphering,
+            $encryption_key, $options, $encryption_iv);
+    return $encryption;
 }
 
-function mdecrypt($encrypted_data, $key) {
-    return $encrypted_data;
-//        $encrypted_data = mUrlEncode($encrypted_data);
-    $encrypted_data = ($encrypted_data);
-    $algorithm = MCRYPT_BLOWFISH;
-    $mode = MCRYPT_MODE_ECB;
-    $iv = mcrypt_create_iv(mcrypt_get_iv_size($algorithm, $mode), MCRYPT_DEV_URANDOM);
-    $decrypted_data = base64_decode($encrypted_data);
-    return rtrim(mcrypt_decrypt($algorithm, $key, $decrypted_data, $mode, $iv), "\0");
+/**
+ * Returns decrypted original string
+ */
+function mdecrypt($encrypted_string, $decryption_key) {
+    // Store the cipher method
+    $ciphering = "AES-128-CTR";
+
+// Use OpenSSl Encryption method
+    $iv_length = openssl_cipher_iv_length($ciphering);
+    $options = 0;
+    // Non-NULL Initialization Vector for decryption
+    $decryption_iv = '1234567891011121';
+
+// Use openssl_decrypt() function to decrypt the data
+    $decryption = openssl_decrypt($encrypted_string, $ciphering,
+            $decryption_key, $options, $decryption_iv);
+    return $decryption;
 }
 
 function mUrlEncode($string) {
@@ -749,6 +766,67 @@ function CreateSecurity() {
     $iv = mcrypt_create_iv(mcrypt_get_iv_size($algorithm, $mode), MCRYPT_DEV_URANDOM);
     $encrypted_data = mcrypt_encrypt($algorithm, $key, $data, $mode, $iv);
     return base64_encode($encrypted_data);
+}
+
+/*
+ * Gönderilen metnin sağ ve sol boşlukları temizlendikten sonra türkçe karakteri küçük harften büyük harfe çeviriyor
+ */
+
+function tr_uppercase($sData) {
+    $newphrase = trim($sData);
+    $letters = array('A' => 'a',
+        'B' => 'b',
+        'C' => 'c',
+        'D' => 'd',
+        'E' => 'e',
+        'F' => 'f',
+        'G' => 'g',
+        'H' => 'h',
+//        'I' => 'i',
+        'J' => 'j',
+        'K' => 'k',
+        'L' => 'l',
+        'M' => 'm',
+        'N' => 'n',
+        'O' => 'o',
+        'P' => 'p',
+        'Q' => 'q',
+        'R' => 'r',
+        'S' => 's',
+        'T' => 't',
+        'U' => 'u',
+        'V' => 'v',
+        'W' => 'w',
+        'X' => 'x',
+        'Y' => 'y',
+        'Z' => 'z',
+        'Ü' => 'ü',
+        'Ş' => 'ş',
+        'Ğ' => 'ğ',
+        'Ç' => 'ç',
+        'İ' => 'i',
+        'Ö' => 'ö');
+    foreach ($letters as $key => $value) {
+        $newphrase = str_replace($value, $key, $newphrase);
+    }
+
+
+
+//    $newphrase = str_replace("ü", "Ü", $newphrase);
+//    $newphrase = str_replace("ş", "Ş", $newphrase);
+//    $newphrase = str_replace("ğ", "Ğ", $newphrase);
+//    $newphrase = str_replace("ç", "Ç", $newphrase);
+//    $newphrase = str_replace("i", "i", $newphrase);
+//    $newphrase = str_replace("ö", "Ö", $newphrase);
+//    $newphrase = str_replace("ü", "u", $newphrase);
+//    $newphrase = str_replace("ş", "s", $newphrase);
+//    $newphrase = str_replace("ç", "c", $newphrase);
+//    $newphrase = str_replace("ı", "i", $newphrase);
+//    $newphrase = str_replace("ö", "o", $newphrase);
+//    $newphrase = str_replace("ğ", "g", $newphrase);
+//    $newphrase = strtoupper($newphrase);
+
+    return $newphrase;
 }
 
 ?>

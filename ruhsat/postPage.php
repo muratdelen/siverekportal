@@ -16,17 +16,17 @@ if (isset($_POST['insert']) && in_array(YT_INSERT, $sayfaIslemleriId)) {//kaydet
 
     if ($validated === TRUE) {//işlem sorunsuz yapılabilir
         $data = array(
-            "ruhsat_no" => trim($_POST['ruhsat_no']),
-            "adi_soyadi" => trim($_POST['adi_soyadi']),
-            "cinsi" => trim($_POST['ruhsat_cinsi']),
-            "ruhsat_verilis_amaci" => trim($_POST['ruhsat_verilis_amaci']),
-            "fenni_mesul" => trim($_POST['fenni_mesul']),
+            "ruhsat_no" => tr_uppercase($_POST['ruhsat_no']),
+            "adi_soyadi" => tr_uppercase($_POST['adi_soyadi']),
+            "ruhsat_cinsi" => tr_uppercase($_POST['ruhsat_cinsi']),
+            "ruhsat_verilis_amaci" => tr_uppercase($_POST['ruhsat_verilis_amaci']),
+            "fenni_mesul" => tr_uppercase($_POST['fenni_mesul']),
             "ruhsat_tarihi" => (trim($_POST['ruhsat_tarihi']) == "" ? null : convertDateFormatBasicDefault($_POST['ruhsat_tarihi'])),
-            "mahallesi" => trim($_POST['mahallesi']),
-            "bulten_no" => trim($_POST['bulten_no']),
-            "ada_parsel" => trim($_POST['ada_parsel']),
-            "yibf_no" => trim($_POST['yibf_no']),
-            "olcusu" => trim($_POST['olcusu']),
+            "mahallesi" => tr_uppercase($_POST['mahallesi']),
+            "bulten_no" => tr_uppercase($_POST['bulten_no']),
+            "ada_parsel" => tr_uppercase($_POST['ada_parsel']),
+            "yibf_no" => tr_uppercase($_POST['yibf_no']),
+            "yapi_alani" => trim($_POST['yapi_alani']),
             "iskan_ruhsat_tarihi" => (trim($_POST['iskan_ruhsat_tarihi']) == "" ? null : convertDateFormatBasicDefault($_POST['iskan_ruhsat_tarihi'])),
             "iskan_verildi_mi" => trim($_POST['iskan_verildi_mi'])
         );
@@ -52,17 +52,17 @@ if (isset($_POST['insert']) && in_array(YT_INSERT, $sayfaIslemleriId)) {//kaydet
         $guncellenecek_id = mdecrypt($_POST['update'], $_SESSION['key']);
 
         $data = array(
-            "ruhsat_no" => trim($_POST['ruhsat_no']),
-            "adi_soyadi" => trim($_POST['adi_soyadi']),
-            "cinsi" => trim($_POST['ruhsat_cinsi']),
-            "ruhsat_verilis_amaci" => trim($_POST['ruhsat_verilis_amaci']),
-            "fenni_mesul" => trim($_POST['fenni_mesul']),
+            "ruhsat_no" => tr_uppercase($_POST['ruhsat_no']),
+            "adi_soyadi" => tr_uppercase($_POST['adi_soyadi']),
+            "ruhsat_cinsi" => tr_uppercase($_POST['ruhsat_cinsi']),
+            "ruhsat_verilis_amaci" => tr_uppercase($_POST['ruhsat_verilis_amaci']),
+            "fenni_mesul" => tr_uppercase($_POST['fenni_mesul']),
             "ruhsat_tarihi" => (trim($_POST['ruhsat_tarihi']) == "" ? null : convertDateFormatBasicDefault($_POST['ruhsat_tarihi'])),
-            "mahallesi" => trim($_POST['mahallesi']),
-            "bulten_no" => trim($_POST['bulten_no']),
-            "ada_parsel" => trim($_POST['ada_parsel']),
-            "yibf_no" => trim($_POST['yibf_no']),
-            "olcusu" => trim($_POST['olcusu']),
+            "mahallesi" => tr_uppercase($_POST['mahallesi']),
+            "bulten_no" => tr_uppercase($_POST['bulten_no']),
+            "ada_parsel" => tr_uppercase($_POST['ada_parsel']),
+            "yibf_no" => tr_uppercase($_POST['yibf_no']),
+            "yapi_alani" => trim($_POST['yapi_alani']),
             "iskan_ruhsat_tarihi" => (trim($_POST['iskan_ruhsat_tarihi']) == "" ? null : convertDateFormatBasicDefault($_POST['iskan_ruhsat_tarihi'])),
             "iskan_verildi_mi" => trim($_POST['iskan_verildi_mi'])
         );

@@ -28,6 +28,8 @@
                 <section class="content-header"></section>
 
                 <?php
+                
+
 //yeni kayıt butonunana basıldı ise
                 if (isset($_GET['add']) && in_array(YT_INSERT, $sayfaIslemleriId)) {
                     require_once 'ekle.php';
@@ -54,7 +56,7 @@
                             <div class="form-group form-group-sm">
                                 <label class="col-sm-2 control-label" for="ruhsatlar">Ruhsat No</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control select2 select2-hidden-accessible"  onchange="$('#get-items').click();" style="width: 100%;" tabindex="-1" aria-hidden="true" id="ruhsat_no" name="ruhsat_no">
+                                    <select class="form-control select2 select2-hidden-accessible"  onchange="$('#get-items').click();" style="width: 100%;" tabindex="-1" aria-hidden="true" id="ruhsat" name="ruhsat">
                                         <option value=''>Listelenecek Ruhsat Seçiniz</option>
                                         <?php
                                         try {
@@ -66,7 +68,7 @@
                                         foreach ($ruhsatlar as $ruhsat) {
                                             $id_sifreli = mcrypt($ruhsat->id, $_SESSION['key']);
                                             echo "<option value='$id_sifreli' ";
-                                            echo (isset($ruhsat->id) ? (isset($_GET['ruhsat_no']) ? ($_GET['ruhsat_no'] == $id_sifreli ? 'selected' : null) : null) : null);
+                                            echo (isset($ruhsat->id) ? (isset($_GET['ruhsat']) ? ($_GET['ruhsat'] == $ruhsat->ruhsat_no ? 'selected' : null) : null) : null);
                                             echo ">$ruhsat->ruhsat_no</option>";
                                         }
                                         ?>
@@ -88,14 +90,14 @@
                                         <option value=''>Ruhsat Cinsi Seçiniz</option>
                                         <?php
                                         try {
-                                            $ruhsatlar = $db->fetchAll("SELECT cinsi FROM s_ruhsat_bilgileri GROUP BY cinsi");
+                                            $ruhsatlar = $db->fetchAll("SELECT DISTINCT cinsi FROM s_ruhsat_bilgileri ");
                                         } catch (Zend_Db_Exception $ex) {
                                             log::DB_hata_kaydi_ekle(__FILE__, $ex);
                                         }
                                         htmlspecialchar_obj($ruhsatlar);
                                         foreach ($ruhsatlar as $ruhsat) {
                                             echo "<option value='$ruhsat->cinsi' ";
-                                            echo (isset($ruhsat->cinsi) ? (isset($_GET['ruhsat_cinsi']) ? ($_GET['ruhsat_cinsi'] == $ruhsat->cinsi ? 'selected' : null) : null) : null);
+                                            echo (isset($ruhsat->ruhsat_cinsi) ? (isset($_GET['ruhsat_cinsi']) ? ($_GET['ruhsat_cinsi'] == $ruhsat->cinsi ? 'selected' : null) : null) : null);
                                             echo ">$ruhsat->cinsi</option>";
                                         }
                                         ?>
@@ -148,6 +150,16 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group form-group-sm">
+                                <label class="col-sm-2 control-label" for="kacak_islem_yapildi_mi">Kaçak İşlem Yapıldı Mı?</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="kacak_islem_yapildi_mi" name="kacak_islem_yapildi_mi">
+                                        <option value=''>Kaçak Durumu Seçiniz</option>
+                                        <option value='1' <?= ((isset($_GET['kacak_islem_yapildi_mi']) && ($_GET['kacak_islem_yapildi_mi'] === 1) ? 'selected' : '')) ?> >Kaçak İşlem Yapıldı</option>
+                                        <option value='0' <?= ((isset($_GET['kacak_islem_yapildi_mi']) && ($_GET['kacak_islem_yapildi_mi'] === 0) ? 'selected' : '')) ?> >Kaçak Yok</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-sm-12 form-group form-group-sm">
                                 <button type="submit" id="get-items" name="Sorgula" class="btn bg-purple btn-block"><span class="glyphicon glyphicon-search"></span> <?= "Ruhsat Bilgilerini Getir" ?></button>
                             </div>
@@ -155,15 +167,13 @@
                     </div>
                 </div>
 
-
-
                 <?php
                 if (isset($_GET['Sorgula'])) {
-                    if (trim($_GET['ruhsat_no']) == "") {
+                    if (trim($_GET['ruhsat']) == "") {
                         $ruhsat_where_string = "";
                         $ruhsat_where = array();
                         if (trim($_GET['ruhsat_cinsi']) !== "") {
-                            $ruhsat_where_string .= " AND cinsi = ? ";
+                            $ruhsat_where_string .= " AND ruhsat_cinsi = ? ";
                             array_push($ruhsat_where, trim($_GET['ruhsat_cinsi']));
                         }
                         if (trim($_GET['iskan_verildi_mi']) !== "") {
@@ -194,24 +204,34 @@
                             $ruhsat_where_string .= " AND yibf_no LIKE ? ";
                             array_push($ruhsat_where, "%" . trim($_GET['yibf_no']) . "%");
                         }
+                        if (trim($_GET['kacak_islem_yapildi_mi']) !== "") {
+                            $ruhsat_where_string .= " AND kacak_islem_yapildi_mi = ? ";
+                            array_push($ruhsat_where, trim($_GET['kacak_islem_yapildi_mi']));
+                        }
                         $ItemsSQL = "SELECT
-                                            s_ruhsat_bilgileri.id, 
-                                            s_ruhsat_bilgileri.ruhsat_no, 
-                                            (CASE s_ruhsat_bilgileri.iskan_verildi_mi WHEN 1 THEN 'İskan Verildi' WHEN 0 THEN 'İskan Yok' END) AS iskan_verildi_mi, 
-                                            DATE_FORMAT(s_ruhsat_bilgileri.ruhsat_tarihi,'%d/%m/%Y') AS ruhsat_tarihi,  
-                                            s_ruhsat_bilgileri.adi_soyadi, 
-                                            s_ruhsat_bilgileri.cinsi, 
-                                            s_ruhsat_bilgileri.ruhsat_verilis_amaci, 
-                                            s_ruhsat_bilgileri.fenni_mesul, 
-                                            DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
-                                            s_ruhsat_bilgileri.mahallesi, 
-                                            s_ruhsat_bilgileri.bulten_no, 
-                                            s_ruhsat_bilgileri.ada_parsel, 
-                                            s_ruhsat_bilgileri.yibf_no, 
-                                            s_ruhsat_bilgileri.olcusu
-                                    FROM
-                                            s_ruhsat_bilgileri
-                                            WHERE aktif_mi " . $ruhsat_where_string . " LIMIT 1000";
+                                        s_ruhsat_bilgileri.id, 
+                                        s_ruhsat_bilgileri.ruhsat_no, 
+                                        DATE_FORMAT(s_ruhsat_bilgileri.ruhsat_tarihi,'%d/%m/%Y') AS ruhsat_tarihi,	
+                                       (CASE s_ruhsat_bilgileri.kacak_islem_yapildi_mi
+                                        WHEN 1 THEN '<h6 style=\"back-color:red\">Kaçak İşlem Yapıldı.</h6>' 
+                                        WHEN 0 THEN '' END) AS kacak_islem_yapildi_mi, 
+                                        s_ruhsat_bilgileri.bulten_no, 
+                                        s_ruhsat_bilgileri.ada_parsel, 
+                                        s_ruhsat_bilgileri.yibf_no,
+                                        s_ruhsat_bilgileri.adi_soyadi, 
+                                        s_ruhsat_bilgileri.ruhsat_cinsi, 
+                                        s_ruhsat_bilgileri.ruhsat_verilis_amaci, 
+                                        s_ruhsat_bilgileri.fenni_mesul, 
+                                        s_ruhsat_bilgileri.mahallesi,  
+                                        s_ruhsat_bilgileri.yapi_alani, 
+                                         (CASE s_ruhsat_bilgileri.iskan_verildi_mi 
+                                        WHEN 1 THEN '<h6 style=\"color:green\">İskan Verildi</h6>' 
+                                        WHEN 0 THEN '<h6 style=\"color:red\">İskan Yok</h6>' END) AS iskan_verildi_mi, 
+                                        DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
+                                        s_ruhsat_bilgileri.iskan_no, 
+                                        s_ruhsat_bilgileri.iskan_bulten_no, 
+                                        s_ruhsat_bilgileri.kacak_islem_bilgisi
+                                FROM s_ruhsat_bilgileri  WHERE s_ruhsat_bilgileri.aktif_mi " . $ruhsat_where_string . " LIMIT 1000";
                         try {
                             $listItems = $GLOBALS['db']->fetchAll($ItemsSQL, $ruhsat_where);
                         } catch (Zend_Db_Exception $ex) {
@@ -220,24 +240,30 @@
 //                        var_dump($listItems, $ItemsSQL);
                     } else {
                         $ItemsSQL = "SELECT
-                                                s_ruhsat_bilgileri.id, 
-                                                s_ruhsat_bilgileri.ruhsat_no, 
-                                                (CASE s_ruhsat_bilgileri.iskan_verildi_mi WHEN 1 THEN 'İskan Verildi' WHEN 0 THEN 'İskan Yok' END) AS iskan_verildi_mi, 
-                                                DATE_FORMAT(s_ruhsat_bilgileri.ruhsat_tarihi,'%d/%m/%Y') AS ruhsat_tarihi,  
-                                                s_ruhsat_bilgileri.adi_soyadi, 
-                                                s_ruhsat_bilgileri.cinsi, 
-                                                s_ruhsat_bilgileri.ruhsat_verilis_amaci, 
-                                                s_ruhsat_bilgileri.fenni_mesul, 
-                                                DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
-                                                s_ruhsat_bilgileri.mahallesi, 
-                                                s_ruhsat_bilgileri.bulten_no, 
-                                                s_ruhsat_bilgileri.ada_parsel, 
-                                                s_ruhsat_bilgileri.yibf_no, 
-                                                s_ruhsat_bilgileri.olcusu
-                                        FROM
-                                                s_ruhsat_bilgileri
-                                                WHERE aktif_mi AND id = ? ";
-                        $ruhsat_id = mdecrypt($_GET['ruhsat_no'], $_SESSION['key']);
+                                        s_ruhsat_bilgileri.id, 
+                                        s_ruhsat_bilgileri.ruhsat_no, 
+                                        DATE_FORMAT(s_ruhsat_bilgileri.ruhsat_tarihi,'%d/%m/%Y') AS ruhsat_tarihi,	
+                                       (CASE s_ruhsat_bilgileri.kacak_islem_yapildi_mi
+                                        WHEN 1 THEN '<h6 style=\"back-color:red\">Kaçak İşlem Yapıldı.</h6>' 
+                                        WHEN 0 THEN '' END) AS kacak_islem_yapildi_mi, 
+                                        s_ruhsat_bilgileri.bulten_no, 
+                                        s_ruhsat_bilgileri.ada_parsel, 
+                                        s_ruhsat_bilgileri.yibf_no,
+                                        s_ruhsat_bilgileri.adi_soyadi, 
+                                        s_ruhsat_bilgileri.ruhsat_cinsi, 
+                                        s_ruhsat_bilgileri.ruhsat_verilis_amaci, 
+                                        s_ruhsat_bilgileri.fenni_mesul, 
+                                        s_ruhsat_bilgileri.mahallesi,  
+                                        s_ruhsat_bilgileri.yapi_alani, 
+                                         (CASE s_ruhsat_bilgileri.iskan_verildi_mi 
+                                        WHEN 1 THEN '<h6 style=\"color:green\">İskan Verildi</h6>' 
+                                        WHEN 0 THEN '<h6 style=\"color:red\">İskan Yok</h6>' END) AS iskan_verildi_mi, 
+                                        DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
+                                        s_ruhsat_bilgileri.iskan_no, 
+                                        s_ruhsat_bilgileri.iskan_bulten_no, 
+                                        s_ruhsat_bilgileri.kacak_islem_bilgisi
+                                FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi AND id = ? ";
+                        $ruhsat_id = mdecrypt($_GET['ruhsat'], $_SESSION['key']);
                         try {
                             $listItems = $GLOBALS['db']->fetchAll($ItemsSQL, $ruhsat_id);
                         } catch (Zend_Db_Exception $ex) {
@@ -249,19 +275,19 @@
 
                         if (in_array(YT_PAGEADMIN, $sayfaIslemleriId)) {
                             $Buttons = array('update' => 'Güncelle', 'print1' => 'Ekspertiz', 'remove' => 'Sil');
-                            $ButtonsUrls = array('new_tab' => 'preview.php', 'update' => 'index.php', 'print1' => 'pdf.php', 'remove' => 'postPage.php');
+                            $ButtonsUrls = array('new_tab' => 'preview.php', 'update' => 'index.php', 'print1' => 'ekspertiz.php', 'remove' => 'postPage.php');
                         } else {
                             $Buttons = array('update' => 'Güncelle', 'print1' => 'Ekspertiz');
-                            $ButtonsUrls = array('new_tab' => 'preview.php', 'update' => 'index.php', 'print1' => 'pdf.php');
+                            $ButtonsUrls = array('new_tab' => 'preview.php', 'update' => 'index.php', 'print1' => 'ekspertiz.php');
                         }
-                        $options2 = array(
+                        $options = array(
                             //zorunlu parametreler
-                            'tableHeaders' => array('RUHSAT NO', 'İskan', 'İskan Ruhsat Tarihi', 'Adı Soyadı', 'Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul', 'Ruhsat Tarihi', 'Mahallesi', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Ölçüsü'),
+                            'tableHeaders' => array('RUHSAT NO', 'Ruhsat Tarihi', 'Kaçak', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Adı Soyadı', 'Ruhsat Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul/YDK', 'Mahallesi', 'Yapı Alanı', 'İskan', 'İskan Tarihi', 'İskan No', 'İskan Bülten No', 'Kaçak Bilgisi'),
                             //zorunlu olmayan parametreler
                             //        'id' => 'example2' , // optional
                             'order' => array(0, 'asc'),
-                            'tableFooters' => array('RUHSAT NO', 'İskan', 'İskan Ruhsat Tarihi', 'Adı Soyadı', 'Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul', 'Ruhsat Tarihi', 'Mahallesi', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Ölçüsü'), // optional
-                            'filters' => array('text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text'),
+                            'tableFooters' => array('RUHSAT NO', 'Ruhsat Tarihi', 'Kaçak', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Adı Soyadı', 'Ruhsat Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul/YDK', 'Mahallesi', 'Yapı Alanı', 'İskan', 'İskan Tarihi', 'İskan No', 'İskan Bülten No', 'Kaçak Bilgisi'), // optional
+                            'filters' => array('text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text'),
                             //yerel parametreler
                             'tableData' => $listItems,
                             'processButtons' => array(
@@ -272,7 +298,7 @@
                             'buttons' => array("excel", "pdf")
                         );
                         try {
-                            $dtableServer = new DataTable($options2);
+                            $dtableServer = new DataTable($options);
                         } catch (Zend_Db_Exception $ex) {
                             log::DB_hata_kaydi_ekle(__FILE__, $ex);
                         }
@@ -298,5 +324,14 @@
     </div>
 </div>
 </div>
+<script>
+    $(function () {
+        $('.table-data').click(function () {
+            var copytext = $(this).text();
+            console.log(copytext);
+            navigator.clipboard.writeText(copytext);
+        });
+    });
 
+</script>
 </div><!-- /.content -->
