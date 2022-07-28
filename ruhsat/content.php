@@ -60,14 +60,14 @@
                                         <option value=''>Listelenecek Ruhsat Seçiniz</option>
                                         <?php
                                         try {
-                                            $ruhsatlar = $db->fetchAll("SELECT id, ruhsat_no FROM s_ruhsat_bilgileri WHERE aktif_mi AND NOT ISNULL(ruhsat_no)");
+                                            $ruhsatlar = $db->fetchAll("SELECT id, ruhsat_no, adi_soyadi FROM s_ruhsat_bilgileri WHERE aktif_mi AND NOT ISNULL(ruhsat_no) ORDER BY ruhsat_no DESC");
                                         } catch (Zend_Db_Exception $ex) {
                                             log::DB_hata_kaydi_ekle(__FILE__, $ex);
                                         }
                                         htmlspecialchar_obj($ruhsatlar);
                                         foreach ($ruhsatlar as $ruhsat) {
                                             $id_sifreli = mcrypt($ruhsat->id, $_SESSION['key']);
-                                            echo "<option value='$id_sifreli' ";
+                                            echo "<option value='$id_sifreli' title='$ruhsat->adi_soyadi' ";
                                             echo (isset($ruhsat->id) ? (isset($_GET['ruhsat']) ? ($_GET['ruhsat'] == $ruhsat->ruhsat_no ? 'selected' : null) : null) : null);
                                             echo ">$ruhsat->ruhsat_no</option>";
                                         }
@@ -231,7 +231,7 @@
                                         s_ruhsat_bilgileri.iskan_no, 
                                         s_ruhsat_bilgileri.iskan_bulten_no, 
                                         s_ruhsat_bilgileri.kacak_islem_bilgisi
-                                FROM s_ruhsat_bilgileri  WHERE s_ruhsat_bilgileri.aktif_mi " . $ruhsat_where_string . " LIMIT 1000";
+                                FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi " . $ruhsat_where_string . " LIMIT 1000";
                         try {
                             $listItems = $GLOBALS['db']->fetchAll($ItemsSQL, $ruhsat_where);
                         } catch (Zend_Db_Exception $ex) {
@@ -294,8 +294,9 @@
                                 'hasButton' => true,
                                 'buttonPostPage' => 'index.php',
                                 'buttons' => $Buttons,
-                                'buttonUrls' => $ButtonsUrls),
-                            'buttons' => array("excel", "pdf")
+                                'buttonUrls' => $ButtonsUrls)
+//                            ,
+//                            'buttons' => array("excel", "pdf")
                         );
                         try {
                             $dtableServer = new DataTable($options);

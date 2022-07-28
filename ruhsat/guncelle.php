@@ -3,28 +3,31 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
     $update_id = mdecrypt($_POST['update'], $_SESSION['key']);
     try {
         $SQL_cumlesi = "SELECT
-	s_ruhsat_bilgileri.id, 
-	s_ruhsat_bilgileri.ruhsat_no, 
-	(CASE s_ruhsat_bilgileri.iskan_verildi_mi WHEN 1 THEN 'İskan Verildi' WHEN 0 THEN 'İskan Yok' END) AS iskan_verildi_mi, 
-	DATE_FORMAT(s_ruhsat_bilgileri.ruhsat_tarihi,'%d/%m/%Y') AS ruhsat_tarihi,  
-	s_ruhsat_bilgileri.adi_soyadi, 
-	s_ruhsat_bilgileri.ruhsat_cinsi, 
-	s_ruhsat_bilgileri.ruhsat_verilis_amaci, 
-	s_ruhsat_bilgileri.fenni_mesul, 
-	DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
-	s_ruhsat_bilgileri.mahallesi, 
-	s_ruhsat_bilgileri.bulten_no, 
-	s_ruhsat_bilgileri.ada_parsel, 
-	s_ruhsat_bilgileri.yibf_no, 
-	s_ruhsat_bilgileri.yapi_alani
-FROM
-	s_ruhsat_bilgileri
+                                        s_ruhsat_bilgileri.id, 
+                                        s_ruhsat_bilgileri.ruhsat_no, 
+                                        DATE_FORMAT(s_ruhsat_bilgileri.ruhsat_tarihi,'%d/%m/%Y') AS ruhsat_tarihi,	
+                                        kacak_islem_yapildi_mi, 
+                                        s_ruhsat_bilgileri.bulten_no, 
+                                        s_ruhsat_bilgileri.ada_parsel, 
+                                        s_ruhsat_bilgileri.yibf_no,
+                                        s_ruhsat_bilgileri.adi_soyadi, 
+                                        s_ruhsat_bilgileri.ruhsat_cinsi, 
+                                        s_ruhsat_bilgileri.ruhsat_verilis_amaci, 
+                                        s_ruhsat_bilgileri.fenni_mesul, 
+                                        s_ruhsat_bilgileri.mahallesi,  
+                                        s_ruhsat_bilgileri.yapi_alani, 
+                                        iskan_verildi_mi, 
+                                        DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
+                                        s_ruhsat_bilgileri.iskan_no, 
+                                        s_ruhsat_bilgileri.iskan_bulten_no, 
+                                        s_ruhsat_bilgileri.kacak_islem_bilgisi
+                                FROM s_ruhsat_bilgileri
 	WHERE aktif_mi AND id = ?";
         $ruhsat_bilgisi = $GLOBALS['db']->fetchRow($SQL_cumlesi, $update_id);
     } catch (Zend_Db_Exception $ex) {
         log::DB_hata_kaydi_ekle(__FILE__, $ex);
     }
-    var_dump($update_id, $ruhsat_bilgisi);
+//    var_dump($update_id, $ruhsat_bilgisi);
 //die();
 } else {
     adminLTE_redirect(true, "Güncelleme Yetkiniz Yoktur.", "Güncelleme Yetkiniz Yoktur.", "warning", 100000, BASE_URL . "ruhsat/index.php");
@@ -164,11 +167,43 @@ FROM
             <div class="col-sm-8">
                 <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="iskan_verildi_mi" name="iskan_verildi_mi">
                     <option value=''>İskan Durumu Seçiniz</option>
-                    <option value='1' <?= ($ruhsat_bilgisi->iskan_verildi_mi === "İskan Verildi" ? 'selected' : '') ?> >İskan Var</option>
-                    <option value='0' <?= ($ruhsat_bilgisi->iskan_verildi_mi === "İskan Yok" ? 'selected' : '') ?> >İskan Yok</option>
+                    <option value='1' <?= ($ruhsat_bilgisi->iskan_verildi_mi === 1 ? 'selected' : '') ?> >İskan Var</option>
+                    <option value='0' <?= ($ruhsat_bilgisi->iskan_verildi_mi === 0 ? 'selected' : '') ?> >İskan Yok</option>
                 </select>
             </div>
         </div>
+
+        <div class="form-group form-group-sm">
+            <label class="col-sm-2 control-label" for="iskan_no">İskan No</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" id="iskan_no" name="iskan_no" value="<?= $ruhsat_bilgisi->iskan_no ?>" >
+            </div>
+        </div>
+
+        <div class="form-group form-group-sm">
+            <label class="col-sm-2 control-label" for="iskan_bulten_no">İskan Bülten No</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" id="iskan_bulten_no" name="iskan_bulten_no" value="<?= $ruhsat_bilgisi->iskan_bulten_no ?>" >
+            </div>
+        </div>
+        
+        <div class="form-group form-group-sm">
+            <label class="col-sm-2 control-label" for="kacak_islem_yapildi_mi">Kaçak İşlem Yapıldı Mı?</label>
+            <div class="col-sm-8">
+                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="kacak_islem_yapildi_mi" name="kacak_islem_yapildi_mi">
+                    <option value=''>İskan Durumu Seçiniz</option>
+                    <option value='1' <?= ($ruhsat_bilgisi->kacak_islem_yapildi_mi === 1 ? 'selected' : '') ?> >Kaçak İşlem Yapıldı</option>
+                    <option value='0' <?= ($ruhsat_bilgisi->kacak_islem_yapildi_mi === 0 ? 'selected' : '') ?> >Kaçak Yok</option>
+                </select>
+            </div>
+        </div>
+              
+            <div class="form-group form-group-sm">
+                <label class="col-sm-2 control-label" for="kacak_islem_bilgisi">Kaçak İşlem Bilgisi</label>
+                <div class="col-sm-8">
+                    <textarea id="kacak_islem_bilgisi" name="kacak_islem_bilgisi" rows="10" cols="80"><?= ($ruhsat_bilgisi->kacak_islem_bilgisi) ?></textarea>
+                </div>  
+            </div> 
         <div class="col-sm-12 form-group form-group-sm">
             <button type="submit" name="update" value="<?= $_POST['update']; ?>" class="btn bg-olive btn-block"><span class="fa fa-pencil-square-o"></span> Ruhsat Bilgisini Güncelle</button>
         </div>         

@@ -16,6 +16,8 @@ require_once 'lib/functions.php';
 <!DOCTYPE html>
 <html>
     <head>
+        <!--saatte bir sayfa otomatik yenilenir.-->
+        <meta http-equiv="Refresh" content="3600">
         <?php
         //SAYFA ÖNCESİ YÜKLENMESİ GEREKENLER
 //

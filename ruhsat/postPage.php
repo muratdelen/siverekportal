@@ -63,8 +63,12 @@ if (isset($_POST['insert']) && in_array(YT_INSERT, $sayfaIslemleriId)) {//kaydet
             "ada_parsel" => tr_uppercase($_POST['ada_parsel']),
             "yibf_no" => tr_uppercase($_POST['yibf_no']),
             "yapi_alani" => trim($_POST['yapi_alani']),
+            "kacak_islem_yapildi_mi" => trim($_POST['kacak_islem_yapildi_mi']),
+            "kacak_islem_bilgisi" => trim($_POST['kacak_islem_bilgisi']),
             "iskan_ruhsat_tarihi" => (trim($_POST['iskan_ruhsat_tarihi']) == "" ? null : convertDateFormatBasicDefault($_POST['iskan_ruhsat_tarihi'])),
-            "iskan_verildi_mi" => trim($_POST['iskan_verildi_mi'])
+            "iskan_verildi_mi" => trim($_POST['iskan_verildi_mi']),
+            "iskan_no" => trim($_POST['iskan_no']),
+            "iskan_bulten_no" => trim($_POST['iskan_bulten_no'])
         );
 //        echo '<pre>';
 //        var_dump($_POST,$data);
