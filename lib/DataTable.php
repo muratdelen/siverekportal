@@ -876,7 +876,7 @@ class DataTable {
                                 $button = '<li>
                              <form method="post" action="' . (isset($this->buttonUrls[$key]) ? $this->buttonUrls[$key] : null) . '">
                               <input type="hidden"  name = "' . $key . '" value="' . $id . '"/>
-                                <button  id = "' . $key . '" class="btn btn-warning" type="submit"><i class="fa fa-plus"> ' . $value . '</i></button>
+                                <button  id = "' . $key . '" class="btn btn-warning" type="submit"><i class="fa fa-plus"></i> ' . $value . '</button>
                             </form>
                         </li>';
                             }
@@ -887,7 +887,7 @@ class DataTable {
                                 $button = '<li>
                              <form method="post" action="' . (isset($this->buttonUrls[$key]) ? $this->buttonUrls[$key] : null) . '">
                               <input type="hidden"  name = "' . $key . '" value="' . $id . '"/>
-                                <button id = "' . $key . '" class="btn btn-info" type="submit"><i class="fa fa-refresh"> ' . $value . '</i></button>
+                                <button id = "' . $key . '" class="btn btn-info" type="submit"><i class="fa fa-refresh"></i> ' . $value . '</button>
                             </form>
                         </li>';
                             }
@@ -897,7 +897,7 @@ class DataTable {
                                 $button = '<li>
                              <form method="get" action="' . (isset($this->buttonUrls[$key]) ? $this->buttonUrls[$key] : null) . '">
                               <input type="hidden"  name = "update" value="' . $id . '"/>
-                                <button id = "' . $key . '" class="btn btn-info" type="submit"><i class="fa fa-refresh"> ' . $value . '</i></button>
+                                <button id = "' . $key . '" class="btn btn-info" type="submit"><i class="fa fa-refresh"></i> ' . $value . '</button>
                             </form>
                         </li>';
                             }
@@ -908,7 +908,7 @@ class DataTable {
                                 $button = '<li>
                              <form method="post" action="' . (isset($this->buttonUrls[$key]) ? $this->buttonUrls[$key] : null) . '" onSubmit="return confirmRemove(this);">
                               <input type="hidden"  name = "' . $key . '" value= "' . $id . '" />
-                                <button id = "' . $key . '" class="btn btn-danger" type="submit" ><i class="fa fa-remove"> ' . $value . '</i></button>
+                                <button id = "' . $key . '" class="btn btn-danger" type="submit" ><i class="fa fa-remove"></i> ' . $value . '</button>
                             </form>
                         </li>';
                             }
@@ -918,7 +918,7 @@ class DataTable {
                             if (in_array(YT_VIEW, $sayfaIslemleriId)) {
                                 $detailId = "'$id'";
                                 $url = "'" . $this->buttonUrls[$key] . "'";
-                                $button = '<li><button  class="btn btn-warning" id="details" onClick="return details( ' . $detailId . ',' . $url . ');"><i class="fa fa-bars"> ' . $value . '</i></button></li>';
+                                $button = '<li><button  class="btn btn-warning" id="details" onClick="return details( ' . $detailId . ',' . $url . ');"><i class="fa fa-bars"></i> ' . $value . '</button></li>';
                             }
                             break;
                         case 'print1':
@@ -927,7 +927,7 @@ class DataTable {
                                 $button = '<li>
                              <form method="post" action="' . (isset($this->buttonUrls[$key]) ? $this->buttonUrls[$key] : null) . '">
                               <input type="hidden"  name = "' . $key . '" value="' . $id . '"/>
-                                <button  id = "' . $key . '" class="btn bg-purple" type="submit"><i class="fa fa-print"> ' . $value . '</i></button>                                    
+                                <button  id = "' . $key . '" class="btn bg-purple" type="submit"><i class="fa fa-print"></i> ' . $value . '</button>                                    
                             </form>
                         </li>';
                             }
@@ -938,7 +938,7 @@ class DataTable {
                                 $button = '<li>
                              <form method="post" action="' . (isset($this->buttonUrls[$key]) ? $this->buttonUrls[$key] : null) . '">
                               <input type="hidden"  name = "' . $key . '" value="' . $id . '"/>
-                                <button  id = "' . $key . '" class="btn bg-purple" type="submit"><i class="fa fa-print"> ' . $value . '</i></button>                                    
+                                <button  id = "' . $key . '" class="btn bg-purple" type="submit"><i class="fa fa-print"></i> ' . $value . '</button>                                    
                             </form>
                         </li>';
                             }
@@ -949,7 +949,7 @@ class DataTable {
                                 $button = '<li>
                              <form method="post" action="' . (isset($this->buttonUrls[$key]) ? $this->buttonUrls[$key] : null) . '">
                               <input type="hidden"  name = "' . $key . '" value="' . $id . '"/>
-                                <button  id = "' . $key . '" class="btn bg-purple" type="submit"><i class="fa fa-print"> ' . $value . '</i></button>                                    
+                                <button  id = "' . $key . '" class="btn bg-purple" type="submit"><i class="fa fa-print"></i> ' . $value . '</button>                                    
                             </form>
                         </li>';
                             }

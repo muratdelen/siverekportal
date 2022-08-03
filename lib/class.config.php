@@ -52,9 +52,11 @@ class configuration {
 //    <!-- Bootstrap 3.3.5 -->
                 $return_string .= '<link rel="stylesheet" href="' . ASSETS_DIR . '/bootstrap/css/bootstrap.min.css"/>';
 //    <!-- Font Awesome -->
-                $return_string .= ' <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>';
+                $return_string .= ' <link rel="stylesheet" href="' . CDN_DIR . '/fonts/font-awesome/6.2.0/css/all.min.css"/>';
+//$return_string .= ' <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>';
 //    <!-- Ionicons -->
-                $return_string .= ' <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>';
+                $return_string .= ' <link rel="stylesheet" href="' . CDN_DIR . '/fonts/ionicons/2.0.1/css/ionicons.min.css"/>';
+//  $return_string .= ' <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>';
 //    <!-- Theme style -->
                 $return_string .= '<link rel="stylesheet" href="' . CDN_DIR . '/dist/css/AdminLTE.css"/>';
 //    <!-- AdminLTE Skins. Choose a skin from the css/skins
