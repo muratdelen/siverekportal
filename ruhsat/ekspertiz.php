@@ -2,10 +2,9 @@
 <?php
 require_once '../lib/config.php';
 require_once '../lib/functions.php';
-require_once '../lib/class.pdf.php';
 
 //$_POST = unserialize($_POST["params"]);
-$html_pdf ="Bir aksilik oldu veriler yüklenmedi.";
+$html_pdf = "Bir aksilik oldu veriler yüklenmedi.";
 if (isset($_POST['print1']) && in_array(YT_PDF, $sayfaIslemleriId)) {
     $secilen_ruhsat = mdecrypt($_POST['print1'], $_SESSION['key']);
     $ItemsSQL = "SELECT
@@ -44,6 +43,8 @@ Siverek Belediye Meclisinin 07.10.2015 tarih ve 2464 sayılı belediye gelirler 
 <tr><td></td><td></td></tr>
 <tr><td colspan="2" align="right"><strong>CANER ALTUNDAĞ </strong></td></tr>
 <tr><td colspan="2" align="right"><strong>İmar ve Şehircilik Müd. V</strong></td></tr>
+<tr><td></td><td></td></tr>
+<tr><td></td><td></td></tr>
 <tr><td></td><td></td></tr>
 <tr><td></td><td></td></tr>
 <tr><td colspan="2" align="left">Ekspertiz için imar planı örneği, ruhsat, yapı, kullanma izin belgesi örneği, proje vb. evrakların verilmesi-75 TL</td></tr>
@@ -141,7 +142,7 @@ include_once '../lib/DataTable.php';
                                         </div>  
                                     </div>      
                                     <div class="box-footer">
-                                        <button class="btn bg-orange margin pull-right" type="cancel" onclick="window.location = 'index.php?Sorgula&ruhsat_no=<?=mcrypt($secilen_ruhsat_bilgileri->id, $_SESSION['key'])?>';return false;">Ruhsat Bilgilerine Dön</button>
+                                        <button class="btn bg-orange margin pull-right" type="cancel" onclick="window.location = 'index.php?Sorgula&ruhsat=<?= (mcrypt($secilen_ruhsat_bilgileri->id, $_SESSION['key'])) ?>';return false;">Ruhsat Bilgilerine Dön</button>
                                         <input class="btn bg-olive margin pull-right" type="submit" value="Pdf Olarak Çıktı Al"/> 
                                         <input   type="hidden" name = "ekspertiz" value="<?= $_POST['print1'] ?>"/>
                                     </div>

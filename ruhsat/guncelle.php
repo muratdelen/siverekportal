@@ -20,7 +20,8 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
                                         DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
                                         s_ruhsat_bilgileri.iskan_no, 
                                         s_ruhsat_bilgileri.iskan_bulten_no, 
-                                        s_ruhsat_bilgileri.kacak_islem_bilgisi
+                                        s_ruhsat_bilgileri.kacak_islem_bilgisi, 
+                                        s_ruhsat_bilgileri.aktif_mi
                                 FROM s_ruhsat_bilgileri
 	WHERE aktif_mi AND id = ?";
         $ruhsat_bilgisi = $GLOBALS['db']->fetchRow($SQL_cumlesi, $update_id);
@@ -163,12 +164,12 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
             </div>
         </div>
         <div class="form-group form-group-sm">
-            <label class="col-sm-2 control-label" for="iskan_verildi_mi">İskan Verildi Mi?</label>
+            <label class="col-sm-2 control-label" for="iskan_verildi_mi">İskan Süreci</label>
             <div class="col-sm-8">
                 <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="iskan_verildi_mi" name="iskan_verildi_mi">
-                    <option value=''>İskan Durumu Seçiniz</option>
-                    <option value='1' <?= ($ruhsat_bilgisi->iskan_verildi_mi === 1 ? 'selected' : '') ?> >İskan Var</option>
+                    <option value='1' <?= ($ruhsat_bilgisi->iskan_verildi_mi === -1 ? 'selected' : '') ?> >Onay Bekliyor/Başvuru Yapıldı</option>
                     <option value='0' <?= ($ruhsat_bilgisi->iskan_verildi_mi === 0 ? 'selected' : '') ?> >İskan Yok</option>
+                    <option value='1' <?= ($ruhsat_bilgisi->iskan_verildi_mi === 1 ? 'selected' : '') ?> >İskan Verildi</option>
                 </select>
             </div>
         </div>
@@ -186,7 +187,7 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
                 <input class="form-control" type="text" id="iskan_bulten_no" name="iskan_bulten_no" value="<?= $ruhsat_bilgisi->iskan_bulten_no ?>" >
             </div>
         </div>
-        
+
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="kacak_islem_yapildi_mi">Kaçak İşlem Yapıldı Mı?</label>
             <div class="col-sm-8">
@@ -197,13 +198,22 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
                 </select>
             </div>
         </div>
-              
-            <div class="form-group form-group-sm">
-                <label class="col-sm-2 control-label" for="kacak_islem_bilgisi">Kaçak İşlem Bilgisi</label>
-                <div class="col-sm-8">
-                    <textarea id="kacak_islem_bilgisi" name="kacak_islem_bilgisi" rows="10" cols="80"><?= ($ruhsat_bilgisi->kacak_islem_bilgisi) ?></textarea>
-                </div>  
-            </div> 
+
+        <div class="form-group form-group-sm">
+            <label class="col-sm-2 control-label" for="kacak_islem_bilgisi">Kaçak İşlem Bilgisi</label>
+            <div class="col-sm-8">
+                <textarea id="kacak_islem_bilgisi" name="kacak_islem_bilgisi" rows="10" cols="80"><?= ($ruhsat_bilgisi->kacak_islem_bilgisi) ?></textarea>
+            </div>  
+        </div> 
+        <div class="form-group form-group-sm">
+            <label class="col-sm-2 control-label" for="ruhsat_aktif_mi">İnşaat Ruhsat Süreci</label>
+            <div class="col-sm-8">
+                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="ruhsat_aktif_mi" name="ruhsat_aktif_mi">
+                    <option value='-1' <?= ($ruhsat_bilgisi->aktif_mi === -1 ? 'selected' : '') ?> >Onay Bekliyor/Başvuru Yapıldı</option>
+                    <option value='1' <?= ($ruhsat_bilgisi->aktif_mi === 1 ? 'selected' : '') ?> >Ruhsat Verildi</option>
+                </select>
+            </div>
+        </div>
         <div class="col-sm-12 form-group form-group-sm">
             <button type="submit" name="update" value="<?= $_POST['update']; ?>" class="btn bg-olive btn-block"><span class="fa fa-pencil-square-o"></span> Ruhsat Bilgisini Güncelle</button>
         </div>         

@@ -94,3 +94,5 @@ include_once '../lib/DataTable.php';
     </script>
 </html>
 
+            <?php
+            require_once '../assets/alert.php';

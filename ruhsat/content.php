@@ -140,12 +140,23 @@
                                 </div>
                             </div>
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-2 control-label" for="iskan_verildi_mi">İskan Verildi Mi?</label>
+                                <label class="col-sm-2 control-label" for="iskan_verildi_mi">İskan Süreci</label>
                                 <div class="col-sm-8">
                                     <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="iskan_verildi_mi" name="iskan_verildi_mi">
                                         <option value=''>İskan Durumu Seçiniz</option>
-                                        <option value='1' <?= ((isset($_GET['iskan_verildi_mi']) && ($_GET['iskan_verildi_mi'] === 1) ? 'selected' : '')) ?> >İskan Var</option>
-                                        <option value='0' <?= ((isset($_GET['iskan_verildi_mi']) && ($_GET['iskan_verildi_mi'] === 0) ? 'selected' : '')) ?> >İskan Yok</option>
+                                        <option value='-1' <?= ((isset($_GET['iskan_verildi_mi']) && ($_GET['iskan_verildi_mi'] == -1) ? 'selected' : '')) ?> >Onay Bekliyor/Başvuru Yapıldı</option>
+                                        <option value='0' <?= ((isset($_GET['iskan_verildi_mi']) && ($_GET['iskan_verildi_mi'] == 0) ? 'selected' : '')) ?> >İskan Yok</option>
+                                        <option value='1' <?= ((isset($_GET['iskan_verildi_mi']) && ($_GET['iskan_verildi_mi'] == 1) ? 'selected' : '')) ?> >İskan Verildi</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">
+                                <label class="col-sm-2 control-label" for="aktif_mi">Ruhsat Süreci</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="aktif_mi" name="aktif_mi">
+                                        <option value=''>Ruhsat Durumu Seçiniz</option>
+                                        <option value='-1' <?= ((isset($_GET['aktif_mi']) && ($_GET['aktif_mi'] == -1) ? 'selected' : '')) ?> >Onay Bekliyor/Başvuru Yapıldı</option>
+                                        <option value='1' <?= ((isset($_GET['aktif_mi']) && ($_GET['aktif_mi'] == 1) ? 'selected' : '')) ?> >Ruhsat Verildi</option>
                                     </select>
                                 </div>
                             </div>
@@ -170,7 +181,7 @@
                 if (isset($_GET['Sorgula'])) {
                     if (isset($_GET['ruhsat'])) {
                         if ($_GET['ruhsat'] == "ruhsatyok") {
-                           $ItemsSQL = "SELECT
+                            $ItemsSQL = "SELECT
                                         s_ruhsat_bilgileri.id, 
                                         s_ruhsat_bilgileri.ruhsat_no, 
                                         DATE_FORMAT(s_ruhsat_bilgileri.ruhsat_tarihi,'%d/%m/%Y') AS ruhsat_tarihi,	
@@ -198,7 +209,7 @@
                                 $listItems = $GLOBALS['db']->fetchAll($ItemsSQL);
                             } catch (Zend_Db_Exception $ex) {
                                 log::DB_hata_kaydi_ekle(__FILE__, $ex);
-                            } 
+                            }
                         } else {
                             $ItemsSQL = "SELECT
                                         s_ruhsat_bilgileri.id, 
@@ -270,6 +281,59 @@
                             $ruhsat_where_string .= " AND kacak_islem_yapildi_mi = ? ";
                             array_push($ruhsat_where, trim($_GET['kacak_islem_yapildi_mi']));
                         }
+                        if (trim($_GET['aktif_mi']) !== "") {
+                            if (trim($_GET['aktif_mi']) == -1) {
+                                $ItemsSQL = "SELECT
+                                        s_ruhsat_bilgileri.id, 
+                                        s_ruhsat_bilgileri.ruhsat_no, 
+                                        DATE_FORMAT(s_ruhsat_bilgileri.ruhsat_tarihi,'%d/%m/%Y') AS ruhsat_tarihi,	
+                                       (CASE s_ruhsat_bilgileri.kacak_islem_yapildi_mi
+                                        WHEN 1 THEN '<h6 style=\"back-color:red\">Kaçak İşlem Yapıldı.</h6>' 
+                                        WHEN 0 THEN '' END) AS kacak_islem_yapildi_mi, 
+                                        s_ruhsat_bilgileri.bulten_no, 
+                                        s_ruhsat_bilgileri.ada_parsel, 
+                                        s_ruhsat_bilgileri.yibf_no,
+                                        s_ruhsat_bilgileri.adi_soyadi, 
+                                        s_ruhsat_bilgileri.ruhsat_cinsi, 
+                                        s_ruhsat_bilgileri.ruhsat_verilis_amaci, 
+                                        s_ruhsat_bilgileri.fenni_mesul, 
+                                        s_ruhsat_bilgileri.mahallesi,  
+                                        s_ruhsat_bilgileri.yapi_alani, 
+                                         (CASE s_ruhsat_bilgileri.iskan_verildi_mi 
+                                        WHEN 1 THEN '<h6 style=\"color:green\">İskan Verildi</h6>' 
+                                        WHEN 0 THEN '<h6 style=\"color:red\">İskan Yok</h6>' END) AS iskan_verildi_mi, 
+                                        DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
+                                        s_ruhsat_bilgileri.iskan_no, 
+                                        s_ruhsat_bilgileri.iskan_bulten_no, 
+                                        s_ruhsat_bilgileri.kacak_islem_bilgisi
+                                FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi = '-1' " . $ruhsat_where_string . " LIMIT 1000";
+                            } else {
+                                $ItemsSQL = "SELECT
+                                        s_ruhsat_bilgileri.id, 
+                                        s_ruhsat_bilgileri.ruhsat_no, 
+                                        DATE_FORMAT(s_ruhsat_bilgileri.ruhsat_tarihi,'%d/%m/%Y') AS ruhsat_tarihi,	
+                                       (CASE s_ruhsat_bilgileri.kacak_islem_yapildi_mi
+                                        WHEN 1 THEN '<h6 style=\"back-color:red\">Kaçak İşlem Yapıldı.</h6>' 
+                                        WHEN 0 THEN '' END) AS kacak_islem_yapildi_mi, 
+                                        s_ruhsat_bilgileri.bulten_no, 
+                                        s_ruhsat_bilgileri.ada_parsel, 
+                                        s_ruhsat_bilgileri.yibf_no,
+                                        s_ruhsat_bilgileri.adi_soyadi, 
+                                        s_ruhsat_bilgileri.ruhsat_cinsi, 
+                                        s_ruhsat_bilgileri.ruhsat_verilis_amaci, 
+                                        s_ruhsat_bilgileri.fenni_mesul, 
+                                        s_ruhsat_bilgileri.mahallesi,  
+                                        s_ruhsat_bilgileri.yapi_alani, 
+                                         (CASE s_ruhsat_bilgileri.iskan_verildi_mi 
+                                        WHEN 1 THEN '<h6 style=\"color:green\">İskan Verildi</h6>' 
+                                        WHEN 0 THEN '<h6 style=\"color:red\">İskan Yok</h6>' END) AS iskan_verildi_mi, 
+                                        DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
+                                        s_ruhsat_bilgileri.iskan_no, 
+                                        s_ruhsat_bilgileri.iskan_bulten_no, 
+                                        s_ruhsat_bilgileri.kacak_islem_bilgisi
+                                FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi " . $ruhsat_where_string . " LIMIT 1000";
+                            }
+                        }
                         $ItemsSQL = "SELECT
                                         s_ruhsat_bilgileri.id, 
                                         s_ruhsat_bilgileri.ruhsat_no, 
@@ -326,8 +390,8 @@
                                 'buttonPostPage' => 'index.php',
                                 'buttons' => $Buttons,
                                 'buttonUrls' => $ButtonsUrls)
-//                            ,
-//                            'buttons' => array("excel", "pdf")
+                            ,
+                            'buttons' => array("excel", "pdf")
                         );
                         try {
                             $dtableServer = new DataTable($options);
@@ -339,20 +403,20 @@
                             <div class="box box-primary">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Sorgulama Sonucu</h3>
-                                    <?php
-                                    echo $dtableServer->get_data_table();
-                                    echo $dtableServer->get_datatable_script();
-                                    ?>     </div><!-- /.box-body -->
+                <?php
+                echo $dtableServer->get_data_table();
+                echo $dtableServer->get_datatable_script();
+                ?>     </div><!-- /.box-body -->
                             </div>
                         </div>
-                        <?php
-                    } else {
-                        adminLTE_alert(false, __("Sorgulama Sonucu"), __("Sorgulamada kayıt bulunamadı!"), "warning");
-                    }
-                }
+                <?php
+            } else {
+                adminLTE_alert(false, __("Sorgulama Sonucu"), __("Sorgulamada kayıt bulunamadı!"), "warning");
             }
         }
-        ?>
+    }
+}
+?>
     </div>
 </div>
 </div>

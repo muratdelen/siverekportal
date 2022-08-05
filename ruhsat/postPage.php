@@ -28,12 +28,13 @@ if (isset($_POST['insert']) && in_array(YT_INSERT, $sayfaIslemleriId)) {//kaydet
             "yibf_no" => tr_uppercase($_POST['yibf_no']),
             "yapi_alani" => trim($_POST['yapi_alani']),
             "iskan_ruhsat_tarihi" => (trim($_POST['iskan_ruhsat_tarihi']) == "" ? null : convertDateFormatBasicDefault($_POST['iskan_ruhsat_tarihi'])),
-            "iskan_verildi_mi" => trim($_POST['iskan_verildi_mi'])
+            "iskan_verildi_mi" => trim($_POST['iskan_verildi_mi']),
+            "aktif_mi" => trim($_POST['ruhsat_aktif_mi'])
         );
         try {
             log::islem_aciklamasi_kaydi("Ruhsat Bilgileri", "Ruhsat Bilgileri Ekleme", YT_INSERT);
-            $GLOBALS['db']->insert('s_ruhsat_bilgileri', $data, null);
-            adminLTE_redirect(false, __("Ekleme Sonucu"), __("Ruhsat Bilgileri Eklendi"), "success", 1000000, BASE_URL . "ruhsat/index.php");
+            $eklen_id = $GLOBALS['db']->insert('s_ruhsat_bilgileri', $data, null);
+            adminLTE_redirect(false, __("Ekleme Sonucu"), __("Ruhsat Bilgileri Eklendi"), "success", 1000000, BASE_URL . "ruhsat/index.php?Sorgula&ruhsat=" . mcrypt($eklen_id, $_SESSION['key']));
         } catch (Zend_Db_Exception $ex) {
             log::DB_hata_kaydi_ekle(__FILE__, $ex);
             adminLTE_redirect(false, __("Ekleme Sonucu"), __("Ruhsat Bilgileri Eklenemedi!"), "danger", 1000000, BASE_URL . "ruhsat/index.php");
@@ -68,7 +69,8 @@ if (isset($_POST['insert']) && in_array(YT_INSERT, $sayfaIslemleriId)) {//kaydet
             "iskan_ruhsat_tarihi" => (trim($_POST['iskan_ruhsat_tarihi']) == "" ? null : convertDateFormatBasicDefault($_POST['iskan_ruhsat_tarihi'])),
             "iskan_verildi_mi" => trim($_POST['iskan_verildi_mi']),
             "iskan_no" => trim($_POST['iskan_no']),
-            "iskan_bulten_no" => trim($_POST['iskan_bulten_no'])
+            "iskan_bulten_no" => trim($_POST['iskan_bulten_no']),
+            "aktif_mi" => trim($_POST['ruhsat_aktif_mi'])
         );
 //        echo '<pre>';
 //        var_dump($_POST,$data);
@@ -77,13 +79,13 @@ if (isset($_POST['insert']) && in_array(YT_INSERT, $sayfaIslemleriId)) {//kaydet
         try {
             log::islem_aciklamasi_kaydi("Ruhsat Başvurusu", "Yeni Ruhsat Güncelleme", YT_INSERT);
             $GLOBALS['db']->update('s_ruhsat_bilgileri', $data, $where);
-            adminLTE_redirect(true, "Ruhsat Başvurusu", "Ruhsat Güncelleme İşlemi Başarıyla Tamamlandı.", "success", 1000000, BASE_URL . "ruhsat/index.php");
+            adminLTE_redirect(true, "Ruhsat Başvurusu", "Ruhsat Güncelleme İşlemi Başarıyla Tamamlandı.", "success", 1000000, BASE_URL . "ruhsat/index.php?Sorgula&ruhsat=" . urlencode($_POST['update']));
         } catch (Zend_Db_Exception $ex) {
             log::DB_hata_kaydi_ekle(__FILE__, $ex);
-            adminLTE_redirect(false, "Ruhsat Başvurusu", "Ruhsat güncellerken bir hata oluştu.", "danger", 1000000, BASE_URL . "ruhsat/index.php");
+            adminLTE_redirect(false, "Ruhsat Başvurusu", "Ruhsat güncellerken bir hata oluştu.", "danger", 1000000, BASE_URL . "ruhsat/index.php?Sorgula&ruhsat=" . urlencode($_POST['update']));
         }
     } else {
-        adminLTE_redirect($validator->get_readable_errors(true), "warning", BASE_URL . "ruhsat/index.php"); //BURADA STANDART HATALAR VARDIR.
+        adminLTE_redirect($validator->get_readable_errors(true), "warning", BASE_URL . "ruhsat/index.php?Sorgula&ruhsat=" . urlencode($_POST['update'])); //BURADA STANDART HATALAR VARDIR.
     }
 } elseif (in_array(YT_DELETE, $sayfaIslemleriId) && isset($_POST['remove'])) {//güncelleme işlemi
     $silinecek_id = mdecrypt($_POST['remove'], $_SESSION['key']);

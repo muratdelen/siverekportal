@@ -97,15 +97,25 @@
             </div>
         </div>
         <div class="form-group form-group-sm">
-            <label class="col-sm-2 control-label" for="iskan_verildi_mi">İskan Verildi Mi?</label>
+            <label class="col-sm-2 control-label" for="iskan_verildi_mi">İskan Süreci</label>
             <div class="col-sm-8">
                 <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="iskan_verildi_mi" name="iskan_verildi_mi">
-                    <option value=''>İskan Durumu Seçiniz</option>
-                    <option value='1'>İskan Var</option>
+                    <option value='-1' selected>Onay Bekliyor/Başvuru Yapıldı</option>
                     <option value='0'>İskan Yok</option>
+                    <option value='1'>İskan Verildi</option>
                 </select>
             </div>
         </div>  
+
+        <div class="form-group form-group-sm">
+            <label class="col-sm-2 control-label" for="ruhsat_aktif_mi">İnşaat Ruhsat Süreci</label>
+            <div class="col-sm-8">
+                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="ruhsat_aktif_mi" name="ruhsat_aktif_mi">
+                    <option value='-1' selected>Onay Bekliyor/Başvuru Yapıldı</option>
+                    <option value='1'>Ruhsat Verildi</option>
+                </select>
+            </div>
+        </div>
         <div class="col-sm-12 form-group form-group-sm">
             <button type="submit" name="insert" value="" class="btn bg-olive btn-block"><span class="fa fa-floppy-o"></span>Ruhsat Bilgisi Ekle</button>
         </div> 
