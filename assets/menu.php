@@ -96,7 +96,7 @@ foreach ($subMenuItems as $key => $subMenuItem) {
             }
         }
        
-        $menu_html .= '<li class="treeview help_for_use_website"><a href="/"><small class="label pull-left bg-purple"><i class="fa fa-question-circle"></i></small><span>' . __("Kullanımı") . '</span></a></li>';
+//        $menu_html .= '<li class="treeview help_for_use_website"><a href="/"><small class="label pull-left bg-purple"><i class="fa fa-question-circle"></i></small><span>' . __("Kullanımı") . '</span></a></li>';
         echo $menu_html;
         ?>
 
