@@ -1,6 +1,6 @@
 <?php
 
-require("gump.class.php");
+require("../lib/GUMP/gump.class.php");
 
 class InputFilterClass extends GUMP {
 
@@ -229,7 +229,7 @@ class InputFilterClass extends GUMP {
 
 //    functions************************************
 
-    protected function validate_date($field, $input, $param = NULL) {
+    protected function validate_date($field, $input, $param = NULL, $value = NULL) {
 
         if (!isset($input[$field]) || trim($input[$field]) === "") {
             return;

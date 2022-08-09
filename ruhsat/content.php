@@ -59,15 +59,14 @@
                                         <option value='ruhsatyok'>Ruhsat No Boş Olanlar</option>
                                         <?php
                                         try {
-                                            $ruhsatlar = $db->fetchAll("SELECT id, ruhsat_no, adi_soyadi FROM s_ruhsat_bilgileri WHERE aktif_mi AND NOT ISNULL(ruhsat_no) ORDER BY ruhsat_no DESC");
+                                            $ruhsatlar = $db->fetchAll("SELECT id, ruhsat_no, adi_soyadi FROM s_ruhsat_bilgileri WHERE aktif_mi AND NOT ISNULL(ruhsat_no) GROUP BY ruhsat_no ORDER BY ruhsat_no DESC");
                                         } catch (Zend_Db_Exception $ex) {
                                             log::DB_hata_kaydi_ekle(__FILE__, $ex);
                                         }
                                         htmlspecialchar_obj($ruhsatlar);
                                         foreach ($ruhsatlar as $ruhsat) {
-                                            $id_sifreli = mcrypt($ruhsat->id, $_SESSION['key']);
-                                            echo "<option value='$id_sifreli' title='$ruhsat->adi_soyadi' ";
-                                            echo (isset($ruhsat->id) ? (isset($_GET['ruhsat']) ? ($_GET['ruhsat'] == $id_sifreli ? 'selected' : null) : null) : null);
+                                            echo "<option value='$ruhsat->ruhsat_no' title='$ruhsat->adi_soyadi' ";
+                                            echo (isset($ruhsat->ruhsat_no) ? (isset($_GET['ruhsat']) ? ($_GET['ruhsat'] == $ruhsat->ruhsat_no ? 'selected' : null) : null) : null);
                                             echo ">$ruhsat->ruhsat_no</option>";
                                         }
                                         ?>
@@ -234,10 +233,9 @@
                                         s_ruhsat_bilgileri.iskan_no, 
                                         s_ruhsat_bilgileri.iskan_bulten_no, 
                                         s_ruhsat_bilgileri.kacak_islem_bilgisi
-                                FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi AND id = ? ";
-                            $ruhsat_id = mdecrypt($_GET['ruhsat'], $_SESSION['key']);
+                                FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi AND ruhsat_no = ? ";
                             try {
-                                $listItems = $GLOBALS['db']->fetchAll($ItemsSQL, $ruhsat_id);
+                                $listItems = $GLOBALS['db']->fetchAll($ItemsSQL, $_GET['ruhsat']);
                             } catch (Zend_Db_Exception $ex) {
                                 log::DB_hata_kaydi_ekle(__FILE__, $ex);
                             }

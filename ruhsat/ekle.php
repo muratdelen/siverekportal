@@ -1,3 +1,12 @@
+<?php
+$yeni_ruhsat_no = date("Y") . "/";
+try {
+    $son_ruhsat_bilgisi = $db->fetchRow("SELECT deger FROM s_degiskenler WHERE aktif_mi AND degisken = 'son_ruhsat_no'");
+    $yeni_ruhsat_no .= ($son_ruhsat_bilgisi->deger + 1);
+} catch (Zend_Db_Exception $ex) {
+    log::DB_hata_kaydi_ekle(__FILE__, $ex);
+}
+?>
 <div class="col-md-12 box box-primary" id="ekle_ekrani_div">
     <form class="form-horizontal" method="post"  id="form_ruhsat_ekle" action="postPage.php">
         <div class="box-header">
@@ -6,7 +15,7 @@
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="ruhsat_no">Ruhsat No</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" id="ruhsat_no" name="ruhsat_no" value="" >
+                <input class="form-control" readonly type="text" id="ruhsat_no" name="ruhsat_no" value="<?= $yeni_ruhsat_no ?>" >
             </div>
         </div>
         <div class="form-group form-group-sm">
@@ -21,32 +30,32 @@
                 <input class="form-control" type="text" id="ruhsat_cinsi" name="ruhsat_cinsi" value="" >
             </div>
         </div>
-          <div class="form-group form-group-sm">
+        <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="ruhsat_verilis_amaci">Ruhsat Veriliş Amacı</label>
             <div class="col-sm-8">
                 <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="ruhsat_verilis_amaci" name="ruhsat_verilis_amaci">
-                <option value=''>Listelenecek Ruhsat Seçiniz</option>
-                <?php
-                try {
-                    $ruhsat_verilis_amaclari = $db->fetchAll("SELECT verilis_amaci, aciklama FROM s_ruhsat_verilis_amaci WHERE aktif_mi");
-                } catch (Zend_Db_Exception $ex) {
-                    log::DB_hata_kaydi_ekle(__FILE__, $ex);
-                }
-                htmlspecialchar_obj($ruhsat_verilis_amaclari);
-                foreach ($ruhsat_verilis_amaclari as $ruhsat_verilis_amaci) {
-                    echo "<option value='$ruhsat_verilis_amaci->verilis_amaci' title='$ruhsat_verilis_amaci->aciklama' ";
-                    echo ">$ruhsat_verilis_amaci->verilis_amaci</option>";
-                }
-                ?>
-            </select>
+                    <option value=''>Listelenecek Ruhsat Seçiniz</option>
+                    <?php
+                    try {
+                        $ruhsat_verilis_amaclari = $db->fetchAll("SELECT verilis_amaci, aciklama FROM s_ruhsat_verilis_amaci WHERE aktif_mi");
+                    } catch (Zend_Db_Exception $ex) {
+                        log::DB_hata_kaydi_ekle(__FILE__, $ex);
+                    }
+                    htmlspecialchar_obj($ruhsat_verilis_amaclari);
+                    foreach ($ruhsat_verilis_amaclari as $ruhsat_verilis_amaci) {
+                        echo "<option value='$ruhsat_verilis_amaci->verilis_amaci' title='$ruhsat_verilis_amaci->aciklama' ";
+                        echo ">$ruhsat_verilis_amaci->verilis_amaci</option>";
+                    }
+                    ?>
+                </select>
             </div>
         </div>
-<!--        <div class="form-group form-group-sm">
-            <label class="col-sm-2 control-label" for="ruhsat_verilis_amaci">Ruhsat Veriliş Amacı</label>
-            <div class="col-sm-8">
-                <input class="form-control" type="text" id="ruhsat_verilis_amaci" name="ruhsat_verilis_amaci" value="" >
-            </div>
-        </div>        -->
+        <!--        <div class="form-group form-group-sm">
+                    <label class="col-sm-2 control-label" for="ruhsat_verilis_amaci">Ruhsat Veriliş Amacı</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="text" id="ruhsat_verilis_amaci" name="ruhsat_verilis_amaci" value="" >
+                    </div>
+                </div>        -->
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="fenni_mesul">Fenni Mesul</label>
             <div class="col-sm-8">
