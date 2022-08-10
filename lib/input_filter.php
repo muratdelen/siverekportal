@@ -1,6 +1,6 @@
 <?php
 
-require("../lib/GUMP/gump.class.php");
+require("gump.class.php");
 
 class InputFilterClass extends GUMP {
 

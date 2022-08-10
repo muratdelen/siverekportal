@@ -79,6 +79,7 @@ if (isset($_POST['insert']) && in_array(YT_INSERT, $sayfaIslemleriId)) {//kaydet
         try {
             log::islem_aciklamasi_kaydi("Ruhsat Başvurusu", "Yeni Ruhsat Güncelleme", YT_INSERT);
             $GLOBALS['db']->update('s_ruhsat_bilgileri', $data, $where);
+            $GLOBALS['db']->fetchAll("UPDATE s_degiskenler SET deger = deger + 1 WHERE aktif_mi AND degisken = 'son_ruhsat_no' ");
             adminLTE_redirect(true, "Ruhsat Başvurusu", "Ruhsat Güncelleme İşlemi Başarıyla Tamamlandı.", "success", 1000000, BASE_URL . "ruhsat/index.php?Sorgula&ruhsat=" . urlencode($_POST['update']));
         } catch (Zend_Db_Exception $ex) {
             log::DB_hata_kaydi_ekle(__FILE__, $ex);
