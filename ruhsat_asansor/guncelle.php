@@ -27,7 +27,7 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
                     try {
                         $ruhsatlar = $db->fetchAll("SELECT id, ruhsat_no, adi_soyadi FROM s_ruhsat_bilgileri WHERE aktif_mi AND NOT ISNULL(ruhsat_no) 
 AND id IN (SELECT s_ruhsat_bilgileri_id FROM s_asansor_uygulama_projeleri) 
-ORDER BY ruhsat_no DESC");
+ORDER BY id DESC");
                     } catch (Zend_Db_Exception $ex) {
                         log::DB_hata_kaydi_ekle(__FILE__, $ex);
                     }

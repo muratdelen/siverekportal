@@ -2,7 +2,7 @@
 $yeni_ruhsat_no = date("Y") . "/";
 try {
     $son_ruhsat_bilgisi = $db->fetchRow("SELECT deger FROM s_degiskenler WHERE aktif_mi AND degisken = 'son_ruhsat_no'");
-    $yeni_ruhsat_no .= ($son_ruhsat_bilgisi->deger + 1);
+    $yeni_ruhsat_no .= $son_ruhsat_bilgisi->deger;
 } catch (Zend_Db_Exception $ex) {
     log::DB_hata_kaydi_ekle(__FILE__, $ex);
 }
@@ -57,9 +57,24 @@ try {
                     </div>
                 </div>        -->
         <div class="form-group form-group-sm">
-            <label class="col-sm-2 control-label" for="fenni_mesul">Fenni Mesul</label>
+            <label class="col-sm-2 control-label" for="fenni_mesul">Fenni Mesul/Yapı Denetim</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" id="fenni_mesul" name="fenni_mesul" value="" >
+                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="fenni_mesul" name="fenni_mesul">
+                    <option value=''>Listelenecek Ruhsat Seçiniz</option>
+                    <?php
+                    try {
+                        $yapi_denetim_firmalari = $db->fetchAll("SELECT unvan, adres FROM s_ydk_listesi");
+                    } catch (Zend_Db_Exception $ex) {
+                        log::DB_hata_kaydi_ekle(__FILE__, $ex);
+                    }
+                    htmlspecialchar_obj($yapi_denetim_firmalari);
+                    foreach ($yapi_denetim_firmalari as $yapi_denetim_firma) {
+                        echo "<option value='$yapi_denetim_firma->unvan' title='$yapi_denetim_firma->adres' ";
+                        echo ">$yapi_denetim_firma->unvan</option>";
+                    }
+                    ?>
+                </select>
+                <!--<input class="form-control" type="text" id="fenni_mesul" name="fenni_mesul" value="" >-->
             </div>
         </div>
         <div class="form-group form-group-sm">

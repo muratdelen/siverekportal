@@ -62,7 +62,7 @@ if (isset($_SESSION["grup_id"])) {
             </head>
 
             <body>
-            <div id="header_div"><a href="//www.siverek.bel.tr" target="_blank">Siverek Belediyesi</a> :: <a href="#" target="_blank">Bilgi İşlem</a></div>
+            <div id="header_div"><a href="//www.siverek.bel.tr" target="_blank">Siverek Belediyesi</a> :: <a href="#" target="_blank">Bilgi İşlem</a> :: <a href="#" target="_blank">Yazılım Geliştirme Birimi</a></div>
             <form method="post" action="" role="login" id="login-form">
 
                 <div>

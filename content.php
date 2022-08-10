@@ -51,7 +51,7 @@
         <div class="col-md-12 alert-info ">
             <div class="box box-info">
                 <div class="box-header with-border" style="text-align: center;">
-                    <h3 class="box-title" >İmar Bekleyenler ...</h3>
+                    <h3 class="box-title" >İskan Ruhsatı Bekleyenler ...</h3>
                     <table border="1" cellpadding="1" cellspacing="1" class=" table table-striped table-bordered table-hover table-condensed" style="text-align:center;">
                         <tbody>
                             <tr>
@@ -95,7 +95,7 @@
         <div class="col-md-12 alert-success ">
             <div class="box box-success">
                 <div class="box-header with-border" style="text-align: center;">
-                    <h3 class="box-title" >İmar Çıkanlar</h3>
+                    <h3 class="box-title" >İskan Ruhsatı Çıkanlar</h3>
                     <table border="1" cellpadding="1" cellspacing="1" class=" table table-striped table-bordered table-hover table-condensed" style="text-align:center;">
                         <tbody>
                             <tr>

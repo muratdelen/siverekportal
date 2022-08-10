@@ -59,14 +59,16 @@
                                         <option value='ruhsatyok'>Ruhsat No Boş Olanlar</option>
                                         <?php
                                         try {
-                                            $ruhsatlar = $db->fetchAll("SELECT id, ruhsat_no, adi_soyadi FROM s_ruhsat_bilgileri WHERE aktif_mi AND NOT ISNULL(ruhsat_no) GROUP BY ruhsat_no ORDER BY ruhsat_no DESC");
+                                            $ruhsatlar = $db->fetchAll("SELECT id, ruhsat_no, adi_soyadi FROM s_ruhsat_bilgileri WHERE aktif_mi AND NOT ISNULL(ruhsat_no) GROUP BY ruhsat_no ORDER BY id DESC");
                                         } catch (Zend_Db_Exception $ex) {
                                             log::DB_hata_kaydi_ekle(__FILE__, $ex);
                                         }
                                         htmlspecialchar_obj($ruhsatlar);
                                         foreach ($ruhsatlar as $ruhsat) {
+                                        $sifreli_id = mcrypt($ruhsat->id, $_SESSION['key']);
                                             echo "<option value='$ruhsat->ruhsat_no' title='$ruhsat->adi_soyadi' ";
                                             echo (isset($ruhsat->ruhsat_no) ? (isset($_GET['ruhsat']) ? ($_GET['ruhsat'] == $ruhsat->ruhsat_no ? 'selected' : null) : null) : null);
+                                            echo (isset($ruhsat->id) ? (isset($_GET['ruhsat_id']) ? ($_GET['ruhsat_id'] == $sifreli_id ? 'selected' : null) : null) : null);
                                             echo ">$ruhsat->ruhsat_no</option>";
                                         }
                                         ?>
@@ -178,7 +180,38 @@
 
                 <?php
                 if (isset($_GET['Sorgula'])) {
-                    if (isset($_GET['ruhsat'])) {
+                    if (isset($_GET["ruhsat_id"])) {
+                         $ItemsSQL = "SELECT
+                                        s_ruhsat_bilgileri.id, 
+                                        s_ruhsat_bilgileri.ruhsat_no, 
+                                        DATE_FORMAT(s_ruhsat_bilgileri.ruhsat_tarihi,'%d/%m/%Y') AS ruhsat_tarihi,	
+                                       (CASE s_ruhsat_bilgileri.kacak_islem_yapildi_mi
+                                        WHEN 1 THEN '<h6 style=\"back-color:red\">Kaçak İşlem Yapıldı.</h6>' 
+                                        WHEN 0 THEN '' END) AS kacak_islem_yapildi_mi, 
+                                        s_ruhsat_bilgileri.bulten_no, 
+                                        s_ruhsat_bilgileri.ada_parsel, 
+                                        s_ruhsat_bilgileri.yibf_no,
+                                        s_ruhsat_bilgileri.adi_soyadi, 
+                                        s_ruhsat_bilgileri.ruhsat_cinsi, 
+                                        s_ruhsat_bilgileri.ruhsat_verilis_amaci, 
+                                        s_ruhsat_bilgileri.fenni_mesul, 
+                                        s_ruhsat_bilgileri.mahallesi,  
+                                        s_ruhsat_bilgileri.yapi_alani, 
+                                         (CASE s_ruhsat_bilgileri.iskan_verildi_mi 
+                                        WHEN 1 THEN '<h6 style=\"color:green\">İskan Verildi</h6>' 
+                                        WHEN 0 THEN '<h6 style=\"color:red\">İskan Yok</h6>' END) AS iskan_verildi_mi, 
+                                        DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
+                                        s_ruhsat_bilgileri.iskan_no, 
+                                        s_ruhsat_bilgileri.iskan_bulten_no, 
+                                        s_ruhsat_bilgileri.kacak_islem_bilgisi
+                                FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi AND id = ? ";
+                        $ruhsat_id = mdecrypt($_GET['ruhsat_id'], $_SESSION['key']);
+                        try {
+                            $listItems = $GLOBALS['db']->fetchAll($ItemsSQL, $ruhsat_id);
+                        } catch (Zend_Db_Exception $ex) {
+                            log::DB_hata_kaydi_ekle(__FILE__, $ex);
+                        }
+                    } else if (isset($_GET['ruhsat'])) {
                         if ($_GET['ruhsat'] == "ruhsatyok") {
                             $ItemsSQL = "SELECT
                                         s_ruhsat_bilgileri.id, 
@@ -401,20 +434,20 @@
                             <div class="box box-primary">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Sorgulama Sonucu</h3>
-                <?php
-                echo $dtableServer->get_data_table();
-                echo $dtableServer->get_datatable_script();
-                ?>     </div><!-- /.box-body -->
+                                    <?php
+                                    echo $dtableServer->get_data_table();
+                                    echo $dtableServer->get_datatable_script();
+                                    ?>     </div><!-- /.box-body -->
                             </div>
                         </div>
-                <?php
-            } else {
-                adminLTE_alert(false, __("Sorgulama Sonucu"), __("Sorgulamada kayıt bulunamadı!"), "warning");
+                        <?php
+                    } else {
+                        adminLTE_alert(false, __("Sorgulama Sonucu"), __("Sorgulamada kayıt bulunamadı!"), "warning");
+                    }
+                }
             }
         }
-    }
-}
-?>
+        ?>
     </div>
 </div>
 </div>

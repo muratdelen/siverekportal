@@ -34,7 +34,8 @@ if (isset($_POST['insert']) && in_array(YT_INSERT, $sayfaIslemleriId)) {//kaydet
         try {
             log::islem_aciklamasi_kaydi("Ruhsat Bilgileri", "Ruhsat Bilgileri Ekleme", YT_INSERT);
             $eklen_id = $GLOBALS['db']->insert('s_ruhsat_bilgileri', $data, null);
-            adminLTE_redirect(false, __("Ekleme Sonucu"), __("Ruhsat Bilgileri Eklendi"), "success", 1000000, BASE_URL . "ruhsat/index.php?Sorgula&ruhsat=" . mcrypt($eklen_id, $_SESSION['key']));
+            $GLOBALS['db']->fetchAll("UPDATE s_degiskenler SET deger = deger + 1 WHERE aktif_mi AND degisken = 'son_ruhsat_no' ");
+            adminLTE_redirect(false, __("Ekleme Sonucu"), __("Ruhsat Bilgileri Eklendi"), "success", 1000000, BASE_URL . "ruhsat/index.php?Sorgula&ruhsat_id=" . mcrypt($eklen_id, $_SESSION['key']));
         } catch (Zend_Db_Exception $ex) {
             log::DB_hata_kaydi_ekle(__FILE__, $ex);
             adminLTE_redirect(false, __("Ekleme Sonucu"), __("Ruhsat Bilgileri Eklenemedi!"), "danger", 1000000, BASE_URL . "ruhsat/index.php");
@@ -79,11 +80,10 @@ if (isset($_POST['insert']) && in_array(YT_INSERT, $sayfaIslemleriId)) {//kaydet
         try {
             log::islem_aciklamasi_kaydi("Ruhsat Başvurusu", "Yeni Ruhsat Güncelleme", YT_INSERT);
             $GLOBALS['db']->update('s_ruhsat_bilgileri', $data, $where);
-            $GLOBALS['db']->fetchAll("UPDATE s_degiskenler SET deger = deger + 1 WHERE aktif_mi AND degisken = 'son_ruhsat_no' ");
-            adminLTE_redirect(true, "Ruhsat Başvurusu", "Ruhsat Güncelleme İşlemi Başarıyla Tamamlandı.", "success", 1000000, BASE_URL . "ruhsat/index.php?Sorgula&ruhsat=" . urlencode($_POST['update']));
+            adminLTE_redirect(true, "Ruhsat Başvurusu", "Ruhsat Güncelleme İşlemi Başarıyla Tamamlandı.", "success", 1000000, BASE_URL . "ruhsat/index.php?Sorgula&ruhsat_id=" . urlencode($_POST['update']));
         } catch (Zend_Db_Exception $ex) {
             log::DB_hata_kaydi_ekle(__FILE__, $ex);
-            adminLTE_redirect(false, "Ruhsat Başvurusu", "Ruhsat güncellerken bir hata oluştu.", "danger", 1000000, BASE_URL . "ruhsat/index.php?Sorgula&ruhsat=" . urlencode($_POST['update']));
+            adminLTE_redirect(false, "Ruhsat Başvurusu", "Ruhsat güncellerken bir hata oluştu.", "danger", 1000000, BASE_URL . "ruhsat/index.php?Sorgula&ruhsat_id=" . urlencode($_POST['update']));
         }
     } else {
         adminLTE_redirect($validator->get_readable_errors(true), "warning", BASE_URL . "ruhsat/index.php?Sorgula&ruhsat=" . urlencode($_POST['update'])); //BURADA STANDART HATALAR VARDIR.

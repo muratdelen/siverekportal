@@ -142,7 +142,7 @@ include_once '../lib/DataTable.php';
                                         </div>  
                                     </div>      
                                     <div class="box-footer">
-                                        <button class="btn bg-orange margin pull-right" type="cancel" onclick="window.location = 'index.php?Sorgula&ruhsat=<?= (mcrypt($secilen_ruhsat_bilgileri->id, $_SESSION['key'])) ?>';return false;">Ruhsat Bilgilerine Dön</button>
+                                        <button class="btn bg-orange margin pull-right" type="cancel" onclick="window.location = 'index.php?Sorgula&ruhsat_id=<?= (mcrypt($secilen_ruhsat_bilgileri->id, $_SESSION['key'])) ?>';return false;">Ruhsat Bilgilerine Dön</button>
                                         <input class="btn bg-olive margin pull-right" type="submit" value="Pdf Olarak Çıktı Al"/> 
                                         <input   type="hidden" name = "ekspertiz" value="<?= $_POST['print1'] ?>"/>
                                     </div>
