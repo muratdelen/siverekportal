@@ -15,7 +15,7 @@ try {
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="ruhsat_no">Ruhsat No</label>
             <div class="col-sm-8">
-                <input class="form-control" readonly type="text" id="ruhsat_no" name="ruhsat_no" value="<?= $yeni_ruhsat_no ?>" >
+                <input class="form-control" type="text" id="ruhsat_no" name="ruhsat_no" value="<?= $yeni_ruhsat_no ?>" >
             </div>
         </div>
         <div class="form-group form-group-sm">

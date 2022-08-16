@@ -71,7 +71,7 @@ Siverek Belediye Meclisinin 07.10.2015 tarih ve 2464 sayılı belediye gelirler 
 <tr><td></td><td></td></tr>
 <tr><td></td><td></td></tr>
 <tr><td colspan="2" align="center"> <strong>PERSONEL ADI SOYADI</strong> </td></tr>
-<tr><td colspan="2" align="center"> <strong></strong> </td></tr>
+<tr><td colspan="2" align="center"> <strong>' . $kullanici . '</strong> </td></tr>
 <tr><td colspan="2" align="center"><strong>İMZA</strong> </td></tr>
 <tr><td></td><td></td></tr>
 <tr><td colspan="2" align="center"> <strong></strong> </td></tr>
