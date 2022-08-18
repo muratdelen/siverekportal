@@ -24,12 +24,19 @@ try {
                 <input class="form-control" type="text" id="adi_soyadi" name="adi_soyadi" value="" >
             </div>
         </div>
+        
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="ruhsat_cinsi">Ruhsat Cinsi</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" id="ruhsat_cinsi" name="ruhsat_cinsi" value="" >
+                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="ruhsat_cinsi" name="ruhsat_cinsi">
+                <option value='' selected>Ruhsat Cinsi Seçiniz</option>
+                <option value='MESKEN' >Mesken</option>
+                    <option value='İŞYERİ'>İşyeri</option>
+                    <option value='MESKEN+İŞYERİ'>Mesken+İşyeri</option>
+                    <option value='AHIR'>Ahır</option>
+                </select>
             </div>
-        </div>
+        </div>  
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="ruhsat_verilis_amaci">Ruhsat Veriliş Amacı</label>
             <div class="col-sm-8">
