@@ -92,6 +92,7 @@ require_once '../../lib/input_filter.php';
 
     </script>
 </html>
+<php?
 if (isset($_SESSION["kullanici_adi"])) {
     include_once '../../assets/alert.php';
 }

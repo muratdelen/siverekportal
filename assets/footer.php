@@ -3,7 +3,7 @@
     <div class="pull-right hidden-xs">
         <?= __("Copyright &copy;2022 <b>Version</b> 1.0"); ?>
     </div>
-    <?= __('<strong><a href="http://bidb.Siverek.edu.tr">Bilgi İşlem Müdürlüğü</a></strong> tarafından yapılmıştır.'); ?>
+    <?= __('<strong><a href="http://bidb.Siverek.edu.tr">Bilgi İşlem Yazılım Birimi</a></strong> tarafından yapılmıştır.'); ?>
 
 </footer>
 
