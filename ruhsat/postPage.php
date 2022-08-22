@@ -29,6 +29,7 @@ if (isset($_POST['insert']) && in_array(YT_INSERT, $sayfaIslemleriId)) {//kaydet
             "yapi_alani" => trim($_POST['yapi_alani']),
             "iskan_ruhsat_tarihi" => (trim($_POST['iskan_ruhsat_tarihi']) == "" ? null : convertDateFormatBasicDefault($_POST['iskan_ruhsat_tarihi'])),
             "iskan_verildi_mi" => trim($_POST['iskan_verildi_mi']),
+            "aciklama" => trim($_POST['aciklama']),
             "aktif_mi" => trim($_POST['ruhsat_aktif_mi'])
         );
         try {
@@ -71,6 +72,7 @@ if (isset($_POST['insert']) && in_array(YT_INSERT, $sayfaIslemleriId)) {//kaydet
             "iskan_verildi_mi" => trim($_POST['iskan_verildi_mi']),
             "iskan_no" => trim($_POST['iskan_no']),
             "iskan_bulten_no" => trim($_POST['iskan_bulten_no']),
+            "aciklama" => trim($_POST['aciklama']),
             "aktif_mi" => trim($_POST['ruhsat_aktif_mi'])
         );
 //        echo '<pre>';

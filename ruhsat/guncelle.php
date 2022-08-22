@@ -214,6 +214,13 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
                 </select>
             </div>
         </div>
+        
+        <div class="form-group form-group-sm">
+            <label class="col-sm-2 control-label" for="aciklama">Açıklama</label>
+            <div class="col-sm-8">
+                <textarea id="aciklama" name="aciklama" rows="10" cols="80"><?= ($ruhsat_bilgisi->aciklama) ?></textarea>
+            </div>  
+        </div>
         <div class="col-sm-12 form-group form-group-sm">
             <button type="submit" name="update" value="<?= $_POST['update']; ?>" class="btn bg-olive btn-block"><span class="fa fa-pencil-square-o"></span> Ruhsat Bilgisini Güncelle</button>
         </div>         
