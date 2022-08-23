@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 if (isset($_POST['update']) && $_POST['update'] != '') {
     $update_id = mdecrypt($_POST['update'], $_SESSION['key']);
     try {
@@ -20,7 +20,8 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
                                         DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
                                         s_ruhsat_bilgileri.iskan_no, 
                                         s_ruhsat_bilgileri.iskan_bulten_no, 
-                                        s_ruhsat_bilgileri.kacak_islem_bilgisi, 
+                                        s_ruhsat_bilgileri.kacak_islem_bilgisi,
+                                        aciklama, 
                                         s_ruhsat_bilgileri.aktif_mi
                                 FROM s_ruhsat_bilgileri
 	WHERE aktif_mi AND id = ?";
@@ -74,7 +75,7 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
                         echo "<option value='$ruhsat_verilis_amaci->verilis_amaci' title='$ruhsat_verilis_amaci->aciklama' ";
                         if ($ruhsat_bilgisi->ruhsat_verilis_amaci == $ruhsat_verilis_amaci->verilis_amaci) {
                             $is_not_select = false;
-                            echo 'seledted';
+                            echo 'selected';
                         }
                         echo ">$ruhsat_verilis_amaci->verilis_amaci</option>";
                     }
@@ -202,7 +203,7 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="kacak_islem_bilgisi">Kaçak İşlem Bilgisi</label>
             <div class="col-sm-8">
-                <textarea id="kacak_islem_bilgisi" name="kacak_islem_bilgisi" rows="10" cols="80"><?= ($ruhsat_bilgisi->kacak_islem_bilgisi) ?></textarea>
+                <textarea id="kacak_islem_bilgisi" name="kacak_islem_bilgisi" rows="10" cols="80"><?= htmlentities($ruhsat_bilgisi->kacak_islem_bilgisi) ?></textarea>
             </div>  
         </div> 
         <div class="form-group form-group-sm">
@@ -213,6 +214,13 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
                     <option value='1' <?= ($ruhsat_bilgisi->aktif_mi === 1 ? 'selected' : '') ?> >Ruhsat Verildi</option>
                 </select>
             </div>
+        </div>
+        
+        <div class="form-group form-group-sm">
+            <label class="col-sm-2 control-label" for="aciklama">Açıklama</label>
+            <div class="col-sm-8">
+                <textarea id="aciklama" name="aciklama" rows="10" cols="80"><?= htmlentities($ruhsat_bilgisi->aciklama) ?></textarea>
+            </div>  
         </div>
         <div class="col-sm-12 form-group form-group-sm">
             <button type="submit" name="update" value="<?= $_POST['update']; ?>" class="btn bg-olive btn-block"><span class="fa fa-pencil-square-o"></span> Ruhsat Bilgisini Güncelle</button>

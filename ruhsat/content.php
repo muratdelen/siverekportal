@@ -1,4 +1,4 @@
-
+﻿
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -79,8 +79,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-12 form-group form-group-sm">
-                                <button type="submit" id="get-items" name="Sorgula" class="btn bg-purple btn-block"><span class="glyphicon glyphicon-search"></span> <?= "Ruhsat Bilgilerini Getir" ?></button>
+                           <div class="col-sm-12 form-group form-group-sm">
+                                <button type="submit" id="get-items" name="Sorgula" class="btn bg-purple btn-block hidden"><span class="glyphicon glyphicon-search"></span> <?= "Ruhsat Bilgilerini Getir" ?></button>
                             </div>
                         </form>
                         <hr> 
@@ -232,7 +232,8 @@
                                         DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
                                         s_ruhsat_bilgileri.iskan_no, 
                                         s_ruhsat_bilgileri.iskan_bulten_no, 
-                                        s_ruhsat_bilgileri.kacak_islem_bilgisi
+                                        s_ruhsat_bilgileri.kacak_islem_bilgisi, 
+                                        s_ruhsat_bilgileri.aciklama
                                 FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi AND id = ? ";
                         $ruhsat_id = mdecrypt($_GET['ruhsat_id'], $_SESSION['key']);
                         try {
@@ -264,7 +265,8 @@
                                         DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
                                         s_ruhsat_bilgileri.iskan_no, 
                                         s_ruhsat_bilgileri.iskan_bulten_no, 
-                                        s_ruhsat_bilgileri.kacak_islem_bilgisi
+                                        s_ruhsat_bilgileri.kacak_islem_bilgisi, 
+                                        s_ruhsat_bilgileri.aciklama
                                 FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi AND ISNULL(ruhsat_no) LIMIT 1000";
                             try {
                                 $listItems = $GLOBALS['db']->fetchAll($ItemsSQL);
@@ -294,7 +296,8 @@
                                         DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
                                         s_ruhsat_bilgileri.iskan_no, 
                                         s_ruhsat_bilgileri.iskan_bulten_no, 
-                                        s_ruhsat_bilgileri.kacak_islem_bilgisi
+                                        s_ruhsat_bilgileri.kacak_islem_bilgisi, 
+                                        s_ruhsat_bilgileri.aciklama
                                 FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi AND ruhsat_no = ? ";
                             try {
                                 $listItems = $GLOBALS['db']->fetchAll($ItemsSQL, $_GET['ruhsat']);
@@ -335,8 +338,8 @@
                             array_push($ruhsat_where, trim($_GET['bulten_no']));
                         }
                         if (trim($_GET['ada_parsel']) !== "") {
-                            $ruhsat_where_string .= " AND ada_parsel LIKE ? ";
-                            array_push($ruhsat_where, "%" . trim($_GET['ada_parsel']) . "%");
+                            $ruhsat_where_string .= " AND ada_parsel = ? ";
+                            array_push($ruhsat_where,  trim($_GET['ada_parsel']));
                         }
                         if (trim($_GET['yibf_no']) !== "") {
                             $ruhsat_where_string .= " AND yibf_no LIKE ? ";
@@ -370,7 +373,8 @@
                                         DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
                                         s_ruhsat_bilgileri.iskan_no, 
                                         s_ruhsat_bilgileri.iskan_bulten_no, 
-                                        s_ruhsat_bilgileri.kacak_islem_bilgisi
+                                        s_ruhsat_bilgileri.kacak_islem_bilgisi, 
+                                        s_ruhsat_bilgileri.aciklama
                                 FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi = '-1' " . $ruhsat_where_string . " LIMIT 1000";
                             } else {
                                 $ItemsSQL = "SELECT
@@ -395,7 +399,8 @@
                                         DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
                                         s_ruhsat_bilgileri.iskan_no, 
                                         s_ruhsat_bilgileri.iskan_bulten_no, 
-                                        s_ruhsat_bilgileri.kacak_islem_bilgisi
+                                        s_ruhsat_bilgileri.kacak_islem_bilgisi, 
+                                        s_ruhsat_bilgileri.aciklama
                                 FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi " . $ruhsat_where_string . " LIMIT 1000";
                             }
                         }
@@ -421,7 +426,8 @@
                                         DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
                                         s_ruhsat_bilgileri.iskan_no, 
                                         s_ruhsat_bilgileri.iskan_bulten_no, 
-                                        s_ruhsat_bilgileri.kacak_islem_bilgisi
+                                        s_ruhsat_bilgileri.kacak_islem_bilgisi, 
+                                        s_ruhsat_bilgileri.aciklama
                                 FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi " . $ruhsat_where_string . " LIMIT 1000";
                         try {
                             $listItems = $GLOBALS['db']->fetchAll($ItemsSQL, $ruhsat_where);
@@ -442,12 +448,12 @@
                         }
                         $options = array(
                             //zorunlu parametreler
-                            'tableHeaders' => array('RUHSAT NO', 'Ruhsat Tarihi', 'Kaçak', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Adı Soyadı', 'Ruhsat Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul/YDK', 'Mahallesi', 'Yapı Alanı', 'İskan', 'İskan Tarihi', 'İskan No', 'İskan Bülten No', 'Kaçak Bilgisi'),
+                            'tableHeaders' => array('RUHSAT NO', 'Ruhsat Tarihi', 'Kaçak', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Adı Soyadı', 'Ruhsat Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul/YDK', 'Mahallesi', 'Yapı Alanı', 'İskan', 'İskan Tarihi', 'İskan No', 'İskan Bülten No', 'Kaçak Bilgisi','Açıklama'),
                             //zorunlu olmayan parametreler
                             //        'id' => 'example2' , // optional
                             'order' => array(0, 'asc'),
-                            'tableFooters' => array('RUHSAT NO', 'Ruhsat Tarihi', 'Kaçak', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Adı Soyadı', 'Ruhsat Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul/YDK', 'Mahallesi', 'Yapı Alanı', 'İskan', 'İskan Tarihi', 'İskan No', 'İskan Bülten No', 'Kaçak Bilgisi'), // optional
-                            'filters' => array('text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text'),
+                            'tableFooters' => array('RUHSAT NO', 'Ruhsat Tarihi', 'Kaçak', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Adı Soyadı', 'Ruhsat Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul/YDK', 'Mahallesi', 'Yapı Alanı', 'İskan', 'İskan Tarihi', 'İskan No', 'İskan Bülten No', 'Kaçak Bilgisi','Açıklama'), // optional
+                            'filters' => array('text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text'),
                             //yerel parametreler
                             'tableData' => $listItems,
                             'processButtons' => array(
