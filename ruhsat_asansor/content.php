@@ -76,9 +76,9 @@ ORDER BY ruhsat_no DESC");
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-12 form-group form-group-sm">
+                            <!--<div class="col-sm-12 form-group form-group-sm">
                                 <button type="submit" id="get-items" name="Sorgula" class="btn bg-purple btn-block"><span class="glyphicon glyphicon-search"></span> <?= "Ruhsat ve Asansör Bilgilerini Getir" ?></button>
-                            </div>
+                            </div>-->
                         </form>
                         <hr>                            
                         <form class="form-horizontal" method="get" action="">

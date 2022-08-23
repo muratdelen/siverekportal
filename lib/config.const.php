@@ -1,6 +1,6 @@
 <?php
 
-ini_set("display_errors", 1);
+ini_set("display_errors", 0);
 
 $GoogleSiteKey = '6LdGwkYUAAAAAI4E-LhN5EES0lHVI6FuG-5vazxv';
 $GoogleSecret = '6LdGwkYUAAAAANbD7ihRyPBBAoGNQE7JrreL9b_r';

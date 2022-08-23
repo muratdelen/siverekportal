@@ -153,7 +153,7 @@ if (isset($_SESSION['adminLTE_alert'])) {
     </form>
 </div>-->
 <header class="main-header">
-    <!-- Logo -->
+    <!-- Logo --> 
     <a href="<?php echo BASE_URL; ?>" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"></span>
@@ -162,6 +162,12 @@ if (isset($_SESSION['adminLTE_alert'])) {
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
+       
+
+            <a style="color:white; margin-left:500px;font-size:50px; " > Ruhsat Envater </a>
+        
+     
+       
         <!-- Sidebar toggle button-->
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" style="color:#fff;">
             <span class="sr-only">Toggle navigation</span>

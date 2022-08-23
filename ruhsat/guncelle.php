@@ -219,7 +219,11 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="aciklama">Açıklama</label>
             <div class="col-sm-8">
+<<<<<<< HEAD
                 <textarea id="aciklama" name="aciklama" rows="10" cols="80"><?= htmlentities($ruhsat_bilgisi->aciklama) ?></textarea>
+=======
+                <textarea id="aciklama" name="aciklama" rows="10" cols="80"><?= ($ruhsat_bilgisi->aciklama) ?></textarea>
+>>>>>>> cc41b9fc7f8ef8d88177fe1f958a928f341ac159
             </div>  
         </div>
         <div class="col-sm-12 form-group form-group-sm">
