@@ -29,7 +29,7 @@
 
                 <?php
 //yeni kayıt butonunana basıldı ise
-                if (isset($_GET['add']) && in_array(YT_INSERT, $sayfaIslemleriId)) {
+                if (isset($_GET['add']) && in_array(YT_INSERT, $sayfaIslemleriId) || isset($_POST['insert']) && in_array(YT_INSERT, $sayfaIslemleriId)) {
                     require_once 'ekle.php';
                 }//eğer güncelleme butonuna basıldı ise
                 else if (isset($_POST['update']) && in_array(YT_UPDATE, $sayfaIslemleriId)) {
@@ -200,8 +200,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-12 form-group form-group-sm">
-                                <button type="submit" id="get-items" name="Sorgula" class="btn bg-purple btn-block"><span class="glyphicon glyphicon-search"></span> <?= "Ruhsat Bilgilerini Getir" ?></button>
+                            <div class="col-sm-12 form-group form-group-sm text-center">
+                                <button type="submit" id="get-items" name="Sorgula" class="btn bg-purple"><span class="glyphicon glyphicon-search"></span> <?= "Ruhsat Bilgilerini Getir" ?></button>
                             </div>
                         </form>
                     </div>
@@ -440,8 +440,8 @@
                     if ((isset($listItems)) && !empty($listItems)) {
 
                         if (in_array(YT_PAGEADMIN, $sayfaIslemleriId)) {
-                            $Buttons = array('update' => 'Güncelle', 'print1' => 'Ekspertiz', 'remove' => 'Sil');
-                            $ButtonsUrls = array('new_tab' => 'preview.php', 'update' => 'index.php', 'print1' => 'ekspertiz.php', 'remove' => 'postPage.php');
+                            $Buttons = array('insert' => 'Ekle','update' => 'Güncelle', 'print1' => 'Ekspertiz', 'remove' => 'Sil');
+                            $ButtonsUrls = array('new_tab' => 'preview.php', 'insert' => 'index.php','update' => 'index.php', 'print1' => 'ekspertiz.php', 'remove' => 'postPage.php');
                         } else {
                             $Buttons = array('update' => 'Güncelle', 'print1' => 'Ekspertiz');
                             $ButtonsUrls = array('new_tab' => 'preview.php', 'update' => 'index.php', 'print1' => 'ekspertiz.php');
@@ -451,7 +451,7 @@
                             'tableHeaders' => array('RUHSAT NO', 'Ruhsat Tarihi', 'Kaçak', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Adı Soyadı', 'Ruhsat Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul/YDK', 'Mahallesi', 'Yapı Alanı', 'İskan', 'İskan Tarihi', 'İskan No', 'İskan Bülten No', 'Kaçak Bilgisi','Açıklama'),
                             //zorunlu olmayan parametreler
                             //        'id' => 'example2' , // optional
-                            'order' => array(0, 'asc'),
+                            'order' => array(0, 'desc'),
                             'tableFooters' => array('RUHSAT NO', 'Ruhsat Tarihi', 'Kaçak', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Adı Soyadı', 'Ruhsat Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul/YDK', 'Mahallesi', 'Yapı Alanı', 'İskan', 'İskan Tarihi', 'İskan No', 'İskan Bülten No', 'Kaçak Bilgisi','Açıklama'), // optional
                             'filters' => array('text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text'),
                             //yerel parametreler
@@ -492,11 +492,27 @@
 </div>
 </div>
 <script>
+
+    function unsecuredCopyToClipboard(text) {
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    document.execCommand('copy');
+  } catch (err) {
+    console.error('Unable to copy to clipboard', err);
+  }
+  document.body.removeChild(textArea);
+}
     $(function () {
         $('.table-data').click(function () {
             var copytext = $(this).text();
-            console.log(copytext);
-            navigator.clipboard.writeText(copytext);
+            unsecuredCopyToClipboard(copytext);
+            $(this).css("font-weight","bold");
+            //console.log(copytext);
+           // navigator.clipboard.writeText(copytext);
         });
     });
 

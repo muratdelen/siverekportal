@@ -85,13 +85,6 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
                     ?>
                 </select>
             </div>
-        </div>    
-
-        <div class="form-group form-group-sm">
-            <label class="col-sm-2 control-label" for="fenni_mesul">Fenni Mesul/Yapı Denetim</label>
-            <div class="col-sm-8">
-                <input class="form-control" type="text" id="fenni_mesul" name="fenni_mesul" value="<?= $ruhsat_bilgisi->fenni_mesul ?>" >
-            </div>
         </div>
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="fenni_mesul">Fenni Mesul/Yapı Denetim</label>

@@ -1,4 +1,38 @@
 <?php
+if (isset($_POST['insert']) && $_POST['insert'] != '') {
+    $insert_id = mdecrypt($_POST['insert'], $_SESSION['key']);
+    try {
+        $SQL_cumlesi = "SELECT
+                                        s_ruhsat_bilgileri.id, 
+                                        s_ruhsat_bilgileri.ruhsat_no, 
+                                        DATE_FORMAT(s_ruhsat_bilgileri.ruhsat_tarihi,'%d/%m/%Y') AS ruhsat_tarihi,	
+                                        kacak_islem_yapildi_mi, 
+                                        s_ruhsat_bilgileri.bulten_no, 
+                                        s_ruhsat_bilgileri.ada_parsel, 
+                                        s_ruhsat_bilgileri.yibf_no,
+                                        s_ruhsat_bilgileri.adi_soyadi, 
+                                        s_ruhsat_bilgileri.ruhsat_cinsi, 
+                                        s_ruhsat_bilgileri.ruhsat_verilis_amaci, 
+                                        s_ruhsat_bilgileri.fenni_mesul, 
+                                        s_ruhsat_bilgileri.mahallesi,  
+                                        s_ruhsat_bilgileri.yapi_alani, 
+                                        iskan_verildi_mi, 
+                                        DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
+                                        s_ruhsat_bilgileri.iskan_no, 
+                                        s_ruhsat_bilgileri.iskan_bulten_no, 
+                                        s_ruhsat_bilgileri.kacak_islem_bilgisi,
+                                        aciklama, 
+                                        s_ruhsat_bilgileri.aktif_mi
+                                FROM s_ruhsat_bilgileri
+	WHERE aktif_mi AND id = ?";
+        $ruhsat_bilgisi = $GLOBALS['db']->fetchRow($SQL_cumlesi, $insert_id);
+    } catch (Zend_Db_Exception $ex) {
+        log::DB_hata_kaydi_ekle(__FILE__, $ex);
+    }
+   var_dump($update_id, $ruhsat_bilgisi);
+//die();
+}
+
 $yeni_ruhsat_no = date("Y") . "/";
 try {
     $son_ruhsat_bilgisi = $db->fetchRow("SELECT deger FROM s_degiskenler WHERE aktif_mi AND degisken = 'son_ruhsat_no'");
@@ -21,22 +55,50 @@ try {
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="adi_soyadi">Ad Soyad</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" id="adi_soyadi" name="adi_soyadi" value="" >
+                <input class="form-control" type="text" id="adi_soyadi" name="adi_soyadi" value="<?= (isset($ruhsat_bilgisi->adi_soyadi) ? $ruhsat_bilgisi->adi_soyadi : "") ?>" >
             </div>
         </div>
         
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="ruhsat_cinsi">Ruhsat Cinsi</label>
             <div class="col-sm-8">
-                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="ruhsat_cinsi" name="ruhsat_cinsi">
-                <option value='' selected>Ruhsat Cinsi Seçiniz</option>
-                <option value='MESKEN' >Mesken</option>
-                    <option value='İŞYERİ'>İşyeri</option>
-                    <option value='MESKEN+İŞYERİ'>Mesken+İşyeri</option>
-                    <option value='AHIR'>Ahır</option>
-                </select>
+                <input class="form-control" type="text" id="ruhsat_cinsi" name="ruhsat_cinsi" value="<?= (isset($ruhsat_bilgisi->ruhsat_cinsi) ? $ruhsat_bilgisi->ruhsat_cinsi : "") ?>" >
             </div>
         </div>  
+        <?php
+        if(isset($ruhsat_bilgisi->ruhsat_verilis_amaci)){
+?>
+   <div class="form-group form-group-sm">
+            <label class="col-sm-2 control-label" for="ruhsat_verilis_amaci">Ruhsat Veriliş Amacı</label>
+            <div class="col-sm-8">
+                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="ruhsat_verilis_amaci" name="ruhsat_verilis_amaci">
+                    <option value=''>Listelenecek Ruhsat Seçiniz</option>
+                    <?php
+                    try {
+                        $ruhsat_verilis_amaclari = $db->fetchAll("SELECT verilis_amaci, aciklama FROM s_ruhsat_verilis_amaci WHERE aktif_mi");
+                    } catch (Zend_Db_Exception $ex) {
+                        log::DB_hata_kaydi_ekle(__FILE__, $ex);
+                    }
+                    htmlspecialchar_obj($ruhsat_verilis_amaclari);
+                    $is_not_select = true;
+                    foreach ($ruhsat_verilis_amaclari as $ruhsat_verilis_amaci) {
+                        echo "<option value='$ruhsat_verilis_amaci->verilis_amaci' title='$ruhsat_verilis_amaci->aciklama' ";
+                        if ($ruhsat_bilgisi->ruhsat_verilis_amaci == $ruhsat_verilis_amaci->verilis_amaci) {
+                            $is_not_select = false;
+                            echo 'selected';
+                        }
+                        echo ">$ruhsat_verilis_amaci->verilis_amaci</option>";
+                    }
+                    if ($is_not_select && !is_null($ruhsat_bilgisi->ruhsat_verilis_amaci)) {
+                        echo "<option value='$ruhsat_bilgisi->ruhsat_verilis_amaci' title='Daha önce girilen bilgidir.' selected >$ruhsat_bilgisi->ruhsat_verilis_amaci</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+        </div>
+<?php
+        }else{?>
+
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="ruhsat_verilis_amaci">Ruhsat Veriliş Amacı</label>
             <div class="col-sm-8">
@@ -57,12 +119,51 @@ try {
                 </select>
             </div>
         </div>
+        <?php
+        }
+        ?>
         <!--        <div class="form-group form-group-sm">
                     <label class="col-sm-2 control-label" for="ruhsat_verilis_amaci">Ruhsat Veriliş Amacı</label>
                     <div class="col-sm-8">
                         <input class="form-control" type="text" id="ruhsat_verilis_amaci" name="ruhsat_verilis_amaci" value="" >
                     </div>
                 </div>        -->
+                <?php
+                if(isset($ruhsat_bilgisi->fenni_mesul)){
+?>
+
+<div class="form-group form-group-sm">
+            <label class="col-sm-2 control-label" for="fenni_mesul">Fenni Mesul/Yapı Denetim</label>
+            <div class="col-sm-8">
+                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="fenni_mesul" name="fenni_mesul">
+                    <option value=''>Listelenecek Ruhsat Seçiniz</option>
+                    <?php
+                    try {
+                        $ydk_bilgileri = $db->fetchAll("SELECT unvan, adres FROM s_ydk_listesi WHERE aktif_mi");
+                    } catch (Zend_Db_Exception $ex) {
+                        log::DB_hata_kaydi_ekle(__FILE__, $ex);
+                    }
+                    htmlspecialchar_obj($ruhsat_verilis_amaclari);
+                    $is_not_select = true;
+                    foreach ($ydk_bilgileri as $ydk_bilgisi) {
+                        echo "<option value='$ydk_bilgisi->unvan' title='$ydk_bilgisi->adres' ";
+                        if ($ruhsat_bilgisi->fenni_mesul == $ydk_bilgisi->unvan) {
+                            $is_not_select = false;
+                            echo 'selected';
+                        }
+                        echo ">$ydk_bilgisi->unvan</option>";
+                    }
+                    if ($is_not_select && !is_null($ruhsat_bilgisi->fenni_mesul)) {
+                        echo "<option value='$ruhsat_bilgisi->fenni_mesul' title='Daha önce girilen bilgidir.' selected >$ruhsat_bilgisi->fenni_mesul</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+        </div>
+<?php
+                }else{
+                    ?>
+                
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="fenni_mesul">Fenni Mesul/Yapı Denetim</label>
             <div class="col-sm-8">
@@ -84,47 +185,50 @@ try {
                 <!--<input class="form-control" type="text" id="fenni_mesul" name="fenni_mesul" value="" >-->
             </div>
         </div>
+        <?php
+                }
+                ?>
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="ruhsat_tarihi">Ruhsat Tarihi</label>
             <div class="col-sm-8">
-                <input class="form-control date" type="text" id="ruhsat_tarihi" name="ruhsat_tarihi" value="" >
+                <input class="form-control date" type="text" id="ruhsat_tarihi" name="ruhsat_tarihi" value="<?= (isset($ruhsat_bilgisi->ruhsat_tarihi) ? $ruhsat_bilgisi->ruhsat_tarihi : "") ?>" >
             </div>
         </div>
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="mahallesi">Mahallesi</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" id="mahallesi" name="mahallesi" value="" >
+                <input class="form-control" type="text" id="mahallesi" name="mahallesi" value="<?= (isset($ruhsat_bilgisi->mahallesi) ? $ruhsat_bilgisi->mahallesi : "") ?>" >
             </div>
         </div>
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="bulten_no">Bulten No</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" id="bulten_no" name="bulten_no" value="" >
+                <input class="form-control" type="text" id="bulten_no" name="bulten_no" value="<?= (isset($ruhsat_bilgisi->bulten_no) ? $ruhsat_bilgisi->bulten_no : "") ?>"  >
             </div>
         </div>
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="ada_parsel">Ada Parsel</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" id="ada_parsel" name="ada_parsel" value="" >
+                <input class="form-control" type="text" id="ada_parsel" name="ada_parsel" value="<?= (isset($ruhsat_bilgisi->ada_parsel) ? $ruhsat_bilgisi->ada_parsel : "") ?>" >
             </div>
         </div>
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="yibf_no">YİBF No</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" id="yibf_no" name="yibf_no" value="" >
+                <input class="form-control" type="text" id="yibf_no" name="yibf_no" value="<?= (isset($ruhsat_bilgisi->yibf_no) ? $ruhsat_bilgisi->yibf_no : "") ?>" >
             </div>
         </div>
 
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="yapi_alani">Ölçüsü</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" id="yapi_alani" name="yapi_alani" value="" >
+                <input class="form-control" type="text" id="yapi_alani" name="yapi_alani"  value="<?= (isset($ruhsat_bilgisi->yapi_alani) ? $ruhsat_bilgisi->yapi_alani : "") ?>" >
             </div>
         </div>
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="iskan_ruhsat_tarihi">İskan Tarihi</label>
             <div class="col-sm-8">
-                <input class="form-control date" type="text" id="iskan_ruhsat_tarihi" name="iskan_ruhsat_tarihi" value="" >
+                <input class="form-control date" type="text" id="iskan_ruhsat_tarihi" name="iskan_ruhsat_tarihi" value="<?= (isset($ruhsat_bilgisi->iskan_ruhsat_tarihi) ? $ruhsat_bilgisi->iskan_ruhsat_tarihi : "") ?>" >
             </div>
         </div>
         <div class="form-group form-group-sm">
@@ -172,5 +276,28 @@ try {
                 adi_soyadi: {required: "Ruhsat sahibi giriniz. "}
             }
         });
-    });
+        $("#ruhsat_no").change(function () {
+            //$("#ruhsat_no").val(mUrlEncode($("#ruhsat_no").val()));
+            var formData = new Array();
+            formData.push({name: 'ruhsat_no', value: $("#ruhsat_no").val()});
+            $.ajax({
+//                async: true,
+                url: 'ajax.php',
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    if (data == 1) {
+                        adminLTE_alert_remove();
+                        adminLTE_alert(false, "Ruhsat Adı", "Ruhsat Adı Kullanılabilir.", "success");
+                    } else {
+                        adminLTE_alert_remove();
+                        adminLTE_alert(false, "Ruhsat Adı", "Bu Ruhsat Önceden Girilmiştir. Lütfen Ruhsat Adını Değiştiriniz.", "danger");
+                    }
+                }
+            });
+        });
+
+    }); 
+
+
 </script>
