@@ -29,7 +29,7 @@ if (isset($_POST['insert']) && $_POST['insert'] != '') {
     } catch (Zend_Db_Exception $ex) {
         log::DB_hata_kaydi_ekle(__FILE__, $ex);
     }
-   var_dump($update_id, $ruhsat_bilgisi);
+  // var_dump($update_id, $ruhsat_bilgisi);
 //die();
 }
 
@@ -236,8 +236,8 @@ try {
             <div class="col-sm-8">
                 <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="iskan_verildi_mi" name="iskan_verildi_mi">
                     <option value='-1' selected>Onay Bekliyor/Başvuru Yapıldı</option>
-                    <option value='0'>İskan Yok</option>
-                    <option value='1'>İskan Verildi</option>
+                    <option value='0' <?= (isset($ruhsat_bilgisi->iskan_verildi_mi)&&iskan_verildi_mi === 0 ? "selected" : "") ?>>İskan Yok</option>
+                    <option value='1' <?= (isset($ruhsat_bilgisi->iskan_verildi_mi)&&iskan_verildi_mi === 1 ? "selected" : "") ?> >İskan Verildi</option>
                 </select>
             </div>
         </div>  
