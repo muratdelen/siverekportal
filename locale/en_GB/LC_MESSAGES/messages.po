@@ -1,0 +1,616 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2016-06-30 09:20+0300\n"
+"PO-Revision-Date: 2016-06-30 09:23+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Poedit-Basepath: ../../..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: assets/dist/js/jquery-ui.min.js:8 assets/plugins/jQueryUI/jquery-ui.min.js:8
+msgid "'"
+msgstr ""
+
+#: assets/alert.php:45
+msgid "okundu yapmak için tıklayınız."
+msgstr "Click here to read."
+
+#: assets/alert.php:45
+msgid "Hata var"
+msgstr "There is Error"
+
+#: assets/alert.php:45
+msgid "Bildirimleri okundu yapmak için tıklayınız."
+msgstr "Click here to read notifications."
+
+#: assets/alert.php:48
+msgid "Yeni hata yoktur."
+msgstr "There are no new errors."
+
+#: assets/alert.php:69
+msgid "Hata Yapan Kullanıcı"
+msgstr "Error On Users"
+
+#: assets/alert.php:70
+msgid "Hata Başlığı"
+msgstr "Error Title"
+
+#: assets/alert.php:71
+msgid "Hata Tipi"
+msgstr "Error Type"
+
+#: assets/alert.php:72
+msgid "Hata Satırı"
+msgstr "Error Line"
+
+#: assets/alert.php:73
+msgid "Hata Url"
+msgstr "Error Url"
+
+#: assets/alert.php:74
+msgid "Hata Tanımı"
+msgstr "Error Description"
+
+#: assets/alert.php:75
+msgid "Hata Yapan Ip"
+msgstr "Error Ip"
+
+#: assets/alert.php:132
+msgid "Tüm bildirimleri okundu yapmak için tıklayınız."
+msgstr "Click here to read all notifications."
+
+#: assets/alert.php:135
+msgid "Yeni bildirim yoktur. "
+msgstr "There are no new notifications."
+
+#: assets/alert.php:155
+msgid "Tarafından Mesaj Gönderildi."
+msgstr "Message Sented"
+
+#: assets/alert.php:162
+msgid "Kullanıcı Adı"
+msgstr "Username"
+
+#: assets/alert.php:162
+msgid "Mesaj Gönderdi. Cevaplamak İçin Tıklayınız."
+msgstr "Message Sented. Click here to answer."
+
+#: assets/alert.php:165
+msgid "Zaman"
+msgstr "Time"
+
+#: assets/footer.php:4
+msgid "Copyright &copy; 2016-2017  <b>Version</b> 1.0"
+msgstr "Copyright &copy; 2016-2017  <b>Version</b> 1.0"
+
+#: assets/footer.php:6
+msgid ""
+"<strong><a href=\"http://www.bidb.Siverek.edu.tr/\">Siverek Belediyesi "
+"Bilgi İşlem Daire Başkanlığı Yazılım Geliştirme Birimi</a></strong> "
+"tarafından yapılmıştır."
+msgstr ""
+"Create BY  <strong><a href=\"http://www.bidb.Siverek.edu.tr/english/"
+"\">Siverek University Computer Center Software Department</a></strong> "
+
+#: assets/header.php:220 bilgi_guncelleme/content.php:9 calisma/content.php:9
+#: numara_arama/content.php:9 online/content.php:10
+#: personel_arama/content.php:9 spamkontrol/content.php:9
+msgid "Siverek Belediyesi Seçmeli Dersler Koordinatörlüğü"
+msgstr "Siverek Belediyesi Seçmeli Dersler Koordinatörlüğü"
+
+#: assets/header.php:223
+msgid "Çıkış"
+msgstr "Log out"
+
+#: assets/header.php:233
+msgid "Giriş İçin Tıklayınız"
+msgstr "Please click here to login"
+
+#: assets/menu.php:16
+msgid "Menu Arama"
+msgstr "Search Menu"
+
+#: bilgi_guncelleme/content.php:6 calisma/content.php:6
+#: spamkontrol/content.php:6
+msgid "E-POSTA İŞLEMLERİ"
+msgstr "EMAIL OPERATIONS"
+
+#: bilgi_guncelleme/content.php:10 calisma/content.php:10
+msgid "Bilgi Güncelleme"
+msgstr "Info Update"
+
+#: bilgi_guncelleme/lib/Ldap.php:386
+msgid "Hesabınız bu işlem için uygun değildir."
+msgstr "Your account is not eligible for this procedure."
+
+#: bilgi_guncelleme/lib/Ldap.php:390 lib/LdapTransactions.php:186
+msgid "Hesap geçici süreyle durdurulmuştur."
+msgstr "Account has been suspended temporarily."
+
+#: bilgi_guncelleme/lib/Ldap.php:394 lib/LdapTransactions.php:190
+msgid "Eşleşme hatası."
+msgstr "Pairing error."
+
+#: bilgi_guncelleme/lib/Ldap.php:400 lib/LdapTransactions.php:196
+msgid "Hatalı kullanıcı adı veya şifre!"
+msgstr "Incorrect Username and/or Password"
+
+#: bilgi_guncelleme/lib/Ldap.php:403 lib/LdapTransactions.php:199
+msgid "Şifrenizin kullanım süresi dolmuştur!"
+msgstr "Your password has expired lifetime!"
+
+#: bilgi_guncelleme/lib/Ldap.php:414 lib/LdapTransactions.php:209
+msgid "Kullanılan şifrenin süresi dolmuştur."
+msgstr "The duration of the password used is full."
+
+#: bilgi_guncelleme/lib/Ldap.php:418 lib/LdapTransactions.php:213
+msgid "Kullanılan hesabın süresi dolmuştur."
+msgstr "The duration of the password used is full."
+
+#: bilgi_guncelleme/lib/Ldap.php:422 lib/LdapTransactions.php:216
+msgid "HATA : "
+msgstr "ERROR:"
+
+#: content.php:10
+msgid "Uygulama Ara"
+msgstr "Search Application"
+
+#: content.php:18
+msgid "HÜ E-Posta"
+msgstr "HU E-Mail"
+
+#: content.php:19
+msgid "HÜ E-Posta Sistemleri için tıklayınız."
+msgstr "click for E-Mail system"
+
+#: content.php:27
+msgid "Alternatif E-Posta"
+msgstr "Alternative E-Mail Interface"
+
+#: content.php:28
+msgid "HÜ Roundcube E-Posta Sistemleri için tıklayınız."
+msgstr "Please  click for roundcube e-mail interface"
+
+#: content.php:37
+msgid "Şifremi Unuttum"
+msgstr "Forgot My Password"
+
+#: content.php:38
+msgid "Şifrenizi sıfırlamak için lütfen tıklayınız."
+msgstr "Please click here to reset your password"
+
+#: content.php:49
+msgid "Şifre Değiştir"
+msgstr "Change Password"
+
+#: content.php:50
+msgid "Şifrenizi değiştirmek için tıklayınız"
+msgstr "Please click here to change your password"
+
+#: content.php:58
+msgid "SMS* ile şifre almak için bilgi güncelleme"
+msgstr "Information update to get a password via SMS message"
+
+#: content.php:59
+msgid "*SMS veya Alternatif E-Posta ile şifre almak için "
+msgstr "To get a password via SMS message of alternative e-mail address"
+
+#: content.php:67
+msgid "HUYS"
+msgstr "HUYS"
+
+#: content.php:68
+msgid "HÜ Yönetim Sistemleri için tıklayınız"
+msgstr "Siverek University Management Systems"
+
+#: content.php:79
+msgid "Yazılım Deposu"
+msgstr "Software Store"
+
+#: content.php:80
+msgid "HÜ Yazılım Paketleri Sunucusuna erişmek için tıklayınız"
+msgstr "Please click here to access Siverek University Software Packages"
+
+#: content.php:88
+msgid "Sorun Bildirim ve Destek Sistemi"
+msgstr "Troubleshooting & Support System"
+
+#: content.php:89
+msgid "Sorun bildirmek için lütfen tıklayınız"
+msgstr "Click here to notify any problems you encounter"
+
+#: content.php:97
+msgid "Sıkça Sorulan Sorular"
+msgstr "Frequently Asked Questions"
+
+#: content.php:98
+msgid "Sıkça sorulan sorulara ulaşmak için lütfen tıklayınız"
+msgstr "Click here for Frequently Asked Questions"
+
+#: content.php:108 personel_arama/content.php:10
+msgid "Personel Arama"
+msgstr " Staff  Search"
+
+#: content.php:109
+msgid "Personel arama sayfasına ulaşmak için lütfen tıklayınız"
+msgstr "Click here for Staff Search"
+
+#: content.php:117
+msgid "HÜ Birim Telefon Numaraları"
+msgstr "Siverek University Telephone Numbers"
+
+#: content.php:118
+msgid "HÜ Birimleri için telefon rehberi"
+msgstr "Telephone Directory for University Departments and Units"
+
+#: lib/DataTable.php:602 loglist/alert/DataTable.php:628
+msgid "İşlem"
+msgstr "Process"
+
+#: lib/DataTable.php:604 loglist/alert/DataTable.php:630 online/content.php:156
+msgid "Mesaj Yolla"
+msgstr "Send Message"
+
+#: lib/DataTable.php:605 loglist/alert/DataTable.php:631
+msgid "Mesaj Sil"
+msgstr "Remove Message"
+
+#: lib/LdapTransactions.php:205
+msgid "Sunucuya bağlanılamadı."
+msgstr "Failed to connect to the server."
+
+#: lib/class.config.php:172
+msgid "Kapat"
+msgstr "Close"
+
+#: lib/functions.php:30
+msgid "Bağlantı zaman aşımına uğradı tekrar deneyiniz."
+msgstr "The connection has timed out and try again."
+
+#: loglist/alert/content.php:6 loglist/alert/content.php:9
+msgid "Mesaj Silme İşlemi"
+msgstr "Message Deletion"
+
+#: loglist/alert/content.php:6
+msgid "Silme Başarıyla Gerçekleşti!"
+msgstr "Deleting Successfully!"
+
+#: loglist/alert/content.php:9
+msgid "Silme Gerçekleşmedi!"
+msgstr "Deletion Realization!"
+
+#: loglist/alert/content.php:75
+msgid "Sözülen Mesajları Sil"
+msgstr "Delete All Message"
+
+#: loglist/alert/content.php:85 loglist/alert/content.php:89
+msgid "Silme Sonucu"
+msgstr "Delete Result"
+
+#: loglist/alert/content.php:85
+msgid "Mesaj Silindi!"
+msgstr "Remove Message"
+
+#: loglist/alert/content.php:89
+msgid "Mesaj Silinemedi!"
+msgstr "Message could not be remove !"
+
+#: numara_arama/content.php:6 personel_arama/content.php:6
+msgid "PERSONEL ARAMA"
+msgstr "STAFF SEARCH"
+
+#: numara_arama/content.php:10
+msgid "Birim Telefon Numaraları"
+msgstr "Siverek University Telephone Numbers"
+
+#: numara_arama/content.php:22
+msgid "Birim Adı"
+msgstr "Name"
+
+#: numara_arama/content.php:28
+msgid "Birim Ara"
+msgstr "Search Phone"
+
+#: numara_arama/content.php:57 numara_arama/content.php:62
+msgid "Üst Birim Adı"
+msgstr "Top Name"
+
+#: numara_arama/content.php:57 numara_arama/content.php:62
+msgid "Alt Birim Adı"
+msgstr "Sub Name"
+
+#: numara_arama/content.php:57 numara_arama/content.php:62
+msgid "Telefon-1"
+msgstr "Phone-1"
+
+#: numara_arama/content.php:57 numara_arama/content.php:62
+msgid "Telefon-2"
+msgstr "Phone-2"
+
+#: numara_arama/content.php:78 numara_arama/content.php:87
+#: numara_arama/content.php:91 personel_arama/sorgula.php:74
+#: personel_arama/sorgula.php:83 personel_arama/sorgula.php:87
+msgid "Sorgulama Sonucu"
+msgstr "Query Result"
+
+#: numara_arama/content.php:87 personel_arama/sorgula.php:83
+msgid "Sorgulamada kayıt bulunamadı!"
+msgstr "No records query!"
+
+#: numara_arama/content.php:91
+msgid "Birim Adı giriniz! "
+msgstr "Enter Name!"
+
+#: online/content.php:7
+msgid "Bağlanan Kullanıcılar"
+msgstr "Connected Users"
+
+#: online/content.php:11
+msgid "Sisteme Bağlanan Kullanıcılar"
+msgstr "Users who connect to the system"
+
+#: online/content.php:47 online/content.php:55
+msgid "Kullanıcı Engelleme"
+msgstr "Blocking Users"
+
+#: online/content.php:47
+msgid "Engelleme Başarıyla Gerçekleşti"
+msgstr "Blocking is successful"
+
+#: online/content.php:55
+msgid "Engelleme Başarıyla Kaldırıldı."
+msgstr "Remove blocking is successful"
+
+#: online/content.php:80
+msgid " Kullanıcısı Tarafından Engellendiniz."
+msgstr "Blocked by you the user."
+
+#: online/content.php:89
+msgid "Mesaj Gönderme"
+msgstr "Posting"
+
+#: online/content.php:89
+msgid "Mesaj Gönderilemedi!"
+msgstr "Message could not be sent !"
+
+#: online/content.php:118
+msgid "Engelle"
+msgstr "Block"
+
+#: online/content.php:120
+msgid "Engelli Kaldır"
+msgstr "Remove Bloking"
+
+#: online/content.php:129
+msgid "Mesajlarda Ara"
+msgstr "Search for Posts"
+
+#: online/content.php:248
+msgid "Mesajlarınız <b>Uçtan Uca Şifrelemeyle</b> Şifrelenmektedir."
+msgstr "Your message is encrypted with <b> Peer to Peer Encryption</b>."
+
+#: online/online_users.php:3
+msgid "Çevrimiçi Kullanıcı Ara"
+msgstr "Search Users Online"
+
+#: personel_arama/sorgula.php:8
+msgid "Personel Adı"
+msgstr "Staff Name"
+
+#: personel_arama/sorgula.php:14
+msgid "Personel Soyadı"
+msgstr "Staff Surname"
+
+#: personel_arama/sorgula.php:20
+msgid "PERSONEL ARA"
+msgstr "Search for Staff"
+
+#: personel_arama/sorgula.php:53 personel_arama/sorgula.php:58
+msgid "Adi"
+msgstr "Name"
+
+#: personel_arama/sorgula.php:53 personel_arama/sorgula.php:58
+msgid "Soyadı"
+msgstr "Surname"
+
+#: personel_arama/sorgula.php:53 personel_arama/sorgula.php:58
+msgid "Görev Unvan Adı"
+msgstr "Duty Title Name"
+
+#: personel_arama/sorgula.php:53 personel_arama/sorgula.php:58
+msgid "Görev Birimi"
+msgstr "Task Force"
+
+#: personel_arama/sorgula.php:87
+msgid "personel adı veya soyadı giriniz! "
+msgstr "Enter name or surname of staff!"
+
+#: spamkontrol/content.php:10
+msgid "Spam Kontrol"
+msgstr "Spam Control"
+
+#: spamkontrol/content.php:20
+#, fuzzy
+msgid ""
+"<h1>Proxy hesabınız engellenirse ne yapmalısınız?</h1>\n"
+"                        <p>1. Elektronik posta hesabınızı kullandığınız tüm "
+"cihazları (telefon, tablet, bilgisayar) <strong>mutlaka</strong> virüs "
+"taramasından geçirmeniz gerekmektedir.</p>\n"
+"                        <p>2. Virüs tarama işleminin yapıldığını anlatan "
+"bilgilendirme mailini <a href=\"mailto:bidb@Siverek.edu.tr"
+"\">bidb@Siverek.edu.tr</a> adresine göndermeniz gerekmektedir.</p>\n"
+"                        <p>3. Göndermiş olduğunuz mail dikkate alınarak "
+"Proxy engeliniz kaldırılır. Proxy engeliniz kaldırıldıktan sonra "
+"<strong>mutlaka</strong> şifrenizi portal ekranımızda yer alan "
+"<strong>“Şifre Değiştir”</strong> butonunu kullanarak değiştirmeniz "
+"gerekmektedir.</p>\n"
+"                        <p><strong>Şifre Değişikliğinde Dikkat Edilecek "
+"Hususlar</strong></p>\n"
+"                        <ul>\n"
+"                            <li>Seçeceğiniz şifre, 8 karakterden oluşmalıdır."
+"</li>\n"
+"                            <li>Seçeceğiniz şifre mutlaka bir büyük harf, "
+"bir küçük harf, bir rakam ve özel karakter içermelidir.</li>\n"
+"                            <li>Seçeceğiniz şifre, teknik sınırlamalar "
+"nedeniyle \"ı,I,g,G,s,S,ü,Ü,ö,Ö,ç,Ç\" harflerini ve bazı noktalama "
+"işaretlerini içermemelidir.</li>\n"
+"                        </ul>"
+msgstr ""
+"<H1> What to do if your proxy account blocked? </ H1>\n"
+"                        <P> 1. all the devices you use your e-mail account "
+"(phone, tablet, computer) <strong> must </ strong> You need to pass the "
+"virus scan. </ p>\n"
+"                        <P> 2. Virus scanning of e-mail notification "
+"explaining the <a href=\"mailto:bidb@Siverek.edu.tr\"> bidb@Siverek.edu."
+"t is you must submit </a>. </ P>\n"
+"                        <P> 3. Proxy considering your disability you have "
+"sent e-mail is removed. After you have removed obstacles proxy <strong> must "
+"</ strong> our portal password screen located in the <strong> \"Change "
+"Password\" </ strong> You need to change using the buttons. </ p>\n"
+"                        <P> <strong> Change Password Issues to be Considered "
+"in </ strong> </ p>\n"
+"                        <Ul>\n"
+"                            <Li> you choose password should consist of 8 "
+"characters. </ Li>\n"
+"                            <Li> you choose a password must uppercase, a "
+"lowercase letters, numbers and special characters should contain. </ Li>\n"
+"                            <Li> you choose a password, due to technical "
+"limitations, \"I, I, G, S, S, S, U, O, O, C, C 'must contain letters and "
+"some punctuation. </ Li>\n"
+"                        </ Ul>"
+
+#: spamkontrol/content.php:40
+msgid "Proxy Engelleme Nedeni:"
+msgstr "Proxy Blocking Reason:"
+
+#: spamkontrol/content.php:41
+msgid ""
+"Proxy Engelini Kaldırmak İçin <br><b>Bilgi İşlem Daire Başkanlığı Çağrı "
+"Birimi</b> ile irtibata geçiniz<br>Tlf: 297 6262"
+msgstr ""
+"Reviews to remove the proxy Engel <b> Data Processing Unit of the Department "
+"of Call </ b> your contact Member Phone: 297 6262"
+
+#: spamkontrol/content.php:43
+msgid "Proxy engel bulunmamaktadır."
+msgstr "Proxy is no obstacle."
+
+#: spamkontrol/content.php:45
+#, fuzzy
+msgid ""
+"<h1>E-posta hesabınız engellenirse ne yapmalısınız?</h1>\n"
+"                        <p>1. Elektronik posta hesabınızı kullandığınız tüm "
+"cihazları (telefon, tablet, bilgisayar) <strong>mutlaka</strong> virüs "
+"taramasından geçirmeniz gerekmektedir.</p>\n"
+"                        <p>2. Virüs tarama işleminin yapıldığını anlatan "
+"bilgilendirme mailini <a href=\"mailto:bidb@Siverek.edu.tr"
+"\">bidb@Siverek.edu.tr</a> adresine göndermeniz gerekmektedir.</p>\n"
+"                        <p>3. Göndermiş olduğunuz mail dikkate alınarak E-"
+"posta engeliniz kaldırılır. E-posta engeliniz kaldırıldıktan sonra "
+"<strong>mutlaka</strong> şifrenizi portal ekranımızda yer alan "
+"<strong>“Şifre Değiştir”</strong> butonunu kullanarak değiştirmeniz "
+"gerekmektedir.</p>\n"
+"                        <p><strong>Şifre Değişikliğinde Dikkat Edilecek "
+"Hususlar</strong></p>\n"
+"                        <ul>\n"
+"                            <li>Seçeceğiniz şifre, 8 karakterden oluşmalıdır."
+"</li>\n"
+"                            <li>Seçeceğiniz şifre mutlaka bir büyük harf, "
+"bir küçük harf, bir rakam ve özel karakter içermelidir.</li>\n"
+"                            <li>Seçeceğiniz şifre, teknik sınırlamalar "
+"nedeniyle \"ı,I,g,G,s,S,ü,Ü,ö,Ö,ç,Ç\" harflerini ve bazı noktalama "
+"işaretlerini içermemelidir.</li>\n"
+"                        </ul>"
+msgstr ""
+"<H1> What should you do if your e-mail account is blocked? </ H1>\n"
+"                        <P> 1. all the devices you use your e-mail account "
+"(phone, tablet, computer) <strong> must </ strong> You need to pass the "
+"virus scan. </ p>\n"
+"                        <P> 2. Virus scanning of e-mail notification "
+"explaining the <a href=\"mailto:bidb@Siverek.edu.tr\"> bidb@Siverek.edu."
+"t is you must submit </a>. </ P>\n"
+"                        <P> 3. Email considering your disability you have "
+"sent e-mail is removed. After the obstacle is removed e-mail <strong> must "
+"</ strong> our portal password screen located in the <strong> \"Change "
+"Password\" </ strong> You need to change using the buttons. </ p>\n"
+"                        <P> <strong> Change Password Issues to be Considered "
+"in </ strong> </ p>\n"
+"                        <Ul>\n"
+"                            <Li> you choose password should consist of 8 "
+"characters. </ Li>\n"
+"                            <Li> you choose a password must uppercase, a "
+"lowercase letters, numbers and special characters should contain. </ Li>\n"
+"                            <Li> you choose a password, due to technical "
+"limitations, \"I, I, G, S, S, S, U, O, O, C, C 'must contain letters and "
+"some punctuation. </ Li>\n"
+"                        </ Ul>"
+
+#: spamkontrol/content.php:66
+msgid "Eposta Engelleme Nedeni:"
+msgstr "E-Mail Blocking Reason:"
+
+#: spamkontrol/content.php:105
+msgid ""
+"Sistemsel bir hata oluştu.<br>Lütfen tekrar deneyiniz.<br>Sorun devam ederse "
+"lütfen <b>Bilgi İşlem Daire Başkanlığı Çağrı Birimi</b> ile irtibata "
+"geçiniz<br>Tlf: 297 6262"
+msgstr ""
+"There was a systemic failure. Reviews Please try again. If the problem "
+"persists please Reviews <b> Data Processing Unit of the Department of Call "
+"</ b> your contact Member Phone: 297 6262"
+
+#: spamkontrol/content.php:109
+msgid ""
+"E-posta hesabınız engellenmiştir.<br>Otomatik olarak açmak için 2 hakkınızı "
+"kullandınız.<br>Açtırmak için lütfen <b>Bilgi İşlem Daire Başkanlığı Çağrı "
+"Birimi</b> ile irtibata geçiniz.<br>Tlf: 297 62 62"
+msgstr ""
+"E-mail account has been blocked. Reviews you use 2 your right to open "
+"automatically. Reviews for Opening Please <b> Data Processing Department "
+"Call volume </ b> your contact. Reviews Phone: 297 62 62"
+
+#: spamkontrol/content.php:112
+#, php-format
+msgid ""
+"Otomatik engel kaldırılması için kullanabileceğiniz <b> %s </b> tane "
+"hakkınız bulunmaktadır."
+msgstr ""
+"You can use the automatic barrier removal <b>% s </ b> You are entitled to "
+"one."
+
+#: spamkontrol/content.php:114
+msgid ""
+"Otomatik engel kaldırılması için kullanabileceğiniz hakkınız <b>kalmamıştır</"
+"b>."
+msgstr "You can use right for the automatic barrier removal <b> has not </ b>."
+
+#: spamkontrol/content.php:117
+msgid " E-posta Engelini Kaldır"
+msgstr "Remove Bloking"
+
+#: spamkontrol/content.php:120
+msgid "E-postanızda engel bulunmamaktadır."
+msgstr "There is no obstacle in your e-mail."
+
+#~ msgid "Mesaj İçeriği: "
+#~ msgstr "Message Content:"
+
+#~ msgid "Yapılan İşlem Adı"
+#~ msgstr "Operation name"
+
+#, fuzzy
+#~ msgid "ANASAYFA"
+#~ msgstr "HOME"
+
+#, fuzzy
+#~ msgid "Giriş Yapmamış Kullanıcı"
+#~ msgstr "Logged Out Users"

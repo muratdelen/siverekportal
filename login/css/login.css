@@ -1,0 +1,166 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 05.Ağu.2015, 14:53:08
+    Author     : taha
+*/
+
+@CHARSET "UTF-8";
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none;
+}
+body {
+    /*background-image: url("../img/body_background.gif");*/
+    background: #d9d9d9 none repeat scroll 0 0;;
+}
+
+#header_div {
+    background: rgba(0, 0, 0, 0) url("../images/bar.jpg") repeat-x scroll 0 0;
+    color: #cccccc;
+    height: 50px;
+    padding: 2px;
+    text-align: center;
+}
+#header_div a {
+    color: #cccccc;
+}
+#footer_div {
+    color: #9d9c9c;
+    font-size: smaller;
+    margin-top: 20px;
+    padding: 10px;
+    text-align: center;
+}
+.error_border{
+    border: 1px solid red;
+}
+form[role=login] {
+    color: #696969;
+    max-width: 350px;
+    margin: auto;
+}
+form[role=login] > section {
+    max-width: 350px;
+    margin: 0 auto;
+    border: 5px solid gray;
+    border-radius: 3px;
+    background-color: #F2f2f2;
+    /*padding: 20px;*/
+}
+form[role=login] > section div {
+    /*margin: 30px 0 0 0;*/
+}
+form[role=login] > section a {
+    /*display: block;*/
+    margin: 15px 0 30px 0;
+    color: #0251c7;
+}
+form[role=login] input[type=text],
+form[role=login] input[type=password] {
+    font-size: 15px;
+}
+form[role=login] > section button.btn-success {
+    font-size: 17px;
+    background: #14a016;
+}
+
+.signup {
+    font-size: 15px;
+    text-align: center;
+    margin: 2em 0;
+}
+.signup a {
+    color: #fff;	
+}
+
+button{
+    width: 100%;
+    /*margin: 30px 0 0 0;*/
+}
+
+.input-lg {
+    border-radius: 2px;
+
+}
+
+.input-group {
+    margin-bottom: 5px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+
+
+#bottom-sec{
+    border-top: 1px solid#888; 
+    padding-top:15px; font-size:85% ; text-align: center;
+    margin-top: 10px;
+}
+
+.error_div{
+    text-align: center;
+    margin-top: 10px;
+    color:#AA4949;
+}
+
+.panel-title{
+    color: #fff;
+    background-color: #0c203d;
+    padding: 20px;
+
+}
+
+#div-from{
+    padding: 20px;
+}
+
+#captcha-group{
+    /*text-align: center;*/
+}
+
+#captcha-group input{
+    width: 100%;
+}
+
+#change-image{
+
+    padding: 5px;
+    /*border: 1px gray solid;*/
+    cursor: pointer;
+    /*font-size: 32px;*/
+    vertical-align: middle;
+
+}
+
+
+#captca-div{
+    text-align: center;
+    /*background-color: #0088cc;*/
+}
+
+
+.btn-circle.btn-lg {
+    height: 30px;
+    padding: 7px 8px;
+    /*width: 30px;*/
+}
+.btn-circle {
+    /*border-radius: 15px;*/
+    font-size: 12px;
+    line-height: 1.42857;
+    /*padding: 6px 0;*/
+    text-align: center;
+}
+
+form{
+    padding: 10px;
+}
