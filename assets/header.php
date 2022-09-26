@@ -123,7 +123,7 @@
         $('#lte-modal-container').modal('hide');
     }
     $(function () {
-   //console.log("%c Bu Uygulama ", "color:orange;  font-size: 30pt");
+        //console.log("%c Bu Uygulama ", "color:orange;  font-size: 30pt");
         console.log("%c Bilgi İşlem Yazılım Geliştirme Birimi", "color:orange;  font-size: 30pt");
         console.log("%c Mehmet Emin ERDEM & Murat DELEN & Mehmet CANALIR", "font-size:40px;color:#fff;text-shadow:0 1px 0 #ccc,0 2px 0 #c9c9c9,0 3px 0 #bbb,0 4px 0 #b9b9b9,0 5px 0 #aaa,0 6px 1px rgba(0,0,0,.1),0 0 5px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.3),0 3px 5px rgba(0,0,0,.2),0 5px 10px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.2),0 20px 20px rgba(0,0,0,.15);");
         // console.log("%c Murat DELEN http://muratdelen.com", "font-size:40px;color:#fff;text-shadow:0 1px 0 #ccc,0 2px 0 #c9c9c9,0 3px 0 #bbb,0 4px 0 #b9b9b9,0 5px 0 #aaa,0 6px 1px rgba(0,0,0,.1),0 0 5px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.3),0 3px 5px rgba(0,0,0,.2),0 5px 10px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.2),0 20px 20px rgba(0,0,0,.15);");
@@ -156,10 +156,10 @@ if (isset($_SESSION['adminLTE_alert'])) {
 <header class="main-header">
     <!-- Logo -->
     <a href="<?php echo BASE_URL; ?>" class="logo">
-         <!--mini logo for sidebar mini 50x50 pixels--> 
-        <span class="logo-mini"><img style="height: 75px" src="<?=BASE_URL?>/locale/_logo_images/mini-logo.png" class="mr-2" alt="logo"></span>
-         <!--logo for regular state and mobile devices--> 
-        <span class="logo-lg"><img style="height: 75px"  src="<?=BASE_URL?>/locale/_logo_images/logo.png" class="mr-2" alt="logo"></span>
+        <!--mini logo for sidebar mini 50x50 pixels--> 
+        <span class="logo-mini"><img style="height: 75px" src="<?= BASE_URL ?>/locale/_logo_images/mini-logo.png" class="mr-2" alt="logo"></span>
+        <!--logo for regular state and mobile devices--> 
+        <span class="logo-lg"><img style="height: 75px"  src="<?= BASE_URL ?>/locale/_logo_images/logo.png" class="mr-2" alt="logo"></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
@@ -220,7 +220,7 @@ if (isset($_SESSION['adminLTE_alert'])) {
             </li>';
                     echo '<li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color:#fff !important; ">
-                        <img src="' . BASE_URL . 'upload/user_images/public.png" onerror="this.src=' . "'" . BASE_URL . "upload/user_images/public.png'" . '" class="user-image" alt="User Image">
+                        <img src="' . BASE_URL . 'upload/user_images/' . $kullanici_adi . '.jpg" onerror="this.src=' . "'" . BASE_URL . "upload/user_images/public.png'" . '" class="user-image" alt="User Image">
                              <span class="hidden-xs">' . $kullanici . '</span>
                     </a>
                     <ul class="dropdown-menu">
@@ -231,9 +231,9 @@ if (isset($_SESSION['adminLTE_alert'])) {
                         <input type="file" name="user-image-upload" id="user-image-upload" style="display:none;" onchange="$('#form-user-image-upload').submit();">
                     </form>
                     <a href="#" role="button" onclick="$('#user-image-upload').click();
-                            return false;" >
+                                return false;" >
                            <?php
-                           echo '<img src="' . BASE_URL . 'upload/user_images/public.png" class="img-circle" alt="User Image" onerror="this.src=' . "'" . BASE_URL . "upload/user_images/public.png'" . '"  >
+                           echo '<img src="' . BASE_URL . 'upload/user_images/' . $kullanici_adi . '.jpg" class="img-circle" alt="User Image" onerror="this.src=' . "'" . BASE_URL . "upload/user_images/public.png'" . '"  >
                         <br>Resim Değiştirmek İçin Tıklayınız.</a>
                         <p>' . $kullanici
                            . '<small>' . $kullanici_görevi . ' (' . $selected_language . ') </small>
@@ -280,6 +280,3 @@ if (isset($_SESSION['adminLTE_alert'])) {
         </div>
     </nav>
 </header>
-
-
-

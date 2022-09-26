@@ -1,7 +1,5 @@
 <?php
 
-ini_set("display_errors", 1);
-
 define("YT_VIEW", 1);
 define("YT_INSERT", 2);
 define("YT_UPDATE", 3);

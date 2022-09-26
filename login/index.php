@@ -31,9 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { //post ile veri gelmişse
 }
 if (isset($_SESSION["grup_id"])) {
     if ($_SESSION["grup_id"] == 5) {
-        header('location:' . BASE_URL . 'ruhsat/index.php');
+        header('location:' . BASE_URL . 'imar/ruhsat/index.php');
     } elseif ($_SESSION["grup_id"] == 6) {
-        header('location:' . BASE_URL . 'ruhsat/index.php');
+        header('location:' . BASE_URL . 'imar/ruhsat/index.php');
     } else {
         header('location:' . BASE_URL . 'admin');
     }
@@ -51,12 +51,12 @@ if (isset($_SESSION["grup_id"])) {
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-    <link rel="shortcut icon" href="images/fav_icon.gif" />
+    <link rel="Shortcut Icon" href="../cdn/favicon/favicon.ico" type="image/x-icon">
     <title> Siverek Oturum Sistemi </title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="<?php echo ASSETS_DIR ?>/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <script src="<?php echo ASSETS_DIR; ?>/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <link href="<?= CDN_DIR ?>bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <script src="<?= CDN_DIR; ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
         <!-- Custom CSS -->
         <link href="css/login.css" rel="stylesheet">
             </head>

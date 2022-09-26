@@ -144,7 +144,6 @@ require_once PROJECT_DIR . 'lib/functions.php';
             <?php include_once ASSETS_DIR . 'menu.php'; ?>
             <!-- /.sidebar -->
         </aside>
-
         <!-- Content Wrapper. Contains page content -->
         <?php
         include_once 'content.php';

@@ -204,7 +204,7 @@ if (in_array($pageUrl, $girissizErisilecekSayfalar)) {
         }
         if (count($sayfaIslemleriId) == 0) {//Engellendi
             if (isset($_SESSION["kullanici_adi"])) {
-                header("location:" . BASE_URL . "accessErrors/forbid.php");
+//                header("location:" . BASE_URL . "accessErrors/forbid.php");
             } else {
 //                $url_all = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 //                $url = parse_url($url_all);
@@ -228,6 +228,6 @@ if (in_array($pageUrl, $girissizErisilecekSayfalar)) {
 include_once 'uyari.php';
 
 if (isset($_SESSION["kullanici_adi"]) && isset($_FILES["user-image-upload"])) {
-//    include 'upload.php';
+    include 'upload.php';
 }
 ?>
