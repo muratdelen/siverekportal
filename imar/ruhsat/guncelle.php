@@ -39,7 +39,17 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
     <form class="form-horizontal" method="post"  id="form_ruhsat_guncelle" action="postPage.php">
         <div class="box-header">
             <a class="btn bg-orange margin pull-right" type="cancel" href="index.php"><i class="fa fa-times" aria-hidden="true"></i></a>
-        </div> 
+        </div>   
+        <div class="form-group form-group-sm alert-warning">
+            <label class="col-sm-2 control-label" for="iskan_verildi_mi">Yapılan İşlem</label>
+            <div class="col-sm-8">
+                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="iskan_verildi_mi" name="iskan_verildi_mi">
+                    <option value='-1' selected>Ruhsat Bilgileri Güncelleme</option>
+                    <option value='1' <?= (isset($ruhsat_bilgisi->iskan_verildi_mi) && $ruhsat_bilgisi->iskan_verildi_mi === 1 ? "selected" : "") ?> >İskan Bilgieri Güncelleme [İskan Verildi]</option>
+                    <!--<option value='0' <?= (isset($ruhsat_bilgisi->iskan_verildi_mi) && $ruhsat_bilgisi->iskan_verildi_mi === 0 ? "selected" : "") ?>>İskan Bilgieri Güncelleme [İskan Yok]</option>-->
+                </select>
+            </div>
+        </div>
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="ruhsat_no">Ruhsat No</label>
             <div class="col-sm-8">
@@ -157,16 +167,6 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
                 <input class="form-control date" type="text" id="iskan_ruhsat_tarihi" name="iskan_ruhsat_tarihi" value="<?= $ruhsat_bilgisi->iskan_ruhsat_tarihi ?>" >
             </div>
         </div>
-        <div class="form-group form-group-sm">
-            <label class="col-sm-2 control-label" for="iskan_verildi_mi">İskan Süreci</label>
-            <div class="col-sm-8">
-                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="iskan_verildi_mi" name="iskan_verildi_mi">
-                    <option value='1' <?= ($ruhsat_bilgisi->iskan_verildi_mi === -1 ? 'selected' : '') ?> >Onay Bekliyor/Başvuru Yapıldı</option>
-                    <option value='0' <?= ($ruhsat_bilgisi->iskan_verildi_mi === 0 ? 'selected' : '') ?> >İskan Yok</option>
-                    <option value='1' <?= ($ruhsat_bilgisi->iskan_verildi_mi === 1 ? 'selected' : '') ?> >İskan Verildi</option>
-                </select>
-            </div>
-        </div>
 
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="iskan_no">İskan No</label>
@@ -208,7 +208,7 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
                 </select>
             </div>
         </div>
-        
+
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="aciklama">Açıklama</label>
             <div class="col-sm-8">

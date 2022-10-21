@@ -63,12 +63,12 @@ try {
         </div> 
 
         <div class="form-group form-group-sm alert-warning">
-            <label class="col-sm-2 control-label" for="iskan_verildi_mi">İskan İşlemi</label>
+            <label class="col-sm-2 control-label" for="iskan_verildi_mi">Yapılan İşlem</label>
             <div class="col-sm-8">
                 <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="iskan_verildi_mi" name="iskan_verildi_mi">
                     <option value='-1' selected>Ruhsat Bilgileri Ekleme</option>
-                    <option value='1' <?= (isset($ruhsat_bilgisi->iskan_verildi_mi) && iskan_verildi_mi === 1 ? "selected" : "") ?> >İskan Bilgieri Ekleme [İskan Verildi]</option>
-                    <!--<option value='0' <?= (isset($ruhsat_bilgisi->iskan_verildi_mi) && iskan_verildi_mi === 0 ? "selected" : "") ?>>İskan Bilgieri Ekleme [İskan Yok]</option>-->
+                    <option value='1' <?= (isset($ruhsat_bilgisi->iskan_verildi_mi) && $ruhsat_bilgisi->iskan_verildi_mi === 1 ? "selected" : "") ?> >İskan Bilgieri Ekleme [İskan Verildi]</option>
+                    <!--<option value='0' <?= (isset($ruhsat_bilgisi->iskan_verildi_mi) && $ruhsat_bilgisi->iskan_verildi_mi === 0 ? "selected" : "") ?>>İskan Bilgieri Ekleme [İskan Yok]</option>-->
                 </select>
             </div>
         </div> 
