@@ -34,6 +34,7 @@ if (isset($_POST['insert']) && $_POST['insert'] != '') {
 }
 
 $yeni_ruhsat_no = date("Y") . "/";
+$yeni_iskan_no = date("Y") . "/";
 try {
     $son_ruhsat_bilgisi = $db->fetchRow("SELECT deger FROM s_degiskenler WHERE aktif_mi AND degisken = 'son_ruhsat_no'");
     $son_iskan_bilgisi = $db->fetchRow("SELECT deger FROM s_degiskenler WHERE aktif_mi AND degisken = 'son_iskan_no'");
@@ -47,6 +48,18 @@ try {
     <form class="form-horizontal" method="post"  id="form_ruhsat_ekle" action="postPage.php">
         <div class="box-header">
             <a class="btn bg-orange margin pull-right" type="cancel" href="index.php"><i class="fa fa-times" aria-hidden="true"></i></a>
+        </div> 
+        <div class="form-group form-group-sm alert-info">
+            <label class="col-sm-2 control-label" for="son_ruhsat_no">Son Ruhsat No</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" id="son_ruhsat_no" name="ruhsat_no" value="<?= $son_ruhsat_bilgisi->deger ?>" >
+            </div>
+        </div> 
+        <div class="form-group form-group-sm alert-info">
+            <label class="col-sm-2 control-label" for="son_iskan_no">Son İskan No</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" id="son_iskan_no" name="son_iskan_no" value="<?= $son_iskan_bilgisi->deger ?>" >
+            </div>
         </div> 
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="ruhsat_no">Ruhsat No</label>

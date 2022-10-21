@@ -1,8 +1,8 @@
 <?php
 
-require_once '../lib/config.php';
-require_once '../lib/functions.php';
-require_once '../lib/input_filter.php';
+require_once '../../lib/config.php'; 
+require_once '../../lib/functions.php';
+require_once '../../lib/input_filter.php';
 
 $validator = new InputFilterClass();
 $_POST = $validator->sanitize($_POST); // Daha güvenli olması için bir kontrol yapılıyor.
@@ -34,21 +34,24 @@ if (isset($_POST['insert']) && in_array(YT_INSERT, $sayfaIslemleriId)) {//kaydet
             "aciklama" => trim($_POST['aciklama']),
             "aktif_mi" => trim($_POST['ruhsat_aktif_mi'])
         );
+        $son_ruhsat_no = $_POST['son_ruhsat_no'] + 1;
+        $son_iskan_no = $_POST['son_iskan_no'] + 1;
+
         try {
             log::islem_aciklamasi_kaydi("Ruhsat Bilgileri", "Ruhsat Bilgileri Ekleme", YT_INSERT);
             $eklen_id = $GLOBALS['db']->insert('s_ruhsat_bilgileri', $data, null);
             if (trim($_POST['iskan_verildi_mi']) == -1) {// Yeni Ruhsat Ekleniyor
-                $GLOBALS['db']->fetchAll("UPDATE s_degiskenler SET deger = deger + 1 WHERE aktif_mi AND degisken = 'son_ruhsat_no' ");
+                $GLOBALS['db']->fetchAll("UPDATE s_degiskenler SET deger = ? WHERE aktif_mi AND degisken = 'son_ruhsat_no' ", $son_ruhsat_no);
             } else {// Yeni İskan Ekleniyor.
-                $GLOBALS['db']->fetchAll("UPDATE s_degiskenler SET deger = deger + 1 WHERE aktif_mi AND degisken = 'son_iskan_no' ");
+                $GLOBALS['db']->fetchAll("UPDATE s_degiskenler SET deger = ? WHERE aktif_mi AND degisken = 'son_iskan_no' ", $son_iskan_no);
             }
-            adminLTE_redirect(false, __("Ekleme Sonucu"), __("Ruhsat Bilgileri Eklendi"), "success", 1000000, BASE_URL . "ruhsat/index.php?sorgula&ruhsat_id=" . mcrypt($eklen_id, $_SESSION['key']));
+            adminLTE_redirect(false, __("Ekleme Sonucu"), __("Ruhsat Bilgileri Eklendi"), "success", 1000000, BASE_URL . "imar/ruhsat/index.php?sorgula&ruhsat_id=" . mcrypt($eklen_id, $_SESSION['key']));
         } catch (Zend_Db_Exception $ex) {
             log::DB_hata_kaydi_ekle(__FILE__, $ex);
-            adminLTE_redirect(false, __("Ekleme Sonucu"), __("Ruhsat Bilgileri Eklenemedi!"), "danger", 1000000, BASE_URL . "ruhsat/index.php");
+            adminLTE_redirect(false, __("Ekleme Sonucu"), __("Ruhsat Bilgileri Eklenemedi!"), "danger", 1000000, BASE_URL . "imar/ruhsat/index.php");
         }
     } else {
-        adminLTE_redirect($validator->get_readable_errors(true), "warning", BASE_URL . "ruhsat/index.php"); //BURADA STANDART HATALAR VARDIR.
+        adminLTE_redirect($validator->get_readable_errors(true), "warning", BASE_URL . "imar/ruhsat/index.php"); //BURADA STANDART HATALAR VARDIR.
     }
 } elseif (isset($_POST['update']) && in_array(YT_UPDATE, $sayfaIslemleriId)) {//güncelleme işlemi
     $rules = array(
@@ -96,13 +99,13 @@ if (isset($_POST['insert']) && in_array(YT_INSERT, $sayfaIslemleriId)) {//kaydet
 //                $where2["ada_parsel = ?"] = tr_uppercase($_POST['ada_parsel']);
 //                $GLOBALS['db']->update('s_ruhsat_bilgileri', $data2, $where2);
 //            }
-            adminLTE_redirect(true, "Ruhsat Başvurusu", "Ruhsat Güncelleme İşlemi Başarıyla Tamamlandı.", "success", 1000000, BASE_URL . "ruhsat/index.php?sorgula&ruhsat_id=" . urlencode($_POST['update']));
+            adminLTE_redirect(true, "Ruhsat Başvurusu", "Ruhsat Güncelleme İşlemi Başarıyla Tamamlandı.", "success", 1000000, BASE_URL . "imar/ruhsat/index.php?sorgula&ruhsat_id=" . urlencode($_POST['update']));
         } catch (Zend_Db_Exception $ex) {
             log::DB_hata_kaydi_ekle(__FILE__, $ex);
-            adminLTE_redirect(false, "Ruhsat Başvurusu", "Ruhsat güncellerken bir hata oluştu.", "danger", 1000000, BASE_URL . "ruhsat/index.php?sorgula&ruhsat_id=" . urlencode($_POST['update']));
+            adminLTE_redirect(false, "Ruhsat Başvurusu", "Ruhsat güncellerken bir hata oluştu.", "danger", 1000000, BASE_URL . "imar/ruhsat/index.php?sorgula&ruhsat_id=" . urlencode($_POST['update']));
         }
     } else {
-        adminLTE_redirect($validator->get_readable_errors(true), "warning", BASE_URL . "ruhsat/index.php?sorgula&ruhsat=" . urlencode($_POST['update'])); //BURADA STANDART HATALAR VARDIR.
+        adminLTE_redirect($validator->get_readable_errors(true), "warning", BASE_URL . "imar/ruhsat/index.php?sorgula&ruhsat=" . urlencode($_POST['update'])); //BURADA STANDART HATALAR VARDIR.
     }
 } elseif (in_array(YT_DELETE, $sayfaIslemleriId) && isset($_POST['remove'])) {//güncelleme işlemi
     $silinecek_id = mdecrypt($_POST['remove'], $_SESSION['key']);
@@ -116,16 +119,16 @@ if (isset($_POST['insert']) && in_array(YT_INSERT, $sayfaIslemleriId)) {//kaydet
             } catch (Zend_Db_Exception $ex) {
                 log::DB_hata_kaydi_ekle(__FILE__, $ex);
             }
-            adminLTE_redirect(true, "Ruhsat Başvurusu", "Ruhsat Silme İşlemi Başarıyla Tamamlandı.", "success", 1000000, BASE_URL . "ruhsat/index.php");
+            adminLTE_redirect(true, "Ruhsat Başvurusu", "Ruhsat Silme İşlemi Başarıyla Tamamlandı.", "success", 1000000, BASE_URL . "imar/ruhsat/index.php");
         } catch (Zend_Db_Exception $ex) {
             log::DB_hata_kaydi_ekle(__FILE__, $ex);
-            adminLTE_redirect(false, "Ruhsat Başvurusu", "Ruhsat silerken bir hata oluştu.", "danger", 1000000, BASE_URL . "ruhsat/index.php");
+            adminLTE_redirect(false, "Ruhsat Başvurusu", "Ruhsat silerken bir hata oluştu.", "danger", 1000000, BASE_URL . "imar/ruhsat/index.php");
         }
     } else {
-        adminLTE_redirect(true, "Silme Yapamazsınız.", "Silmek İçin Yetkiniz Yoktur.", "danger", 1000000, BASE_URL . "ruhsat/index.php");
+        adminLTE_redirect(true, "Silme Yapamazsınız.", "Silmek İçin Yetkiniz Yoktur.", "danger", 1000000, BASE_URL . "imar/ruhsat/index.php");
     }
 } else {
-    adminLTE_redirect(true, "Yetkisiz Erişim", "Yetkiniz dahilinde olmayan bir kayıt yapamazsınız.", "danger", 1000000, BASE_URL . "ruhsat/index.php");
+    adminLTE_redirect(true, "Yetkisiz Erişim", "Yetkiniz dahilinde olmayan bir kayıt yapamazsınız.", "danger", 1000000, BASE_URL . "imar/ruhsat/index.php");
 }
 ?>
 

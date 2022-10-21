@@ -1,8 +1,8 @@
 <?php
 
-require_once '../lib/config.php';
-require_once '../lib/functions.php';
-require_once '../lib/input_filter.php';
+require_once '../../lib/config.php';
+require_once '../../lib/functions.php';
+require_once '../../lib/input_filter.php';
 
 $validator = new InputFilterClass();
 $_POST = $validator->sanitize($_POST); // Daha güvenli olması için bir kontrol yapılıyor.
