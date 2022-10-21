@@ -101,7 +101,7 @@ try {
                                         <!--<option value=''>İskan No Boş Olanlar</option>-->
                                         <?php
                                         try {
-                                            $ruhsatlar = $db->fetchAll("SELECT id, iskan_no, adi_soyadi FROM s_ruhsat_bilgileri WHERE aktif_mi AND iskan_verildi_mi != '-1' AND NOT ISNULL(iskan_no) GROUP BY iskan_no ORDER BY id DESC");
+                                            $ruhsatlar = $db->fetchAll("SELECT id, iskan_no, adi_soyadi FROM s_ruhsat_bilgileri WHERE aktif_mi AND iskan_verildi_mi = '1' AND NOT ISNULL(iskan_no) GROUP BY iskan_no ORDER BY id DESC");
                                         } catch (Zend_Db_Exception $ex) {
                                             log::DB_hata_kaydi_ekle(__FILE__, $ex);
                                         }

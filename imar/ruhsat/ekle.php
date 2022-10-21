@@ -52,13 +52,24 @@ try {
         <div class="form-group form-group-sm alert-info">
             <label class="col-sm-2 control-label" for="son_ruhsat_no">Son Ruhsat No</label>
             <div class="col-sm-8">
-                <input class="form-control" type="text" id="son_ruhsat_no" name="ruhsat_no" value="<?= $son_ruhsat_bilgisi->deger ?>" >
+                <input class="form-control" type="text" id="son_ruhsat_no" name="son_ruhsat_no" value="<?= $son_ruhsat_bilgisi->deger ?>" >
             </div>
         </div> 
         <div class="form-group form-group-sm alert-info">
             <label class="col-sm-2 control-label" for="son_iskan_no">Son İskan No</label>
             <div class="col-sm-8">
                 <input class="form-control" type="text" id="son_iskan_no" name="son_iskan_no" value="<?= $son_iskan_bilgisi->deger ?>" >
+            </div>
+        </div> 
+
+        <div class="form-group form-group-sm alert-warning">
+            <label class="col-sm-2 control-label" for="iskan_verildi_mi">İskan İşlemi</label>
+            <div class="col-sm-8">
+                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="iskan_verildi_mi" name="iskan_verildi_mi">
+                    <option value='-1' selected>Ruhsat Bilgileri Ekleme</option>
+                    <option value='1' <?= (isset($ruhsat_bilgisi->iskan_verildi_mi) && iskan_verildi_mi === 1 ? "selected" : "") ?> >İskan Bilgieri Ekleme [İskan Verildi]</option>
+                    <!--<option value='0' <?= (isset($ruhsat_bilgisi->iskan_verildi_mi) && iskan_verildi_mi === 0 ? "selected" : "") ?>>İskan Bilgieri Ekleme [İskan Yok]</option>-->
+                </select>
             </div>
         </div> 
         <div class="form-group form-group-sm">
@@ -111,7 +122,7 @@ try {
                     </select>
                 </div>
             </div>
-            <?php } else {
+        <?php } else {
             ?>
 
             <div class="form-group form-group-sm">
@@ -245,21 +256,11 @@ try {
             <div class="col-sm-8">
                 <input class="form-control date" type="text" id="iskan_ruhsat_tarihi" name="iskan_ruhsat_tarihi" value="<?= (isset($ruhsat_bilgisi->iskan_ruhsat_tarihi) ? $ruhsat_bilgisi->iskan_ruhsat_tarihi : "") ?>" >
             </div>
-        </div>
+        </div> 
         <div class="form-group form-group-sm">
-            <label class="col-sm-2 control-label" for="iskan_verildi_mi">İskan İşlemi</label>
+            <label class="col-sm-2 control-label" for="iskan_no">İskan No: <?= $yeni_iskan_no ?></label>
             <div class="col-sm-8">
-                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="iskan_verildi_mi" name="iskan_verildi_mi">
-                    <option value='-1' selected>Ruhsat Bilgileri Ekleme / Güncelleme İşlemi</option>
-                    <option value='0' <?= (isset($ruhsat_bilgisi->iskan_verildi_mi) && iskan_verildi_mi === 0 ? "selected" : "") ?>>İskan Yok</option>
-                    <option value='1' <?= (isset($ruhsat_bilgisi->iskan_verildi_mi) && iskan_verildi_mi === 1 ? "selected" : "") ?> >İskan Verildi</option>
-                </select>
-            </div>
-        </div>  
-        <div class="form-group form-group-sm">
-            <label class="col-sm-2 control-label" for="iskan_no">İskan No</label>
-            <div class="col-sm-8">
-                <input class="form-control" type="text" id="iskan_no" name="iskan_no" value="<?= (isset($ruhsat_bilgisi->iskan_no) ? $ruhsat_bilgisi->iskan_no : $yeni_iskan_no) ?>" >
+                <input class="form-control" type="text" id="iskan_no" name="iskan_no" value="<?= (isset($ruhsat_bilgisi->iskan_no) ? $ruhsat_bilgisi->iskan_no : "") ?>" >
             </div>
         </div>
 
@@ -293,6 +294,11 @@ try {
 <script>
 
     $(document).ready(function () {
+        $('#iskan_verildi_mi').change(function(){
+            if($(this).val() == 1){
+                $('#iskan_no').val('<?=$yeni_iskan_no?>');
+            }
+        });
         $('#form_ruhsat_ekle').validate({
             rules: {
                 ruhsat_no: {required: true},
