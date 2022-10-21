@@ -13,7 +13,7 @@ require_once('tcpdf/tcpdf.php');
  *
  * @author Bilgi
  */
-class myPDF {
+class myPDF extends TCPDF {
 
     public $FileName; // height of a single module in points
     public $pageSize;

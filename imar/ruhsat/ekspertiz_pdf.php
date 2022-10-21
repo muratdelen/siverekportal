@@ -1,9 +1,9 @@
 
 <?php
 
-require_once '../lib/config.php';
-require_once '../lib/functions.php';
-require_once '../lib/class.pdf.php';
+require_once '../../lib/config.php';
+require_once '../../lib/functions.php';
+require_once '../../lib/class.pdf.php';
 
 //$_POST = unserialize($_POST["params"]);
 //    var_dump($_POST) ;

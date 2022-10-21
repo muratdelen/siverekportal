@@ -19,7 +19,7 @@ if (isset($_POST['insert']) && in_array(YT_INSERT, $sayfaIslemleriId)) {//kaydet
         //SAYFA EKLEME
         $ItemsSQL = "SELECT st_pages.id FROM st_pages WHERE st_pages.page_url = ? AND st_pages.page_language = ?";
         try {
-            $mypages = $GLOBALS['db']->fetchRow($ItemsSQL, array($_POST['page_url'], $_POST['selected-country']));
+            $mypages = $GLOBALS['db']->fetchRow($ItemsSQL, array($_POST['page_url'],"tr"));
         } catch (Zend_Db_Exception $ex) {
             log::DB_hata_kaydi_ekle(__FILE__, $ex);
         }

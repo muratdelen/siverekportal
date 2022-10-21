@@ -1,9 +1,9 @@
 <?php
 
 require_once '../../lib/config.php';
-require_once PROJECT_DIR . '/lib/functions.php';
-require_once PROJECT_DIR . '/lib/input_filter.php';
-require_once PROJECT_DIR . '/lib/DataTable.php';
+require_once PROJECT_DIR . 'lib/functions.php';
+require_once PROJECT_DIR . 'lib/input_filter.php';
+require_once PROJECT_DIR . 'lib/DataTable.php';
 if (in_array(YT_PAGEADMIN, $sayfaIslemleriId)) {
 
     $aColumns = array('yt_kullanici.kullanici_adi', 'log_hatalar.ip', "date_format(log_hatalar.zaman,'%d/%m/%Y %H:%i:%s') AS zaman", 'log_hatalar.baslik', 'log_hatalar.aciklama', 'log_hatalar.satir_sirasi', 'log_hatalar.sayfa_url', 'log_hatalar.tipi', "(CASE log_hatalar.aktif_mi WHEN 1 THEN 'Akfif' ELSE 'Pasif' END) AS aktif_mi");

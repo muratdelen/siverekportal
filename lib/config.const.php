@@ -29,7 +29,7 @@ define('PDF_URL', '/siverekportal/');
 
 //TRANSLATE
 //// define Constants For Translate
-define('LOCALE_DIR', PROJECT_DIR . '/locale/');
+define('LOCALE_DIR', PROJECT_DIR . 'locale/');
 //define('IMAGE_DIRECTORY', BASE_URL . '/locale/_logo_images/');
 //KİŞİSEL BİLGİSAYARDA ÇALIŞMASI İÇİN
 define("APPLICATION_PATH", realpath('../lib/'));

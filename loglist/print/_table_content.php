@@ -1,9 +1,9 @@
 <?php
 
 require_once '../../lib/config.php';
-require_once PROJECT_DIR . '/lib/functions.php';
-require_once PROJECT_DIR . '/lib/input_filter.php';
-require_once PROJECT_DIR . '/lib/DataTable.php';
+require_once PROJECT_DIR . 'lib/functions.php';
+require_once PROJECT_DIR . 'lib/input_filter.php';
+require_once PROJECT_DIR . 'lib/DataTable.php';
 if (in_array(YT_QUERY, $sayfaIslemleriId)) {
     $aColumns = array('log_cikti.tipi', 'yt_kullanici.kullanici_adi', 'yt_kullanici.adi', 'yt_kullanici.soyadi', 'yt_grup.adi AS grup_adi', 'log_cikti.baslik', 'log_cikti.aciklama', 'log_cikti.sayfa_url', 'log_cikti.ip', "date_format(log_cikti.zaman,'%d/%m/%Y %H:%i:%s') AS zaman");
 

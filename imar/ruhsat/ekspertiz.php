@@ -1,7 +1,9 @@
-
 <?php
-require_once '../lib/config.php';
-require_once '../lib/functions.php';
+require_once '../../lib/config.php';
+require_once PROJECT_DIR . 'lib/functions.php';
+require_once PROJECT_DIR . 'lib/input_filter.php';
+include_once PROJECT_DIR . 'lib/DataTable.php';
+
 
 //$_POST = unserialize($_POST["params"]);
 $html_pdf = "Bir aksilik oldu veriler yüklenmedi.";
@@ -78,18 +80,6 @@ Siverek Belediye Meclisinin 07.10.2015 tarih ve 2464 sayılı belediye gelirler 
 </table>';
 }
 ?>
-
-<?php
-require_once '../lib/config.php';
-require_once '../lib/functions.php';
-require_once '../lib/input_filter.php';
-include_once '../lib/DataTable.php';
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -102,34 +92,29 @@ include_once '../lib/DataTable.php';
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
-        <?php include_once '../assets/header.php'; ?>
+
+        <?php include_once ASSETS_DIR . 'header.php'; ?>
         <!-- Left side column. contains the logo and sidebar -->
         <aside class="main-sidebar">
             <!-- sidebar: style can be found in sidebar.less -->
-            <?php include_once '../assets/menu.php'; ?>
+            <?php include_once ASSETS_DIR . 'menu.php'; ?>
             <!-- /.sidebar -->
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
-
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
+        <div class="content-wrapper">    
             <section class="content-header">
                 <h1>
-                    <small><?= __("İmar Müdürlüğü") ?></small>
+                    <small><?php echo __("YETKİLENDİRME") ?></small>
                 </h1>
                 <ol class="breadcrumb">
-                    <li><a href="/"><i class="fa fa-cloud"></i><?= __("Ruhsat İşlemleri") ?></a></li>
-                    <li class="active">Ekspertiz Raporu Hazırlama</li>
+                    <li><a href="/"><i class="fa fa-cloud"></i><?php echo __("Ruhsat İşlemleri") ?></a></li>
+                    <li class="active"><?php echo __("Raporlar") ?></li>
                 </ol>
             </section>
-
-            <!-- Main content -->
-            <div class="container-fluid">
+            <section class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
-                        <section class="content-header"></section>
-                        <div class="box box-primary">
+                    <div class="box box-primary">
                             <h4 class="box-title" style="margin-left: 5px;">Ekspertiz Raporu</h4>
                             <div class="box box-default"></div>
                             <div class="box-header with-border">
@@ -142,7 +127,7 @@ include_once '../lib/DataTable.php';
                                         </div>  
                                     </div>      
                                     <div class="box-footer">
-                                        <button class="btn bg-orange margin pull-right" type="cancel" onclick="window.location = 'index.php?Sorgula&ruhsat_id=<?= (mcrypt($secilen_ruhsat_bilgileri->id, $_SESSION['key'])) ?>';return false;">Ruhsat Bilgilerine Dön</button>
+                                        <button class="btn bg-orange margin pull-right" type="cancel" onclick="window.location = 'index.php?sorgula&ruhsat=<?= (mcrypt($secilen_ruhsat_bilgileri->id, $_SESSION['key'])) ?>';return false;">Ruhsat Bilgilerine Dön</button>
                                         <input class="btn bg-olive margin pull-right" type="submit" value="Pdf Olarak Çıktı Al"/> 
                                         <input   type="hidden" name = "ekspertiz" value="<?= $_POST['print1'] ?>"/>
                                         <input   type="hidden" name = "dosya_adi" value="<?= $secilen_ruhsat_bilgileri->ruhsat_no. "_".$secilen_ruhsat_bilgileri->adi_soyadi?>"/>
@@ -151,28 +136,25 @@ include_once '../lib/DataTable.php';
                                 </form>
                             </div>
                         </div>
-
-                    </div>
                 </div>
-            </div>
-
-        </div><!-- /.content -->
+            </section>
+        </div>
 
         <!-- /.content-wrapper -->
 
-        <?php include_once '../assets/footer.php';
+        <?php include_once ASSETS_DIR . 'footer.php';
         ?>
 
 
         <!-- Control Sidebar -->
-        <?php // include_once '../assets/rightsidebar.php';   ?>
+        <?php include_once ASSETS_DIR . 'rightsidebar.php'; ?>
         <!-- /.control-sidebar -->
         <!-- Add the sidebar's background. This div must be placed
              immediately after the control sidebar -->
         <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
 
-    <?php
+     <?php
     configuration::getPageHeaderAfter("mainAssets");
     configuration::getPageHeaderAfter("FastClick");
     configuration::getPageHeaderAfter("Select2");
@@ -254,6 +236,6 @@ include_once '../lib/DataTable.php';
                                             });
             </script>
             </html>
-            <?php
-            require_once '../assets/alert.php';
-            
+
+<?php
+require_once ASSETS_DIR . 'alert.php';

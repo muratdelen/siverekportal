@@ -2,9 +2,9 @@
 <?php
 
 require_once '../../lib/config.php';
-require_once PROJECT_DIR . '/lib/functions.php';
-require_once PROJECT_DIR . '/lib/input_filter.php';
-require_once PROJECT_DIR . '/lib/class.excel.php';
+require_once PROJECT_DIR . 'lib/functions.php';
+require_once PROJECT_DIR . 'lib/input_filter.php';
+require_once PROJECT_DIR . 'lib/class.excel.php';
 $_POST = unserialize($_POST["params"]);
 
 if (in_array(6, $sayfaIslemleriId)) {

@@ -1,7 +1,8 @@
 ﻿<div class="content-wrapper">
     <?php
 //        if ($girisYapanKullaniciGrupId != -1) {
-    include_once 'assets/TemplateSlider.php';
+    include_once ASSETS_DIR . 'TemplateSlider.php';
+
 //        }
     echo '<div class="content-header"></div>';
     ?> 

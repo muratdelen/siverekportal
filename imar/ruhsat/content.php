@@ -1,5 +1,5 @@
 ﻿<?php
- try {
+try {
     $son_iskan_numarasi = $db->fetchRow("SELECT DISTINCT iskan_no FROM s_ruhsat_bilgileri WHERE ruhsat_tarihi > '2022-00-00' ORDER BY cast(iskan_no as unsigned) DESC LIMIT 1");
 } catch (Zend_Db_Exception $ex) {
     log::DB_hata_kaydi_ekle(__FILE__, $ex);
@@ -7,7 +7,7 @@
 ?>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
+
     <section class="content-header">
         <h1>
             <small>İmar Müdürlüğü</small>
@@ -16,12 +16,12 @@
             <li><a href="/"><i class="fa fa-cloud"></i>Ruhsat İşlemleri</a></li>
             <li class="active"><?php
                 if (isset($_GET['add']) && in_array(YT_INSERT, $sayfaIslemleriId)) {
-                    echo __("Ruhsat Ekleme:").$son_iskan_numarasi->iskan_no;
+                    echo __("Ruhsat Ekleme:") . $son_iskan_numarasi->iskan_no;
                 }//eğer güncelleme butonuna basıldı ise
                 else if (isset($_POST['update']) && in_array(YT_UPDATE, $sayfaIslemleriId)) {
-                    echo __("Ruhsat Güncelleme:").$son_iskan_numarasi->iskan_no;
+                    echo __("Ruhsat Güncelleme:") . $son_iskan_numarasi->iskan_no;
                 } else {
-                    echo __("Ruhsat Görüntüleme:").$son_iskan_numarasi->iskan_no;
+                    echo __("Ruhsat Görüntüleme:") . $son_iskan_numarasi->iskan_no;
                 }
                 ?>
             </li>
@@ -35,7 +35,6 @@
                 <section class="content-header"></section>
 
                 <?php
-
 //yeni kayıt butonunana basıldı ise
                 if (isset($_GET['add']) && in_array(YT_INSERT, $sayfaIslemleriId) || isset($_POST['insert']) && in_array(YT_INSERT, $sayfaIslemleriId)) {
                     require_once 'ekle.php';
@@ -56,7 +55,7 @@
                     }
                     if (in_array(YT_QUERY, $sayfaIslemleriId)) {//eğer sorgula butonuna basıldı ise sor
                         ?>
-                
+
                         <div class="box-footer">
                             <button class="btn bg-orange margin pull-right" type="cancel" onclick="window.location = 'index.php';return false;">Arama Resetle</button>
                         </div>
@@ -66,29 +65,60 @@
                             <div class="form-group form-group-sm">
                                 <label class="col-sm-2 control-label" for="ruhsatlar">Ruhsat No</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control select2 select2-hidden-accessible"  onchange="$('#get-items').click();" style="width: 100%;" tabindex="-1" aria-hidden="true" id="ruhsat" name="ruhsat">
+                                    <select class="form-control select2 select2-hidden-accessible"  onchange="this.form.submit()" style="width: 100%;" tabindex="-1" aria-hidden="true" id="ruhsat" name="ruhsat">
                                         <option value=''>Listelenecek Ruhsat Seçiniz</option>
-                                        <option value='ruhsatyok'>Ruhsat No Boş Olanlar</option>
+                                        <!--<option value=''>Ruhsat No Boş Olanlar</option>-->
                                         <?php
                                         try {
-                                            $ruhsatlar = $db->fetchAll("SELECT id, ruhsat_no, adi_soyadi FROM s_ruhsat_bilgileri WHERE aktif_mi AND NOT ISNULL(ruhsat_no) GROUP BY ruhsat_no ORDER BY id DESC");
+                                            $ruhsatlar = $db->fetchAll("SELECT id, ruhsat_no, adi_soyadi FROM s_ruhsat_bilgileri WHERE aktif_mi AND iskan_verildi_mi = '-1' AND NOT ISNULL(ruhsat_no) GROUP BY ruhsat_no ORDER BY id DESC");
                                         } catch (Zend_Db_Exception $ex) {
                                             log::DB_hata_kaydi_ekle(__FILE__, $ex);
                                         }
                                         htmlspecialchar_obj($ruhsatlar);
                                         foreach ($ruhsatlar as $ruhsat) {
                                             $sifreli_id = mcrypt($ruhsat->id, $_SESSION['key']);
-                                            echo "<option value='$ruhsat->ruhsat_no' title='$ruhsat->adi_soyadi' ";
-                                            echo (isset($ruhsat->ruhsat_no) ? (isset($_GET['ruhsat']) ? ($_GET['ruhsat'] == $ruhsat->ruhsat_no ? 'selected' : null) : null) : null);
-                                            echo (isset($ruhsat->id) ? (isset($_GET['ruhsat_id']) ? ($_GET['ruhsat_id'] == $sifreli_id ? 'selected' : null) : null) : null);
+                                            echo "<option value='$sifreli_id' title='$ruhsat->adi_soyadi' ";
+                                            echo (isset($ruhsat->id) ? (isset($_GET['ruhsat']) ? ($_GET['ruhsat'] == $sifreli_id ? 'selected' : null) : null) : null);
                                             echo ">$ruhsat->ruhsat_no</option>";
                                         }
                                         ?>
                                     </select>
                                 </div>
                             </div>
-                           <div class="col-sm-12 form-group form-group-sm">
-                                <button type="submit" id="get-items" name="Sorgula" class="btn bg-purple btn-block hidden"><span class="glyphicon glyphicon-search"></span> <?= "Ruhsat Bilgilerini Getir" ?></button>
+                            <input type="hidden" name="sorgula"/>
+                            <div class="col-sm-12 form-group form-group-sm">
+                                <button type="submit" id="get-items" name="sorgula" class="btn bg-purple btn-block hidden"><span class="glyphicon glyphicon-search"></span> <?= "Ruhsat Bilgilerini Getir" ?></button>
+                            </div>
+                        </form>
+                        <form class="form-horizontal" method="get" action="">
+                            <div class="form-group form-group-sm">
+                            </div>                               
+                            <div class="form-group form-group-sm">
+                                <label class="col-sm-2 control-label" for="iskan_no">İskan No</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control select2 select2-hidden-accessible"  onchange="this.form.submit()" style="width: 100%;" tabindex="-1" aria-hidden="true" id="ruhsat" name="ruhsat">
+                                        <option value=''>Listelenecek İskan Seçiniz</option>
+                                        <!--<option value=''>İskan No Boş Olanlar</option>-->
+                                        <?php
+                                        try {
+                                            $ruhsatlar = $db->fetchAll("SELECT id, iskan_no, adi_soyadi FROM s_ruhsat_bilgileri WHERE aktif_mi AND iskan_verildi_mi != '-1' AND NOT ISNULL(iskan_no) GROUP BY iskan_no ORDER BY id DESC");
+                                        } catch (Zend_Db_Exception $ex) {
+                                            log::DB_hata_kaydi_ekle(__FILE__, $ex);
+                                        }
+                                        htmlspecialchar_obj($ruhsatlar);
+                                        foreach ($ruhsatlar as $ruhsat) {
+                                            $sifreli_id = mcrypt($ruhsat->id, $_SESSION['key']);
+                                            echo "<option value='$sifreli_id' title='$ruhsat->adi_soyadi' ";
+                                            echo (isset($ruhsat->id) ? (isset($_GET['ruhsat']) ? ($_GET['ruhsat'] == $sifreli_id ? 'selected' : null) : null) : null);
+                                            echo ">$ruhsat->iskan_no</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="hidden" name="sorgula"/>
+                            <div class="col-sm-12 form-group form-group-sm">
+                                <button type="submit" id="get-items" name="sorgula" class="btn bg-purple btn-block hidden"><span class="glyphicon glyphicon-search"></span> <?= "Ruhsat Bilgilerini Getir" ?></button>
                             </div>
                         </form>
                         <hr> 
@@ -209,22 +239,21 @@
                                 </div>
                             </div>
                             <div class="col-sm-12 form-group form-group-sm text-center">
-                                <button type="submit" id="get-items" name="Sorgula" class="btn bg-purple"><span class="glyphicon glyphicon-search"></span> <?= "Ruhsat Bilgilerini Getir" ?></button>
+                                <button type="submit" id="get-items" name="sorgula" class="btn bg-purple"><span class="glyphicon glyphicon-search"></span> <?= "Ruhsat Bilgilerini Getir" ?></button>
                             </div>
                         </form>
                     </div>
                 </div>
 
                 <?php
-                if (isset($_GET['Sorgula'])) {
+                if (isset($_GET['sorgula'])) {
                     ?>
                     <script>
- $(function () {
-        $('.sidebar-mini').addClass('sidebar-collapse');
-    });
-    </script>
+                        $(function () {
+                            $('.sidebar-mini').addClass('sidebar-collapse');
+                        });
+                    </script>
                     <?php
-                    
                     $ItemsSQL = "SELECT
                     s_ruhsat_bilgileri.id, 
                     s_ruhsat_bilgileri.ruhsat_no, 
@@ -249,9 +278,9 @@
                     WHEN 0 THEN '' END) AS kacak_islem_yapildi_mi, 
                     s_ruhsat_bilgileri.kacak_islem_bilgisi, 
                     s_ruhsat_bilgileri.aciklama";
-                    if (isset($_GET["ruhsat_id"])) {
+                    if (isset($_GET["ruhsat"])) {
                         $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi AND id = ? ";
-                        $ruhsat_id = mdecrypt($_GET['ruhsat_id'], $_SESSION['key']);
+                        $ruhsat_id = mdecrypt($_GET['ruhsat'], $_SESSION['key']);
                         try {
                             $listItems = $GLOBALS['db']->fetchAll($ItemsSQL, $ruhsat_id);
                         } catch (Zend_Db_Exception $ex) {
@@ -307,7 +336,7 @@
                         }
                         if (trim($_GET['ada_parsel']) !== "") {
                             $ruhsat_where_string .= " AND ada_parsel = ? ";
-                            array_push($ruhsat_where,  trim($_GET['ada_parsel']));
+                            array_push($ruhsat_where, trim($_GET['ada_parsel']));
                         }
                         if (trim($_GET['yibf_no']) !== "") {
                             $ruhsat_where_string .= " AND yibf_no LIKE ? ";
@@ -336,19 +365,19 @@
                     if ((isset($listItems)) && !empty($listItems)) {
 
                         if (in_array(YT_PAGEADMIN, $sayfaIslemleriId)) {
-                            $Buttons = array('insert' => 'Ekle','update' => 'Güncelle', 'print1' => 'Ekspertiz', 'remove' => 'Sil');
-                            $ButtonsUrls = array('new_tab' => 'preview.php', 'insert' => 'index.php','update' => 'index.php', 'print1' => 'ekspertiz.php', 'remove' => 'postPage.php');
+                            $Buttons = array('insert' => 'Ekle', 'update' => 'Güncelle', 'print1' => 'Ekspertiz', 'remove' => 'Sil');
+                            $ButtonsUrls = array('new_tab' => 'preview.php', 'insert' => 'index.php', 'update' => 'index.php', 'print1' => 'ekspertiz.php', 'remove' => 'postPage.php');
                         } else {
                             $Buttons = array('update' => 'Güncelle', 'print1' => 'Ekspertiz');
                             $ButtonsUrls = array('new_tab' => 'preview.php', 'update' => 'index.php', 'print1' => 'ekspertiz.php');
                         }
                         $options = array(
                             //zorunlu parametreler
-                            'tableHeaders' => array('RUHSAT NO', 'Ruhsat Tarihi',  'Bülten No', 'Ada/Parsel', 'YİBF No', 'Adı Soyadı', 'Ruhsat Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul/YDK', 'Yapı Alanı', 'İskan', 'İskan Tarihi', 'İskan No', 'İskan Bülten No','Mahallesi','Kaçak', 'Kaçak Bilgisi','Açıklama'),
+                            'tableHeaders' => array('RUHSAT NO', 'Ruhsat Tarihi', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Adı Soyadı', 'Ruhsat Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul/YDK', 'Yapı Alanı', 'İskan', 'İskan Tarihi', 'İskan No', 'İskan Bülten No', 'Mahallesi', 'Kaçak', 'Kaçak Bilgisi', 'Açıklama'),
                             //zorunlu olmayan parametreler
                             //        'id' => 'example2' , // optional
                             'order' => array(0, 'desc'),
-                            'tableFooters' => array('RUHSAT NO', 'Ruhsat Tarihi',  'Bülten No', 'Ada/Parsel', 'YİBF No', 'Adı Soyadı', 'Ruhsat Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul/YDK',  'Yapı Alanı', 'İskan', 'İskan Tarihi', 'İskan No', 'İskan Bülten No','Mahallesi','Kaçak', 'Kaçak Bilgisi','Açıklama'), // optional
+                            'tableFooters' => array('RUHSAT NO', 'Ruhsat Tarihi', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Adı Soyadı', 'Ruhsat Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul/YDK', 'Yapı Alanı', 'İskan', 'İskan Tarihi', 'İskan No', 'İskan Bülten No', 'Mahallesi', 'Kaçak', 'Kaçak Bilgisi', 'Açıklama'), // optional
                             'filters' => array('text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text'),
                             //yerel parametreler
                             'tableData' => $listItems,
@@ -369,7 +398,7 @@
                         <div class="col-md-12">
                             <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Sorgulama Sonucu</h3>
+                                    <h3 class="box-title">sorgulama Sonucu</h3>
                                     <?php
                                     echo $dtableServer->get_data_table();
                                     echo $dtableServer->get_datatable_script();
@@ -378,7 +407,7 @@
                         </div>
                         <?php
                     } else {
-                        adminLTE_alert(false, __("Sorgulama Sonucu"), __("Sorgulamada kayıt bulunamadı!"), "warning");
+                        adminLTE_alert(false, __("sorgulama Sonucu"), __("sorgulamada kayıt bulunamadı!"), "warning");
                     }
                 }
             }
@@ -390,25 +419,25 @@
 <script>
 
     function unsecuredCopyToClipboard(text) {
-  const textArea = document.createElement("textarea");
-  textArea.value = text;
-  document.body.appendChild(textArea);
-  textArea.focus();
-  textArea.select();
-  try {
-    document.execCommand('copy');
-  } catch (err) {
-    console.error('Unable to copy to clipboard', err);
-  }
-  document.body.removeChild(textArea);
-}
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+        } catch (err) {
+            console.error('Unable to copy to clipboard', err);
+        }
+        document.body.removeChild(textArea);
+    }
     $(function () {
         $('.table-data').click(function () {
             var copytext = $(this).text();
             unsecuredCopyToClipboard(copytext);
-            $(this).css("font-weight","bold");
+            $(this).css("font-weight", "bold");
             //console.log(copytext);
-           // navigator.clipboard.writeText(copytext);
+            // navigator.clipboard.writeText(copytext);
         });
     });
 

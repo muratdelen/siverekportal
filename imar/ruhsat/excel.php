@@ -1,9 +1,9 @@
 <?php
 
 require_once '../lib/config.php';
-require_once PROJECT_DIR . '/lib/functions.php';
-require_once PROJECT_DIR . '/lib/input_filter.php';
-require_once PROJECT_DIR . '/lib/class.excel.php';
+require_once PROJECT_DIR . 'lib/functions.php';
+require_once PROJECT_DIR . 'lib/input_filter.php';
+require_once PROJECT_DIR . 'lib/class.excel.php';
 $_POST = unserialize($_POST["params"]);
 //var_dump($_POST);
 //die();
@@ -14,7 +14,7 @@ if (in_array(YT_EXCEL, $sayfaIslemleriId)) {
     $ruhsat_where_string = "";
     $ruhsat_where = array();
 
-    if (isset($_POST['Sorgula'])) {
+    if (isset($_POST['sorgula'])) {
         if (isset($_POST['ruhsat'])) {
             if ($_POST['ruhsat'] == "ruhsatyok") {
                 $ItemsSQL = "SELECT

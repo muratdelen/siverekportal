@@ -1,9 +1,9 @@
 <?php
 
 require_once '../../lib/config.php';
-require_once PROJECT_DIR . '/lib/functions.php';
-require_once PROJECT_DIR . '/lib/input_filter.php';
-require_once PROJECT_DIR . '/loglist/alert/DataTable.php';
+require_once PROJECT_DIR . 'lib/functions.php';
+require_once PROJECT_DIR . 'lib/input_filter.php';
+require_once PROJECT_DIR . 'loglist/alert/DataTable.php';
 
 /* Array of database columns which should be read and sent back to DataTables. Use a space where
  * you want to insert a non-database field (for example a counter or static image)

@@ -1,9 +1,9 @@
 <?php
 
 require_once '../../lib/config.php';
-require_once PROJECT_DIR . '/lib/functions.php';
-require_once PROJECT_DIR . '/lib/input_filter.php';
-require_once PROJECT_DIR . '/lib/DataTable.php';
+require_once PROJECT_DIR . 'lib/functions.php';
+require_once PROJECT_DIR . 'lib/input_filter.php';
+require_once PROJECT_DIR . 'lib/DataTable.php';
 if (in_array(YT_QUERY, $sayfaIslemleriId)) {
 //    'tableHeaders' => array('Kullanıcı Adı', 'Adı', 'Soyadı', 'Grubu', 'İşlem Yetkisi', 'Başlık', 'Açıklama', 'Sayfa Url', 'Tablodaki İşlem', 'Table Adı', 'Table Id', 'Yeni Veriler', 'Eski Veriler', 'ip', 'Zaman', 'Aktif mi?'),
 

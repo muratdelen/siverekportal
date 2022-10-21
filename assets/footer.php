@@ -85,7 +85,7 @@ if ($girisYapanKullaniciGrupId === 1) {//EĞER DEVELOPER İSE TÜM YETKİLER AÇ
             formData.push({name: 'post_type', value: 1}, {name: 'secilen_menu_id', value: $("#erisilebilen_sayfalarin_menu_id").val()});
             $.ajax({
                 async: false,
-                url: '<?php echo ASSETS_DIR; ?>/post_settings.php',
+                url: '<?= BASE_URL; ?>assets/post_settings.php',
                 type: 'POST',
                 data: formData,
                 success: function (data) {
@@ -108,7 +108,7 @@ if ($girisYapanKullaniciGrupId === 1) {//EĞER DEVELOPER İSE TÜM YETKİLER AÇ
                 formData.push({name: 'post_type', value: 2}, {name: 'secilen_menu_id', value: $("#erisilebilen_sayfalarin_menu_id").val()}, {name: 'sayfa_url', value: $("#sayfa_url").val()}, {name: 'sayfa_adi', value: $("#sayfa_adi").val()});
                 $.ajax({
                     async: false,
-                    url: '<?php echo ASSETS_DIR; ?>/post_settings.php',
+                    url: '<?= BASE_URL; ?>assets/post_settings.php',
                     type: 'POST',
                     data: formData,
                     success: function (data) {
@@ -132,7 +132,7 @@ if ($girisYapanKullaniciGrupId === 1) {//EĞER DEVELOPER İSE TÜM YETKİLER AÇ
                 formData.push({name: 'post_type', value: 3}, {name: 'secilen_sayfa', value: $("#erisilebilen_sayfa_sil_select").val()});
                 $.ajax({
                     async: false,
-                    url: '<?php echo ASSETS_DIR; ?>/post_settings.php',
+                    url: '<?= BASE_URL; ?>assets/post_settings.php',
                     type: 'POST',
                     data: formData,
                     success: function (data) {

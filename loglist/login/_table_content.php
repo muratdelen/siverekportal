@@ -1,9 +1,9 @@
 <?php
 
 require_once '../../lib/config.php';
-require_once PROJECT_DIR . '/lib/functions.php';
-require_once PROJECT_DIR . '/lib/input_filter.php';
-require_once PROJECT_DIR . '/lib/DataTable.php';
+require_once PROJECT_DIR . 'lib/functions.php';
+require_once PROJECT_DIR . 'lib/input_filter.php';
+require_once PROJECT_DIR . 'lib/DataTable.php';
 
 if (in_array(YT_QUERY, $sayfaIslemleriId)) {
     $aColumns = array("(case log_giris.tipi when 0 then 'Çıkış' 

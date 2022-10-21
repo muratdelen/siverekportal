@@ -1,8 +1,8 @@
 <?php
 require_once '../../lib/config.php';
-require_once PROJECT_DIR . '/lib/functions.php';
-require_once PROJECT_DIR . '/lib/input_filter.php';
-include_once PROJECT_DIR . '/lib/DataTable.php';
+require_once PROJECT_DIR . 'lib/functions.php';
+require_once PROJECT_DIR . 'lib/input_filter.php';
+include_once PROJECT_DIR . 'lib/DataTable.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -22,11 +22,11 @@ include_once PROJECT_DIR . '/lib/DataTable.php';
     <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
 
-        <?php include_once PROJECT_DIR . '/assets/header.php'; ?>
+        <?php include_once ASSETS_DIR . 'header.php'; ?>
         <!-- Left side column. contains the logo and sidebar -->
         <aside class="main-sidebar">
             <!-- sidebar: style can be found in sidebar.less -->
-            <?php include_once PROJECT_DIR . '/assets/menu.php'; ?>
+            <?php include_once ASSETS_DIR . 'menu.php'; ?>
             <!-- /.sidebar -->
         </aside>
 
@@ -36,12 +36,12 @@ include_once PROJECT_DIR . '/lib/DataTable.php';
         ?>
         <!-- /.content-wrapper -->
 
-        <?php include_once PROJECT_DIR . '/assets/footer.php';
+        <?php include_once ASSETS_DIR . 'footer.php';
         ?>
 
 
         <!-- Control Sidebar -->
-        <?php include_once PROJECT_DIR . '/assets/rightsidebar.php'; ?>
+        <?php include_once ASSETS_DIR . 'rightsidebar.php'; ?>
         <!-- /.control-sidebar -->
         <!-- Add the sidebar's background. This div must be placed
              immediately after the control sidebar -->
@@ -95,4 +95,4 @@ include_once PROJECT_DIR . '/lib/DataTable.php';
 </html>
 
 <?php
-require_once PROJECT_DIR . '/assets/alert.php';
+require_once ASSETS_DIR . 'alert.php';

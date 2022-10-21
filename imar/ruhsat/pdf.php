@@ -1,8 +1,8 @@
 <?php
 require_once '../lib/config.php';
-require_once PROJECT_DIR . '/lib/functions.php';
-require_once PROJECT_DIR . '/lib/input_filter.php';
-require_once PROJECT_DIR . '/lib/class.pdf.php';
+require_once PROJECT_DIR . 'lib/functions.php';
+require_once PROJECT_DIR . 'lib/input_filter.php';
+require_once PROJECT_DIR . 'lib/class.pdf.php';
 $_POST = unserialize($_POST["params"]);
 
 if (in_array(YT_PDF, $sayfaIslemleriId)) {
