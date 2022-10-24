@@ -348,12 +348,12 @@ try {
                         }
                         if (trim($_GET['aktif_mi']) !== "") {
                             if (trim($_GET['aktif_mi']) == -1) {
-                                $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi = '-1' " . $ruhsat_where_string . " LIMIT 1000";
+                                $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi = '-1' " . $ruhsat_where_string . " ORDER BY id DESC LIMIT 1000";
                             } else {
-                                $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi " . $ruhsat_where_string . " LIMIT 1000";
+                                $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi " . $ruhsat_where_string . " ORDER BY id DESC LIMIT 1000";
                             }
                         }
-                        $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi " . $ruhsat_where_string . " LIMIT 1000";
+                        $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi " . $ruhsat_where_string . " ORDER BY id DESC LIMIT 1000";
                         try {
                             $listItems = $GLOBALS['db']->fetchAll($ItemsSQL, $ruhsat_where);
                         } catch (Zend_Db_Exception $ex) {
