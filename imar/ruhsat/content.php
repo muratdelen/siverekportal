@@ -142,8 +142,13 @@ try {
                                 <div class="col-sm-8">
                                     <input class="form-control" type="text" id="bulten_no" name="bulten_no" value="<?php echo isset($_GET['bulten_no']) ? $_GET['bulten_no'] : ''; ?>" >
                                 </div>
+                            </div>                            
+                            <div class="form-group form-group-sm">
+                                <label class="col-sm-2 control-label" for="fenni_mesul">Fenni Mesul/Yapı Denetim</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" id="fenni_mesul" name="fenni_mesul" value="<?php echo isset($_GET['fenni_mesul']) ? $_GET['fenni_mesul'] : ''; ?>" >
+                                </div>
                             </div>
-
                             <div class="form-group form-group-sm">
                                 <label class="col-sm-2 control-label" for="ruhsat_verilis_amaci">Ruhsat Veriliş Amacı</label>
                                 <div class="col-sm-8">
@@ -250,6 +255,8 @@ try {
                     ?>
                     <script>
                         $(function () {
+                            document.getElementById('sorgulama_ekrani').scrollIntoView();
+//                            window.scrollTo(0, document.body.scrollHeight);
                             $('.sidebar-mini').addClass('sidebar-collapse');
                         });
                     </script>
@@ -309,6 +316,7 @@ try {
                             $ruhsat_where_string .= " AND ruhsat_cinsi = ? ";
                             array_push($ruhsat_where, trim($_GET['ruhsat_cinsi']));
                         }
+
                         if (trim($_GET['iskan_verildi_mi']) !== "") {
                             $ruhsat_where_string .= " AND iskan_verildi_mi = ? ";
                             array_push($ruhsat_where, trim($_GET['iskan_verildi_mi']));
@@ -330,6 +338,14 @@ try {
                             $ruhsat_where_string .= " AND mahallesi LIKE ? ";
                             array_push($ruhsat_where, "%" . trim($_GET['mahallesi']) . "%");
                         }
+                        if (trim($_GET['fenni_mesul']) !== "") {
+                            $ruhsat_where_string .= " AND fenni_mesul LIKE ? ";
+                            array_push($ruhsat_where, "%" . trim($_GET['fenni_mesul']) . "%");
+                        }
+//                        if (trim($_GET['fenni_mesul']) !== "") {
+//                            $ruhsat_where_string .= " AND fenni_mesul = ? ";
+//                            array_push($ruhsat_where, trim($_GET['fenni_mesul']));
+//                        }
                         if (trim($_GET['bulten_no']) !== "") {
                             $ruhsat_where_string .= " AND bulten_no = ? ";
                             array_push($ruhsat_where, trim($_GET['bulten_no']));
@@ -376,7 +392,7 @@ try {
                             'tableHeaders' => array('RUHSAT NO', 'Ruhsat Tarihi', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Adı Soyadı', 'Ruhsat Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul/YDK', 'Yapı Alanı', 'İskan', 'İskan Tarihi', 'İskan No', 'İskan Bülten No', 'Mahallesi', 'Kaçak', 'Kaçak Bilgisi', 'Açıklama'),
                             //zorunlu olmayan parametreler
                             //        'id' => 'example2' , // optional
-                            'order' => array(0, 'desc'),
+//                            'order' => array(0, 'desc'),
                             'tableFooters' => array('RUHSAT NO', 'Ruhsat Tarihi', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Adı Soyadı', 'Ruhsat Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul/YDK', 'Yapı Alanı', 'İskan', 'İskan Tarihi', 'İskan No', 'İskan Bülten No', 'Mahallesi', 'Kaçak', 'Kaçak Bilgisi', 'Açıklama'), // optional
                             'filters' => array('text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text'),
                             //yerel parametreler
@@ -402,7 +418,9 @@ try {
                                     <?php
                                     echo $dtableServer->get_data_table();
                                     echo $dtableServer->get_datatable_script();
-                                    ?>     </div><!-- /.box-body -->
+                                    ?>     
+                                </div><!-- /.box-body -->
+                                <div id="sorgulama_ekrani"></div>
                             </div>
                         </div>
                         <?php

@@ -69,7 +69,6 @@ include_once PROJECT_DIR . 'lib/DataTable.php';
 
 // $('.sidebar-mini').addClass('sidebar-collapse'); 
         $(function () {
-
             $(".select2").select2();
             $(".money").mask("000.000.000.000,00", {reverse: true});
             $(".number_tc").mask("00000000000");
