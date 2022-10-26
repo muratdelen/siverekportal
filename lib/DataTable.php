@@ -573,6 +573,10 @@ class DataTable {
          datatable = $('#$this->tableId').dataTable({
         $serverSideConfig 
         'autoWidth': false,
+         'lengthMenu': [
+            [50, 100, 200,  -1],
+            [50, 100, 200, 'All'],
+        ],
         'language': {
             'url': '/assets/plugins/datatables/i18n/" . $selected_language . ".json'
         },

@@ -256,7 +256,7 @@ try {
                     <script>
                         $(function () {
                             document.getElementById('sorgulama_ekrani').scrollIntoView();
-//                            window.scrollTo(0, document.body.scrollHeight);
+            //                            window.scrollTo(0, document.body.scrollHeight);
                             $('.sidebar-mini').addClass('sidebar-collapse');
                         });
                     </script>
@@ -264,7 +264,7 @@ try {
                     $ItemsSQL = "SELECT
                     s_ruhsat_bilgileri.id, 
                     s_ruhsat_bilgileri.ruhsat_no, 
-                    DATE_FORMAT(s_ruhsat_bilgileri.ruhsat_tarihi,'%d/%m/%Y') AS ruhsat_tarihi,	
+                    DATE_FORMAT(s_ruhsat_bilgileri.ruhsat_tarihi,'%d/%m/%Y') AS ruhsat_tarihi_tr,	
                     s_ruhsat_bilgileri.bulten_no, 
                     s_ruhsat_bilgileri.ada_parsel, 
                     s_ruhsat_bilgileri.yibf_no,
@@ -364,18 +364,21 @@ try {
                         }
                         if (trim($_GET['aktif_mi']) !== "") {
                             if (trim($_GET['aktif_mi']) == -1) {
-                                $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi = '-1' " . $ruhsat_where_string . " ORDER BY id DESC LIMIT 1000";
+                                $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi = '-1' " . $ruhsat_where_string . " ORDER BY ruhsat_tarihi DESC LIMIT 1000";
                             } else {
-                                $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi " . $ruhsat_where_string . " ORDER BY id DESC LIMIT 1000";
+                                $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi " . $ruhsat_where_string . " ORDER BY ruhsat_tarihi DESC LIMIT 1000";
                             }
+                        } else {
+                            $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi " . $ruhsat_where_string . " ORDER BY ruhsat_tarihi DESC LIMIT 1000";
                         }
-                        $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi " . $ruhsat_where_string . " ORDER BY id DESC LIMIT 1000";
                         try {
                             $listItems = $GLOBALS['db']->fetchAll($ItemsSQL, $ruhsat_where);
                         } catch (Zend_Db_Exception $ex) {
                             log::DB_hata_kaydi_ekle(__FILE__, $ex);
                         }
-//                        var_dump($listItems, $ItemsSQL);
+//                        echo '<pre>';
+//                        var_dump($listItems, $ItemsSQL); 
+//                        die();
                     }
                     htmlspecialchar_array($listItems);
                     if ((isset($listItems)) && !empty($listItems)) {
@@ -392,7 +395,7 @@ try {
                             'tableHeaders' => array('RUHSAT NO', 'Ruhsat Tarihi', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Adı Soyadı', 'Ruhsat Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul/YDK', 'Yapı Alanı', 'İskan', 'İskan Tarihi', 'İskan No', 'İskan Bülten No', 'Mahallesi', 'Kaçak', 'Kaçak Bilgisi', 'Açıklama'),
                             //zorunlu olmayan parametreler
                             //        'id' => 'example2' , // optional
-//                            'order' => array(0, 'desc'),
+//                            'order' => array(1, 'desc'),
                             'tableFooters' => array('RUHSAT NO', 'Ruhsat Tarihi', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Adı Soyadı', 'Ruhsat Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul/YDK', 'Yapı Alanı', 'İskan', 'İskan Tarihi', 'İskan No', 'İskan Bülten No', 'Mahallesi', 'Kaçak', 'Kaçak Bilgisi', 'Açıklama'), // optional
                             'filters' => array('text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text'),
                             //yerel parametreler
