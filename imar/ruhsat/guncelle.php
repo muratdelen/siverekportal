@@ -196,7 +196,7 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="kacak_islem_bilgisi">Kaçak İşlem Bilgisi</label>
             <div class="col-sm-8">
-                <textarea id="kacak_islem_bilgisi" name="kacak_islem_bilgisi" rows="10" cols="80"><?= htmlentities($ruhsat_bilgisi->kacak_islem_bilgisi) ?></textarea>
+                <textarea class="form-control "  id="kacak_islem_bilgisi" name="kacak_islem_bilgisi" rows="10" cols="80"><?= htmlentities($ruhsat_bilgisi->kacak_islem_bilgisi) ?></textarea>
             </div>  
         </div> 
         <div class="form-group form-group-sm">
@@ -212,7 +212,7 @@ if (isset($_POST['update']) && $_POST['update'] != '') {
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="aciklama">Açıklama</label>
             <div class="col-sm-8">
-                <textarea id="aciklama" name="aciklama" rows="10" cols="80"><?= htmlentities($ruhsat_bilgisi->aciklama) ?></textarea>
+                <textarea class="form-control "  id="aciklama" name="aciklama" rows="10" cols="80"><?= htmlentities($ruhsat_bilgisi->aciklama) ?></textarea>
             </div>  
         </div>
         <div class="col-sm-12 form-group form-group-sm">

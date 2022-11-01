@@ -70,7 +70,7 @@ try {
                                         <!--<option value=''>Ruhsat No Boş Olanlar</option>-->
                                         <?php
                                         try {
-                                            $ruhsatlar = $db->fetchAll("SELECT id, ruhsat_no, adi_soyadi FROM s_ruhsat_bilgileri WHERE aktif_mi AND iskan_verildi_mi = '-1' AND NOT ISNULL(ruhsat_no) GROUP BY ruhsat_no ORDER BY id DESC");
+                                            $ruhsatlar = $db->fetchAll("SELECT id, ruhsat_no, adi_soyadi FROM s_ruhsat_bilgileri WHERE aktif_mi AND iskan_verildi_mi = '-1' AND NOT ISNULL(ruhsat_no) GROUP BY ruhsat_no ORDER BY CAST(SUBSTR(ruhsat_no, 1, 4) AS UNSIGNED) DESC, CAST(SUBSTR(ruhsat_no, 6) AS UNSIGNED) DESC");
                                         } catch (Zend_Db_Exception $ex) {
                                             log::DB_hata_kaydi_ekle(__FILE__, $ex);
                                         }
@@ -266,19 +266,19 @@ try {
                     s_ruhsat_bilgileri.ruhsat_no, 
                     DATE_FORMAT(s_ruhsat_bilgileri.ruhsat_tarihi,'%d/%m/%Y') AS ruhsat_tarihi_tr,	
                     s_ruhsat_bilgileri.bulten_no, 
-                    s_ruhsat_bilgileri.ada_parsel, 
-                    s_ruhsat_bilgileri.yibf_no,
+                    s_ruhsat_bilgileri.ada_parsel,
                     s_ruhsat_bilgileri.adi_soyadi, 
-                    s_ruhsat_bilgileri.ruhsat_cinsi, 
-                    s_ruhsat_bilgileri.ruhsat_verilis_amaci, 
-                    s_ruhsat_bilgileri.fenni_mesul, 
-                    s_ruhsat_bilgileri.yapi_alani, 
+                    s_ruhsat_bilgileri.fenni_mesul,
                      (CASE s_ruhsat_bilgileri.iskan_verildi_mi 
                     WHEN 1 THEN '<h6 style=\"color:green\">Var</h6>' 
-                    WHEN 0 THEN '<h6 style=\"color:red\">Yok</h6>' END) AS iskan_verildi_mi, 
-                    DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi,  
-                    s_ruhsat_bilgileri.iskan_no, 
+                    WHEN 0 THEN '<h6 style=\"color:red\">Yok</h6>' END) AS iskan_verildi_mi,
                     s_ruhsat_bilgileri.iskan_bulten_no, 
+                    s_ruhsat_bilgileri.iskan_no,
+                    DATE_FORMAT(s_ruhsat_bilgileri.iskan_ruhsat_tarihi,'%d/%m/%Y') AS iskan_ruhsat_tarihi, 
+                    s_ruhsat_bilgileri.yibf_no,   
+                    s_ruhsat_bilgileri.yapi_alani,
+                    s_ruhsat_bilgileri.ruhsat_verilis_amaci,
+                    s_ruhsat_bilgileri.ruhsat_cinsi,    
                     s_ruhsat_bilgileri.mahallesi,  
                    (CASE s_ruhsat_bilgileri.kacak_islem_yapildi_mi
                     WHEN 1 THEN '<h6 style=\"back-color:red\">Var.</h6>' 
@@ -364,12 +364,12 @@ try {
                         }
                         if (trim($_GET['aktif_mi']) !== "") {
                             if (trim($_GET['aktif_mi']) == -1) {
-                                $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi = '-1' " . $ruhsat_where_string . " ORDER BY ruhsat_tarihi DESC LIMIT 1000";
+                                $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi = '-1' " . $ruhsat_where_string . " ORDER BY CAST(SUBSTR(ruhsat_no, 1, 4) AS UNSIGNED) DESC, CAST(SUBSTR(ruhsat_no, 6) AS UNSIGNED) DESC";
                             } else {
-                                $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi " . $ruhsat_where_string . " ORDER BY ruhsat_tarihi DESC LIMIT 1000";
+                                $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi " . $ruhsat_where_string . " ORDER BY CAST(SUBSTR(ruhsat_no, 1, 4) AS UNSIGNED) DESC, CAST(SUBSTR(ruhsat_no, 6) AS UNSIGNED) DESC";
                             }
                         } else {
-                            $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi " . $ruhsat_where_string . " ORDER BY ruhsat_tarihi DESC LIMIT 1000";
+                            $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi " . $ruhsat_where_string . " ORDER BY CAST(SUBSTR(ruhsat_no, 1, 4) AS UNSIGNED) DESC, CAST(SUBSTR(ruhsat_no, 6) AS UNSIGNED) DESC";
                         }
                         try {
                             $listItems = $GLOBALS['db']->fetchAll($ItemsSQL, $ruhsat_where);
@@ -377,7 +377,7 @@ try {
                             log::DB_hata_kaydi_ekle(__FILE__, $ex);
                         }
 //                        echo '<pre>';
-//                        var_dump($listItems, $ItemsSQL); 
+//                        var_dump($listItems, $ItemsSQL);
 //                        die();
                     }
                     htmlspecialchar_array($listItems);
@@ -392,11 +392,11 @@ try {
                         }
                         $options = array(
                             //zorunlu parametreler
-                            'tableHeaders' => array('RUHSAT NO', 'Ruhsat Tarihi', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Adı Soyadı', 'Ruhsat Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul/YDK', 'Yapı Alanı', 'İskan', 'İskan Tarihi', 'İskan No', 'İskan Bülten No', 'Mahallesi', 'Kaçak', 'Kaçak Bilgisi', 'Açıklama'),
+                            'tableHeaders' => array('RUHSAT NO', 'Ruhsat Tarihi', 'Bülten No', 'Ada/Parsel', 'Adı Soyadı', 'Fenni Mesul/YDK', 'İskan', 'İskan Bülten No', 'İskan No', 'İskan Tarihi', 'YİBF No', 'Yapı Alanı', 'Ruhsat Veriliş Amacı', 'Ruhsat Cinsi', 'Mahallesi', 'Kaçak', 'Kaçak Bilgisi', 'Açıklama'),
                             //zorunlu olmayan parametreler
                             //        'id' => 'example2' , // optional
-//                            'order' => array(1, 'desc'),
-                            'tableFooters' => array('RUHSAT NO', 'Ruhsat Tarihi', 'Bülten No', 'Ada/Parsel', 'YİBF No', 'Adı Soyadı', 'Ruhsat Cinsi', 'Ruhsat Veriliş Amacı', 'Fenni Mesul/YDK', 'Yapı Alanı', 'İskan', 'İskan Tarihi', 'İskan No', 'İskan Bülten No', 'Mahallesi', 'Kaçak', 'Kaçak Bilgisi', 'Açıklama'), // optional
+                            'order' => array(6, 'desc'),
+                            'tableFooters' => array('RUHSAT NO', 'Ruhsat Tarihi', 'Bülten No', 'Ada/Parsel', 'Adı Soyadı', 'Fenni Mesul/YDK', 'İskan', 'İskan Bülten No', 'İskan No', 'İskan Tarihi', 'YİBF No', 'Yapı Alanı', 'Ruhsat Veriliş Amacı', 'Ruhsat Cinsi', 'Mahallesi', 'Kaçak', 'Kaçak Bilgisi', 'Açıklama'), // optional
                             'filters' => array('text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text'),
                             //yerel parametreler
                             'tableData' => $listItems,

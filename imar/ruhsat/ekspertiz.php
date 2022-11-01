@@ -123,7 +123,7 @@ Siverek Belediye Meclisinin 07.10.2015 tarih ve 2464 sayılı belediye gelirler 
                                     <div class="form-group form-group-sm">
                                         <!--<label class="col-sm-2 control-label" for="ekpertiz_raporu">Ekspertiz Raporu</label>-->
                                         <div class="col-sm-12">
-                                            <textarea id="ekpertiz_raporu" name="ekpertiz_raporu" rows="10" cols="80"><?= htmlentities($html_pdf) ?></textarea>
+                                            <textarea class="form-control "  id="ekpertiz_raporu" name="ekpertiz_raporu" rows="10" cols="80"><?= htmlentities($html_pdf) ?></textarea>
                                         </div>  
                                     </div>      
                                     <div class="box-footer">

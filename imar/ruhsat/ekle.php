@@ -282,7 +282,7 @@ try {
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label" for="aciklama">Açıklama</label>
             <div class="col-sm-8">
-                <textarea id="aciklama" name="aciklama" rows="10" cols="80"></textarea>
+                <textarea class="form-control "  id="aciklama" name="aciklama" rows="10" cols="80"></textarea>
             </div>  
         </div>
         <div class="col-sm-12 form-group form-group-sm">

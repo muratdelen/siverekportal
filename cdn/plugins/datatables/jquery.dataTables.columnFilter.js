@@ -812,7 +812,7 @@
 //                                inp = $(this);
 //                                dSize = $('#ui-datepicker-div').outerHeight();
 //                                $('#ui-datepicker-div').css('top', inp.offset().top - dSize);
-                                $("#ui-datepicker-div").show();
+                        $("#ui-datepicker-div").show();
                         });
                         }
                         });

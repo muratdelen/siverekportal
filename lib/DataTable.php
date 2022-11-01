@@ -237,7 +237,7 @@ class DataTable {
         $serverSideConfig 
         'autoWidth': false,
         'language': {
-            'url': '/assets/plugins/datatables/i18n/" . $selected_language . ".json'
+            'url': '" . BASE_URL . "assets/plugins/datatables/i18n/" . $selected_language . ".json'
         },
 //        'stateSave': true,";
 
