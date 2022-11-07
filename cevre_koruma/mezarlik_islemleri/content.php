@@ -1,29 +1,20 @@
-﻿<?php
-
-
-try {
-    $son_iskan_numarasi = $db->fetchRow("SELECT DISTINCT iskan_no FROM s_ruhsat_bilgileri WHERE ruhsat_tarihi > '2022-00-00' ORDER BY cast(iskan_no as unsigned) DESC LIMIT 1");
-} catch (Zend_Db_Exception $ex) {
-    log::DB_hata_kaydi_ekle(__FILE__, $ex);
-}
-?>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
 
     <section class="content-header">
         <h1>
-            <small>İmar Müdürlüğü</small>
+            <small>Çevre Koruma ve Kontrol Müdürlügü</small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="/"><i class="fa fa-cloud"></i>Ruhsat İşlemleri</a></li>
+            <li><a href="/"><i class="fa fa-cloud"></i>Mezarlık İşlemleri</a></li>
             <li class="active"><?php
                 if (isset($_GET['add']) && in_array(YT_INSERT, $sayfaIslemleriId)) {
-                    echo __("Ruhsat Ekleme:") . $son_iskan_numarasi->iskan_no;
+                    echo __("Ruhsat Ekleme:");
                 }//eğer güncelleme butonuna basıldı ise
                 else if (isset($_POST['update']) && in_array(YT_UPDATE, $sayfaIslemleriId)) {
-                    echo __("Ruhsat Güncelleme:") . $son_iskan_numarasi->iskan_no;
+                    echo __("Ruhsat Güncelleme:");
                 } else {
-                    echo __("Ruhsat Görüntüleme:") . $son_iskan_numarasi->iskan_no;
+                    echo __("Ruhsat Görüntüleme:") ;
                 }
                 ?>
             </li>
@@ -51,7 +42,7 @@ try {
                     if (in_array(YT_INSERT, $sayfaIslemleriId)) {
                         echo '<div class="col-md-8" style="	margin-bottom: 10px;">
                             <form class="form-horizontal" method="GET" action="?add">
-                                <input class="btn bg-green" type="submit" id="btn_yeni_kayit_ekle" name="add" value="YENİ RUHSAT EKLE">
+                                <input class="btn bg-green" type="submit" id="btn_yeni_kayit_ekle" name="add" value="YENİ MEZAR EKLE">
                             </form>  
                         </div>';
                     }
@@ -65,72 +56,44 @@ try {
                             <div class="form-group form-group-sm">
                             </div>                               
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-2 control-label" for="ruhsatlar">Ruhsat No</label>
+                                <label class="col-sm-2 control-label" for="ada_parsel">Mezarlık Ada Parsel</label>
                                 <div class="col-sm-8">
                                     <select class="form-control select2 select2-hidden-accessible"  onchange="this.form.submit()" style="width: 100%;" tabindex="-1" aria-hidden="true" id="ruhsat" name="ruhsat">
                                         <option value=''>Listelenecek Ruhsat Seçiniz</option>
                                         <!--<option value=''>Ruhsat No Boş Olanlar</option>-->
                                         <?php
                                         try {
-                                            $ruhsatlar = $db->fetchAll("SELECT id, ruhsat_no, adi_soyadi FROM s_ruhsat_bilgileri WHERE aktif_mi AND iskan_verildi_mi = '-1' AND NOT ISNULL(ruhsat_no) GROUP BY ruhsat_no ORDER BY CAST(SUBSTR(ruhsat_no, 1, 4) AS UNSIGNED) DESC, CAST(SUBSTR(ruhsat_no, 6) AS UNSIGNED) DESC");
+                                            $mezar_bilgileri = $db->fetchAll("SELECT id, mezarlik_adi, ada_parsel FROM cevre_mezarlik_bilgileri WHERE aktif_mi ORDER BY CAST(SUBSTR(ada_parsel, 1, 4) AS UNSIGNED) DESC, CAST(SUBSTR(ada_parsel, 6) AS UNSIGNED) DESC");
                                         } catch (Zend_Db_Exception $ex) {
                                             log::DB_hata_kaydi_ekle(__FILE__, $ex);
                                         }
-                                        htmlspecialchar_obj($ruhsatlar);
-                                        foreach ($ruhsatlar as $ruhsat) {
-                                            $sifreli_id = mcrypt($ruhsat->id, $_SESSION['key']);
-                                            echo "<option value='$sifreli_id' title='$ruhsat->adi_soyadi' ";
-                                            echo (isset($ruhsat->id) ? (isset($_GET['ruhsat']) ? ($_GET['ruhsat'] == $sifreli_id ? 'selected' : null) : null) : null);
-                                            echo ">$ruhsat->ruhsat_no</option>";
+                                        htmlspecialchar_obj($ada_parsel);
+                                        foreach ($mezar_bilgileri as $mezar_bilgisi) {
+                                            $sifreli_id = mcrypt($mezar_bilgisi->id, $_SESSION['key']);
+                                            echo "<option value='$sifreli_id' title='$mezar_bilgisi->mezarlik_adi' ";
+                                            echo (isset($mezar_bilgisi->id) ? (isset($_GET['ada_parsel']) ? ($_GET['ada_parsel'] == $sifreli_id ? 'selected' : null) : null) : null);
+                                            echo ">$mezar_bilgisi->ada_parsel</option>";
                                         }
                                         ?>
                                     </select>
                                 </div>
                             </div>
                             <input type="hidden" name="sorgula"/>
-                            <div class="col-sm-12 form-group form-group-sm">
-                                <button type="submit" id="get-items" name="sorgula" class="btn bg-purple btn-block hidden"><span class="glyphicon glyphicon-search"></span> <?= "Ruhsat Bilgilerini Getir" ?></button>
-                            </div>
-                        </form>
-                        <form class="form-horizontal" method="get" action="">
-                            <div class="form-group form-group-sm">
-                            </div>                               
-                            <div class="form-group form-group-sm">
-                                <label class="col-sm-2 control-label" for="iskan_no">İskan No</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control select2 select2-hidden-accessible"  onchange="this.form.submit()" style="width: 100%;" tabindex="-1" aria-hidden="true" id="ruhsat" name="ruhsat">
-                                        <option value=''>Listelenecek İskan Seçiniz</option>
-                                        <!--<option value=''>İskan No Boş Olanlar</option>-->
-                                        <?php
-                                        try {
-                                            $ruhsatlar = $db->fetchAll("SELECT id, iskan_no, adi_soyadi FROM s_ruhsat_bilgileri WHERE aktif_mi AND iskan_verildi_mi = '1' AND NOT ISNULL(iskan_no) GROUP BY iskan_no ORDER BY id DESC");
-                                        } catch (Zend_Db_Exception $ex) {
-                                            log::DB_hata_kaydi_ekle(__FILE__, $ex);
-                                        }
-                                        htmlspecialchar_obj($ruhsatlar);
-                                        foreach ($ruhsatlar as $ruhsat) {
-                                            $sifreli_id = mcrypt($ruhsat->id, $_SESSION['key']);
-                                            echo "<option value='$sifreli_id' title='$ruhsat->adi_soyadi' ";
-                                            echo (isset($ruhsat->id) ? (isset($_GET['ruhsat']) ? ($_GET['ruhsat'] == $sifreli_id ? 'selected' : null) : null) : null);
-                                            echo ">$ruhsat->iskan_no</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <input type="hidden" name="sorgula"/>
-                            <div class="col-sm-12 form-group form-group-sm">
-                                <button type="submit" id="get-items" name="sorgula" class="btn bg-purple btn-block hidden"><span class="glyphicon glyphicon-search"></span> <?= "Ruhsat Bilgilerini Getir" ?></button>
-                            </div>
                         </form>
                         <hr> 
                         <form class="form-horizontal" method="get" action="">
                             <div class="form-group form-group-sm">
                             </div>   
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-2 control-label" for="adi_soyadi">Ad Soyad</label>
+                                <label class="col-sm-2 control-label" for="sahibi_ad_soyad">Sahibi Ad Soyad</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" type="text" id="adi_soyadi" name="adi_soyadi" value="<?php echo isset($_GET['adi_soyadi']) ? $_GET['adi_soyadi'] : ''; ?>" >
+                                    <input class="form-control" type="text" id="sahibi_ad_soyad" name="sahibi_ad_soyad" value="<?php echo isset($_GET['sahibi_ad_soyad']) ? $_GET['sahibi_ad_soyad'] : ''; ?>" >
+                                </div>
+                            </div>    
+                            <div class="form-group form-group-sm">
+                                <label class="col-sm-2 control-label" for="sahibi_tc_no">Sahibi Tc No</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" id="sahibi_tc_no" name="sahibi_tc_no" value="<?php echo isset($_GET['sahibi_tc_no']) ? $_GET['sahibi_tc_no'] : ''; ?>" >
                                 </div>
                             </div>
                             <div class="form-group form-group-sm">
@@ -140,111 +103,17 @@ try {
                                 </div>
                             </div>
                             <div class="form-group form-group-sm">
-                                <label class="col-sm-2 control-label" for="bulten_no">Bulten No</label>
+                                <label class="col-sm-2 control-label" for="vefat_eden_ad_soyad">Vefat Eden Ad Soyad</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" type="text" id="bulten_no" name="bulten_no" value="<?php echo isset($_GET['bulten_no']) ? $_GET['bulten_no'] : ''; ?>" >
+                                    <input class="form-control" type="text" id="vefat_eden_ad_soyad" name="vefat_eden_ad_soyad" value="<?php echo isset($_GET['vefat_eden_ad_soyad']) ? $_GET['vefat_eden_ad_soyad'] : ''; ?>" >
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">
+                                <label class="col-sm-2 control-label" for="vefat_eden_tc_no">Vefat Eden Tc Kimlik No</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="text" id="vefat_eden_tc_no" name="vefat_eden_tc_no" value="<?php echo isset($_GET['vefat_eden_tc_no']) ? $_GET['vefat_eden_tc_no'] : ''; ?>" >
                                 </div>
                             </div>                            
-                            <div class="form-group form-group-sm">
-                                <label class="col-sm-2 control-label" for="fenni_mesul">Fenni Mesul/Yapı Denetim</label>
-                                <div class="col-sm-8">
-                                    <input class="form-control" type="text" id="fenni_mesul" name="fenni_mesul" value="<?php echo isset($_GET['fenni_mesul']) ? $_GET['fenni_mesul'] : ''; ?>" >
-                                </div>
-                            </div>
-                            <div class="form-group form-group-sm">
-                                <label class="col-sm-2 control-label" for="ruhsat_verilis_amaci">Ruhsat Veriliş Amacı</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="ruhsat_verilis_amaci" name="ruhsat_verilis_amaci">
-                                        <option value=''>Listelenecek Ruhsat Seçiniz</option>
-                                        <?php
-                                        try {
-                                            $ruhsat_verilis_amaclari = $db->fetchAll("SELECT verilis_amaci, aciklama FROM s_ruhsat_verilis_amaci WHERE aktif_mi");
-                                        } catch (Zend_Db_Exception $ex) {
-                                            log::DB_hata_kaydi_ekle(__FILE__, $ex);
-                                        }
-                                        htmlspecialchar_obj($ruhsat_verilis_amaclari);
-                                        foreach ($ruhsat_verilis_amaclari as $ruhsat_verilis_amaci) {
-                                            echo "<option value='$ruhsat_verilis_amaci->verilis_amaci' title='$ruhsat_verilis_amaci->aciklama' ";
-                                            echo ">$ruhsat_verilis_amaci->verilis_amaci</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group form-group-sm">
-                                <label class="col-sm-2 control-label" for="ruhsatlar">Ruhsat Cinsi</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="ruhsat_cinsi" name="ruhsat_cinsi">
-                                        <option value=''>Ruhsat Cinsi Seçiniz</option>
-                                        <?php
-                                        try {
-                                            $ruhsatlar = $db->fetchAll("SELECT DISTINCT ruhsat_cinsi FROM s_ruhsat_bilgileri ");
-                                        } catch (Zend_Db_Exception $ex) {
-                                            log::DB_hata_kaydi_ekle(__FILE__, $ex);
-                                        }
-                                        htmlspecialchar_obj($ruhsatlar);
-                                        foreach ($ruhsatlar as $ruhsat) {
-                                            echo "<option value='$ruhsat->ruhsat_cinsi' ";
-                                            echo (isset($ruhsat->ruhsat_cinsi) ? (isset($_GET['ruhsat_cinsi']) ? ($_GET['ruhsat_cinsi'] == $ruhsat->ruhsat_cinsi ? 'selected' : null) : null) : null);
-                                            echo ">$ruhsat->ruhsat_cinsi</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group form-group-sm">
-                                <label class="col-sm-2 control-label" for="ruhsat_tarihi">Ruhsat Tarihi</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control date" type="text" placeholder="Başlangıç Tarihi" id="ruhsat_tarihi_baslangic" name="ruhsat_tarihi_baslangic" value="<?php echo isset($_GET['ruhsat_tarihi_baslangic']) ? $_GET['ruhsat_tarihi_baslangic'] : ''; ?>" >
-                                </div>
-                                <div class="col-sm-4">
-                                    <input class="form-control date" type="text" placeholder="Bitiş Tarihi" id="ruhsat_tarihi_bitis" name="ruhsat_tarihi_bitis" value="<?php echo isset($_GET['ruhsat_tarihi_bitis']) ? $_GET['ruhsat_tarihi_bitis'] : ''; ?>" >
-                                </div>
-                            </div>
-                            <div class="form-group form-group-sm">
-                                <label class="col-sm-2 control-label" for="mahallesi">Mahallesi</label>
-                                <div class="col-sm-8">
-                                    <input class="form-control" type="text" id="mahallesi" name="mahallesi" value="<?php echo isset($_GET['mahallesi']) ? $_GET['mahallesi'] : ''; ?>" >
-                                </div>
-                            </div>
-
-                            <div class="form-group form-group-sm">
-                                <label class="col-sm-2 control-label" for="yibf_no">YİBF No</label>
-                                <div class="col-sm-8">
-                                    <input class="form-control" type="text" id="yibf_no" name="yibf_no" value="<?php echo isset($_GET['yibf_no']) ? $_GET['yibf_no'] : ''; ?>" >
-                                </div>
-                            </div>
-                            <div class="form-group form-group-sm">
-                                <label class="col-sm-2 control-label" for="iskan_verildi_mi">İskan Süreci</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="iskan_verildi_mi" name="iskan_verildi_mi">
-                                        <option value=''>İskan Durumu Seçiniz</option>
-                                        <option value='-1' <?= ((isset($_GET['iskan_verildi_mi']) && ($_GET['iskan_verildi_mi'] === -1) ? 'selected' : '')) ?> >Onay Bekliyor/Başvuru Yapıldı</option>
-                                        <option value='0' <?= ((isset($_GET['iskan_verildi_mi']) && ($_GET['iskan_verildi_mi'] === 0) ? 'selected' : '')) ?> >Yok</option>
-                                        <option value='1' <?= ((isset($_GET['iskan_verildi_mi']) && ($_GET['iskan_verildi_mi'] === 1) ? 'selected' : '')) ?> >Var</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group form-group-sm">
-                                <label class="col-sm-2 control-label" for="aktif_mi">Ruhsat Süreci</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="aktif_mi" name="aktif_mi">
-                                        <option value=''>Ruhsat Durumu Seçiniz</option>
-                                        <option value='-1' <?= ((isset($_GET['aktif_mi']) && ($_GET['aktif_mi'] == -1) ? 'selected' : '')) ?> >Onay Bekliyor/Başvuru Yapıldı</option>
-                                        <option value='1' <?= ((isset($_GET['aktif_mi']) && ($_GET['aktif_mi'] == 1) ? 'selected' : '')) ?> >Ruhsat Verildi</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group form-group-sm">
-                                <label class="col-sm-2 control-label" for="kacak_islem_yapildi_mi">Var Mı?</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true" id="kacak_islem_yapildi_mi" name="kacak_islem_yapildi_mi">
-                                        <option value=''>Kaçak Durumu Seçiniz</option>
-                                        <option value='1' <?= ((isset($_GET['kacak_islem_yapildi_mi']) && ($_GET['kacak_islem_yapildi_mi'] === 1) ? 'selected' : '')) ?> >Var</option>
-                                        <option value='0' <?= ((isset($_GET['kacak_islem_yapildi_mi']) && ($_GET['kacak_islem_yapildi_mi'] === 0) ? 'selected' : '')) ?> >Kaçak Yok</option>
-                                    </select>
-                                </div>
-                            </div>
                             <div class="col-sm-12 form-group form-group-sm text-center">
                                 <button type="submit" id="get-items" name="sorgula" class="btn bg-purple"><span class="glyphicon glyphicon-search"></span> <?= "Ruhsat Bilgilerini Getir" ?></button>
                             </div>
@@ -290,7 +159,6 @@ try {
                     if (isset($_GET["ruhsat"])) {
                         $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi AND id = ? ";
                         $ruhsat_id = mdecrypt($_GET['ruhsat'], $_SESSION['key']);
-                        
                         try {
                             $listItems = $GLOBALS['db']->fetchAll($ItemsSQL, $ruhsat_id);
                         } catch (Zend_Db_Exception $ex) {
@@ -315,33 +183,33 @@ try {
                     } else {
                         $ruhsat_where_string = "";
                         $ruhsat_where = array();
-                        if (isset($_GET['ruhsat_cinsi']) && trim($_GET['ruhsat_cinsi']) !== "") {
+                        if (trim($_GET['ruhsat_cinsi']) !== "") {
                             $ruhsat_where_string .= " AND ruhsat_cinsi = ? ";
                             array_push($ruhsat_where, trim($_GET['ruhsat_cinsi']));
                         }
 
-                        if (isset($_GET['iskan_verildi_mi']) && trim($_GET['iskan_verildi_mi']) !== "") {
+                        if (trim($_GET['iskan_verildi_mi']) !== "") {
                             $ruhsat_where_string .= " AND iskan_verildi_mi = ? ";
                             array_push($ruhsat_where, trim($_GET['iskan_verildi_mi']));
                         }
-                        if (isset($_GET['adi_soyadi']) && trim($_GET['adi_soyadi']) !== "") {
+                        if (trim($_GET['adi_soyadi']) !== "") {
                             $ruhsat_where_string .= " AND adi_soyadi LIKE ? ";
                             array_push($ruhsat_where, "%" . trim($_GET['adi_soyadi']) . "%");
                         }
-                        if (isset($_GET['ruhsat_verilis_amaci']) && trim($_GET['ruhsat_verilis_amaci']) !== "") {
+                        if (trim($_GET['ruhsat_verilis_amaci']) !== "") {
                             $ruhsat_where_string .= " AND ruhsat_verilis_amaci LIKE ? ";
                             array_push($ruhsat_where, "%" . trim($_GET['ruhsat_verilis_amaci']) . "%");
                         }
-                        if (isset($_GET['ruhsat_tarihi_baslangic']) && trim($_GET['ruhsat_tarihi_baslangic']) !== "" && trim($_GET['ruhsat_tarihi_bitis']) !== "") {
+                        if (trim($_GET['ruhsat_tarihi_baslangic']) !== "" && trim($_GET['ruhsat_tarihi_bitis']) !== "") {
                             $ruhsat_where_string .= " AND ( ruhsat_tarihi BETWEEN ? AND ? ) ";
                             array_push($ruhsat_where, convertDateFormatBasicDefault($_GET['ruhsat_tarihi_baslangic']));
                             array_push($ruhsat_where, convertDateFormatBasicDefault($_GET['ruhsat_tarihi_bitis']));
                         }
-                        if (isset($_GET['mahallesi']) && trim($_GET['mahallesi']) !== "") {
+                        if (trim($_GET['mahallesi']) !== "") {
                             $ruhsat_where_string .= " AND mahallesi LIKE ? ";
                             array_push($ruhsat_where, "%" . trim($_GET['mahallesi']) . "%");
                         }
-                        if (isset($_GET['fenni_mesul']) && trim($_GET['fenni_mesul']) !== "") {
+                        if (trim($_GET['fenni_mesul']) !== "") {
                             $ruhsat_where_string .= " AND fenni_mesul LIKE ? ";
                             array_push($ruhsat_where, "%" . trim($_GET['fenni_mesul']) . "%");
                         }
@@ -349,23 +217,23 @@ try {
 //                            $ruhsat_where_string .= " AND fenni_mesul = ? ";
 //                            array_push($ruhsat_where, trim($_GET['fenni_mesul']));
 //                        }
-                        if (isset($_GET['bulten_no']) && trim($_GET['bulten_no']) !== "") {
+                        if (trim($_GET['bulten_no']) !== "") {
                             $ruhsat_where_string .= " AND bulten_no = ? ";
                             array_push($ruhsat_where, trim($_GET['bulten_no']));
                         }
-                        if (isset($_GET['ada_parsel']) && trim($_GET['ada_parsel']) !== "") {
+                        if (trim($_GET['ada_parsel']) !== "") {
                             $ruhsat_where_string .= " AND ada_parsel = ? ";
                             array_push($ruhsat_where, trim($_GET['ada_parsel']));
                         }
-                        if (isset($_GET['yibf_no']) && trim($_GET['yibf_no']) !== "") {
+                        if (trim($_GET['yibf_no']) !== "") {
                             $ruhsat_where_string .= " AND yibf_no LIKE ? ";
                             array_push($ruhsat_where, "%" . trim($_GET['yibf_no']) . "%");
                         }
-                        if (isset($_GET['kacak_islem_yapildi_mi']) && trim($_GET['kacak_islem_yapildi_mi']) !== "") {
+                        if (trim($_GET['kacak_islem_yapildi_mi']) !== "") {
                             $ruhsat_where_string .= " AND kacak_islem_yapildi_mi = ? ";
                             array_push($ruhsat_where, trim($_GET['kacak_islem_yapildi_mi']));
                         }
-                        if (isset($_GET['aktif_mi']) && trim($_GET['aktif_mi']) !== "") {
+                        if (trim($_GET['aktif_mi']) !== "") {
                             if (trim($_GET['aktif_mi']) == -1) {
                                 $ItemsSQL .= " FROM s_ruhsat_bilgileri WHERE s_ruhsat_bilgileri.aktif_mi = '-1' " . $ruhsat_where_string . " ORDER BY CAST(SUBSTR(ruhsat_no, 1, 4) AS UNSIGNED) DESC, CAST(SUBSTR(ruhsat_no, 6) AS UNSIGNED) DESC";
                             } else {

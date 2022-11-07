@@ -45,7 +45,7 @@ if (isset($_POST['insert']) && in_array(YT_INSERT, $sayfaIslemleriId)) {//kaydet
             } else {// Yeni İskan Ekleniyor.
                 $GLOBALS['db']->fetchAll("UPDATE s_degiskenler SET deger = ? WHERE aktif_mi AND degisken = 'son_iskan_no' ", $son_iskan_no);
             }
-            adminLTE_redirect(false, __("Ekleme Sonucu"), __("Ruhsat Bilgileri Eklendi"), "success", 1000000, BASE_URL . "imar/ruhsat/index.php?sorgula&ruhsat_id=" . mcrypt($eklen_id, $_SESSION['key']));
+            adminLTE_redirect(false, __("Ekleme Sonucu"), __("Ruhsat Bilgileri Eklendi"), "success", 1000000, BASE_URL . "imar/ruhsat/index.php?sorgula&ruhsat=" . mcrypt($eklen_id, $_SESSION['key']));
         } catch (Zend_Db_Exception $ex) {
             log::DB_hata_kaydi_ekle(__FILE__, $ex);
             adminLTE_redirect(false, __("Ekleme Sonucu"), __("Ruhsat Bilgileri Eklenemedi!"), "danger", 1000000, BASE_URL . "imar/ruhsat/index.php");
